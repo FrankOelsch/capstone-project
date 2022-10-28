@@ -17,7 +17,7 @@ export default function Config() {
     );
   }, [show]);
 
-  const handleKeyDown = (e) => {
+  function showResult(e) {
     if (e.key === "Enter" || e.type === "blur") {
       let isUsefull = true;
       let array = [];
@@ -38,7 +38,7 @@ export default function Config() {
         setShow(Math.random());
       }
     }
-  };
+  }
 
   function handleChange(e) {
     if (isNaN(e.target.value)) {
@@ -58,16 +58,16 @@ export default function Config() {
       <StyledH3>Sichtbare Torfläche: {qm} qm</StyledH3>
       <label htmlFor="gateW">Toröffnung-Breite in mm</label>
       <StyledInput
-        onBlur={handleKeyDown}
-        onKeyDown={handleKeyDown}
+        onBlur={showResult}
+        onKeyDown={showResult}
         onChange={handleChange}
         id="gateW"
         value={gateWidth}
       ></StyledInput>
       <label htmlFor="gateH">Toröffnung-Höhe in mm</label>
       <StyledInput
-        onBlur={handleKeyDown}
-        onKeyDown={handleKeyDown}
+        onBlur={showResult}
+        onKeyDown={showResult}
         onChange={handleChange}
         id="gateH"
         value={gateHeight}
