@@ -8,9 +8,11 @@ const GlobalStyle = createGlobalStyle`
     src: url(${NotoSans2}) format('woff2'),
         url(${NotoSans}) format('woff');
   }
-  
+
   * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
   body {

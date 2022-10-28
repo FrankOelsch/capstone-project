@@ -4,8 +4,9 @@ import styled from "styled-components";
 export default function Config() {
   const [gateWidth, setGateWidth] = useState(2500);
   const [gateHeight, setGateHeight] = useState(2000);
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const [qm, setQm] = useState(5);
+  const [show, setShow] = useState(Math.random());
 
   useEffect(() => {
     setQm(
@@ -14,41 +15,34 @@ export default function Config() {
         minimumFractionDigits: 2,
       })
     );
-  }, []);
+  }, [show]);
 
   const handleKeyDown = (e) => {
-    console.log(e);
     if (e.key === "Enter" || e.type === "blur") {
       let isUsefull = true;
-      let x = "";
+      let array = [];
 
       if (gateWidth < 1000 || gateWidth > 5000) {
         isUsefull = false;
-        x += "Breite muss größer 1000 mm und kleiner 5000 mm sein.";
+        array.push("Zulässige Werte für Breite: 1000 bis 5000 mm");
       }
 
       if (gateHeight < 1800 || gateHeight > 3000) {
         isUsefull = false;
-        x += "\nHöhe muss größer 1800 mm und kleiner 3000 mm sein.";
+        array.push("Zulässige Werte für Höhe: 1800 bis 3000 mm");
       }
 
-      setMessage(x);
+      setMessages(array);
 
       if (isUsefull) {
-        setQm(
-          ((gateWidth * gateHeight) / 1000000).toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2,
-          })
-        );
-        setMessage("");
+        setShow(Math.random());
       }
     }
   };
 
   function handleChange(e) {
     if (isNaN(e.target.value)) {
-      setMessage("Bitte nur Zahlen eingeben!");
+      setMessages(["Bitte nur Zahlen eingeben!"]);
       return;
     }
 
@@ -61,7 +55,7 @@ export default function Config() {
 
   return (
     <>
-      <p>Sichtbare Torfläche: {qm} qm</p>
+      <StyledH3>Sichtbare Torfläche: {qm} qm</StyledH3>
       <label htmlFor="gateW">Toröffnung-Breite in mm</label>
       <StyledInput
         onBlur={handleKeyDown}
@@ -78,13 +72,27 @@ export default function Config() {
         id="gateH"
         value={gateHeight}
       ></StyledInput>
-      <p>{message}</p>
+      {messages.map((message, i) => (
+        <StyledMessage key={i}>{message}</StyledMessage>
+      ))}
     </>
   );
 }
 
+const StyledH3 = styled.h3`
+  margin: 10px;
+`;
+
 const StyledInput = styled.input`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
   margin-bottom: 10px;
+`;
+
+const StyledMessage = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: violet;
+  margin-top: 10px;
 `;
