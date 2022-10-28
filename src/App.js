@@ -1,12 +1,20 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import logo from "./logo.svg";
+import Config from "./pages/Config";
 
 function App() {
-  return <Container></Container>;
+  return (
+    <Container>
+      <Config></Config>
+    </Container>
+  );
 }
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 `;
 
