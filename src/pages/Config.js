@@ -2,79 +2,57 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 export default function Config() {
-  const [gateWidth, setGateWidth] = useState(2500);
-  const [gateHeight, setGateHeight] = useState(2000);
-  const [messages, setMessages] = useState([]);
-  const [qm, setQm] = useState(5);
-  const [show, setShow] = useState(Math.random());
+  const [gateWidth, setGateWidth] = useState("2500");
+  const [gateHeight, setGateHeight] = useState("2000");
+  const [qm, setQm] = useState(
+    ((+gateWidth * +gateHeight) / 1000000).toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+    })
+  );
 
   useEffect(() => {
-    setQm(
-      ((gateWidth * gateHeight) / 1000000).toLocaleString(undefined, {
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2,
-      })
-    );
-  }, [show]);
-
-  function showResult(e) {
-    if (e.key === "Enter" || e.type === "blur") {
-      let isUsefull = true;
-      let array = [];
-
-      if (gateWidth < 1000 || gateWidth > 5000) {
-        isUsefull = false;
-        array.push("Zulässige Werte für Breite: 1000 bis 5000 mm");
-      }
-
-      if (gateHeight < 1800 || gateHeight > 3000) {
-        isUsefull = false;
-        array.push("Zulässige Werte für Höhe: 1800 bis 3000 mm");
-      }
-
-      setMessages(array);
-
-      if (isUsefull) {
-        setShow(Math.random());
-      }
+    if (isNaN(gateHeight) || isNaN(gateWidth)) {
+      setQm("--");
+    } else {
+      setQm(
+        ((+gateWidth * +gateHeight) / 1000000).toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        })
+      );
     }
-  }
-
-  function handleChange(e) {
-    if (isNaN(e.target.value)) {
-      setMessages(["Bitte nur Zahlen eingeben!"]);
-      return;
-    }
-
-    if (e.target.id === "gateW") {
-      setGateWidth(+e.target.value);
-    } else if (e.target.id === "gateH") {
-      setGateHeight(+e.target.value);
-    }
-  }
+  }, [gateHeight, gateWidth]);
 
   return (
     <>
       <StyledH3>Sichtbare Torfläche: {qm} qm</StyledH3>
       <label htmlFor="gateW">Toröffnung-Breite in mm</label>
       <StyledInput
-        onBlur={showResult}
-        onKeyDown={showResult}
-        onChange={handleChange}
-        id="gateW"
+        type="text"
+        onChange={(event) => setGateWidth(event.target.value)}
         value={gateWidth}
       ></StyledInput>
+      {isNaN(gateWidth) ? (
+        <StyledMessage>Bitte nur Zahlen eingeben!</StyledMessage>
+      ) : +gateWidth < 1000 || +gateWidth > 5000 ? (
+        <StyledMessage>
+          Zulässige Werte für Höhe: 1000 bis 5000 mm
+        </StyledMessage>
+      ) : null}
       <label htmlFor="gateH">Toröffnung-Höhe in mm</label>
       <StyledInput
-        onBlur={showResult}
-        onKeyDown={showResult}
-        onChange={handleChange}
-        id="gateH"
+        type="text"
+        onChange={(event) => setGateHeight(event.target.value)}
         value={gateHeight}
       ></StyledInput>
-      {messages.map((message, i) => (
-        <StyledMessage key={i}>{message}</StyledMessage>
-      ))}
+      {isNaN(gateHeight) ? (
+        <StyledMessage>Bitte nur Zahlen eingeben!</StyledMessage>
+      ) : +gateHeight < 1800 || +gateHeight > 3000 ? (
+        <StyledMessage>
+          Zulässige Werte für Höhe: 1800 bis 3000 mm
+        </StyledMessage>
+      ) : null}
     </>
   );
 }
@@ -95,4 +73,5 @@ const StyledMessage = styled.p`
   font-weight: bold;
   color: violet;
   margin-top: 10px;
+  margin-bottom: 10px;
 `;
