@@ -16,7 +16,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 90%;
 `;
 
 export default App;
