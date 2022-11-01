@@ -7,64 +7,29 @@ export default function Config() {
   const messageHeightRef = useRef(null);
   const messageRadiusRef = useRef(null);
 
-  const [gateWidth, setGateWidth] = useState("2500");
-  const [gateHeight, setGateHeight] = useState("2000");
-  const [radius, setRadius] = useState("300");
+  const [gateWidth, setGateWidth] = useState("250");
+  const [gateHeight, setGateHeight] = useState("200");
+  const [radius, setRadius] = useState("30");
   const [qm, setQm] = useState(
-    ((+gateWidth * +gateHeight) / 1000000).toLocaleString(undefined, {
+    ((+gateWidth * +gateHeight) / 1000).toLocaleString(undefined, {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     })
   );
-  const [tempW, setTempW] = useState(1500);
+  const [tempW, setTempW] = useState(150);
+  const [prevWidth, setPrevWidth] = useState(150);
 
-  const gateWidthPrev = useRef("1500");
-  const gateHeightPrev = useRef("2000");
-  const radiusPrev = useRef("300");
-
-  // *** Nur zum Testen ***
-  const [count, setCount] = useState(0);
-  const [intervalId, setIntervalId] = useState(0);
-
-  const handleClick = () => {
-    if (intervalId) {
-      clearInterval(intervalId);
-      setIntervalId(0);
-      return;
-    }
-
-    const newIntervalId = setInterval(() => {
-      setCount((prevCount) => prevCount + 1);
-      setTempW((prev) => prev + 10);
-
-      // let w = +gateWidthPrev.current;
-      // if (+gateWidthPrev.current !== +gateWidth) {
-      //   if (+gateWidthPrev.current < +gateWidth) {
-      //     w += 10;
-      //   }
-      //   if (+gateWidthPrev.current > +gateWidth) {
-      //     w -= 10;
-      //   }
-      // }
-      //drawIt();
-    }, 10);
-    setIntervalId(newIntervalId);
-  };
-
-  const handleKeydown = (e) => {
-    //it triggers by pressing the enter key
-    if (e.keyCode === 13) {
-      handleClick();
-    }
-  };
-  // *** Nur zum Testen ***
+  const gateWidthPrev = useRef("150");
+  const gateHeightPrev = useRef("200");
+  const radiusPrev = useRef("30");
 
   let ctx = null;
   let canv = null;
 
-  useEffect(() => {
-    gateWidthPrev.current = gateWidth;
-  }, [gateWidth]);
+  // useEffect(() => {
+  //   gateWidthPrev.current = +gateWidth;
+  //   console.log("prevW: " + gateWidthPrev.current);
+  // }, [gateWidth]);
 
   useEffect(() => {
     gateHeightPrev.current = gateHeight;
@@ -73,6 +38,13 @@ export default function Config() {
   useEffect(() => {
     radiusPrev.current = radius;
   }, [radius]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      drawIt();
+    }, 4);
+    return () => clearTimeout(timeout);
+  }, [tempW]);
 
   useEffect(() => {
     messageWidthRef.current.textContent = "";
@@ -84,14 +56,12 @@ export default function Config() {
     if (isNaN(gateHeight) || isNaN(gateWidth) || isNaN(radius)) {
       return;
     } else {
-      if (+gateWidth < 1000 || +gateWidth > 5000) {
-        messageWidthRef.current.textContent =
-          "Zulässige Werte: 1000 - 5000 mm.";
+      if (+gateWidth < 100 || +gateWidth > 500) {
+        messageWidthRef.current.textContent = "Zulässige Werte: 100 - 500 cm.";
         isUsefull = false;
       }
-      if (+gateHeight < 1800 || +gateHeight > 3000) {
-        messageHeightRef.current.textContent =
-          "Zulässige Werte: 1800 - 3000 mm.";
+      if (+gateHeight < 180 || +gateHeight > 300) {
+        messageHeightRef.current.textContent = "Zulässige Werte: 180 - 300 mm.";
         isUsefull = false;
       }
       if (+radius < 0 || +radius > +gateWidth / 2 || +radius > +gateHeight) {
@@ -107,22 +77,13 @@ export default function Config() {
             minimumFractionDigits: 2,
           })
         );
-
-        let w = +gateWidthPrev.current;
-        if (+gateWidthPrev.current !== +gateWidth) {
-          if (+gateWidthPrev.current < +gateWidth) {
-            w += 10;
-          }
-          if (+gateWidthPrev.current > +gateWidth) {
-            w -= 10;
-          }
-        }
-
-        //setInterval(drawIt, 10);
+        //if (+gateWidthPrev.current < +gateWidth) {
+        //setStep(10);
+        //}
         drawIt();
       }
     }
-  }, [gateHeight, gateWidth, radius, tempW]);
+  }, [gateHeight, gateWidth, radius]);
 
   function handleChange(e) {
     if (isNaN(e.target.value)) {
@@ -145,27 +106,44 @@ export default function Config() {
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
-    let startY = 3400;
+    let startY = 340;
     let canvBreite = canv.width;
-    let torBreitePrev = tempW;
-    let startXTemp = (canvBreite - torBreitePrev) / 2;
 
+    let torBreitePrev = prevWidth;
+    let torBreiteTemp = tempW;
     let torBreite = +gateWidth;
-    let torHoehe = +gateHeight;
+    console.log(
+      "prevW: " +
+        torBreitePrev +
+        " - tempW: " +
+        torBreiteTemp +
+        " - W: " +
+        torBreite
+    );
 
+    let startXTemp = (canvBreite - torBreiteTemp) / 2;
+
+    let torHoehe = +gateHeight;
     let torHoehePrev = torHoehe;
+
     let radiusPrev = +radius;
 
-    if (tempW > torBreite) {
-      if (intervalId) {
-        clearInterval(intervalId);
-        setIntervalId(0);
-        return;
-      }
+    let step = 0;
+    if (torBreitePrev < torBreite) {
+      step = 1;
+    } else if (torBreitePrev > torBreite) {
+      step = -1;
+    }
+
+    if (tempW === torBreite) {
+      console.log("tempW: " + tempW);
+      setPrevWidth(torBreite);
+    } else {
+      setTempW((prev) => prev + step);
     }
 
     ctx.clearRect(0, 0, canv.width, canv.height);
-    ctx.lineWidth = 40;
+    ctx.lineWidth = 4;
 
     ctx.beginPath();
     ctx.moveTo(startXTemp, startY);
@@ -177,19 +155,19 @@ export default function Config() {
       startY - torHoehePrev,
       radiusPrev
     );
-    ctx.lineTo(startXTemp + torBreitePrev - radiusPrev, startY - torHoehePrev);
+    ctx.lineTo(startXTemp + torBreiteTemp - radiusPrev, startY - torHoehePrev);
     ctx.arcTo(
-      startXTemp + torBreitePrev,
+      startXTemp + torBreiteTemp,
       startY - torHoehePrev,
-      startXTemp + torBreitePrev,
+      startXTemp + torBreiteTemp,
       startY - torHoehePrev + radiusPrev,
       radiusPrev
     );
-    ctx.lineTo(startXTemp + torBreitePrev, startY);
+    ctx.lineTo(startXTemp + torBreiteTemp, startY);
     ctx.closePath();
     ctx.stroke();
 
-    ctx.lineWidth = 10;
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(0, startY);
     ctx.lineTo(canvBreite, startY);
@@ -198,25 +176,22 @@ export default function Config() {
 
   return (
     <>
-      <h1>{count}</h1>
-      <button onClick={handleClick}>{intervalId ? "Stop" : "Start"}</button>
-      <StyledCanvas id="canvas" ref={canvasRef} width={6000} height={4000}>
+      <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
         Your browser does not support the HTML5 canvas tag.
       </StyledCanvas>
 
       <StyledH3>Torfläche: {qm} qm</StyledH3>
 
-      <label htmlFor="gateW">Tor-Breite in mm</label>
+      <label htmlFor="gateW">Tor-Breite in cm</label>
       <StyledInput
         id="gateW"
         type="text"
-        onKeyDown={handleKeydown}
         onChange={handleChange}
         value={gateWidth}
       ></StyledInput>
       <StyledMessage ref={messageWidthRef}></StyledMessage>
 
-      <label htmlFor="gateH">Tor-Höhe in mm</label>
+      <label htmlFor="gateH">Tor-Höhe in cm</label>
       <StyledInput
         id="gateH"
         type="text"
@@ -225,7 +200,7 @@ export default function Config() {
       ></StyledInput>
       <StyledMessage ref={messageHeightRef}></StyledMessage>
 
-      <label htmlFor="radius">Torbogen-Radius in mm</label>
+      <label htmlFor="radius">Torbogen-Radius in cm</label>
       <StyledInput
         id="radius"
         type="text"
