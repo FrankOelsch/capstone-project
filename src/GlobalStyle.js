@@ -16,7 +16,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    margin: 0;
+    height: 100%;
+    background-color: antiquewhite;
     font-family: 'Noto Sans', 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;

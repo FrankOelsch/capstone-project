@@ -3,48 +3,39 @@ import styled from "styled-components";
 
 export default function Config() {
   const canvasRef = useRef(null);
+
   const messageWidthRef = useRef(null);
   const messageHeightRef = useRef(null);
   const messageRadiusRef = useRef(null);
 
-  const [gateWidth, setGateWidth] = useState("250");
-  const [gateHeight, setGateHeight] = useState("200");
+  const [width, setWidth] = useState("250");
+  const [height, setHeight] = useState("200");
   const [radius, setRadius] = useState("30");
+
+  const [prevWidth, setPrevWidth] = useState(150);
+  const [prevHeight, setPrevHeight] = useState(200);
+  const [prevRadius, setPrevRadius] = useState(30);
+
+  const [tempWidth, setTempWidth] = useState(150);
+  const [tempHeight, setTempHeight] = useState(200);
+  const [tempRadius, setTempRadius] = useState(30);
+
   const [qm, setQm] = useState(
-    ((+gateWidth * +gateHeight) / 1000).toLocaleString(undefined, {
+    ((+width * +height) / 10000).toLocaleString(undefined, {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     })
   );
-  const [tempW, setTempW] = useState(150);
-  const [prevWidth, setPrevWidth] = useState(150);
-
-  const gateWidthPrev = useRef("150");
-  const gateHeightPrev = useRef("200");
-  const radiusPrev = useRef("30");
 
   let ctx = null;
   let canv = null;
 
-  // useEffect(() => {
-  //   gateWidthPrev.current = +gateWidth;
-  //   console.log("prevW: " + gateWidthPrev.current);
-  // }, [gateWidth]);
-
-  useEffect(() => {
-    gateHeightPrev.current = gateHeight;
-  }, [gateHeight]);
-
-  useEffect(() => {
-    radiusPrev.current = radius;
-  }, [radius]);
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       drawIt();
-    }, 4);
+    }, 2);
     return () => clearTimeout(timeout);
-  }, [tempW]);
+  }, [tempWidth, tempHeight, tempRadius]);
 
   useEffect(() => {
     messageWidthRef.current.textContent = "";
@@ -53,18 +44,18 @@ export default function Config() {
 
     let isUsefull = true;
 
-    if (isNaN(gateHeight) || isNaN(gateWidth) || isNaN(radius)) {
+    if (isNaN(height) || isNaN(width) || isNaN(radius)) {
       return;
     } else {
-      if (+gateWidth < 100 || +gateWidth > 500) {
+      if (+width < 100 || +width > 500) {
         messageWidthRef.current.textContent = "Zulässige Werte: 100 - 500 cm.";
         isUsefull = false;
       }
-      if (+gateHeight < 180 || +gateHeight > 300) {
+      if (+height < 180 || +height > 300) {
         messageHeightRef.current.textContent = "Zulässige Werte: 180 - 300 mm.";
         isUsefull = false;
       }
-      if (+radius < 0 || +radius > +gateWidth / 2 || +radius > +gateHeight) {
+      if (+radius < 0 || +radius > +width / 2 || +radius > +height || !radius) {
         messageRadiusRef.current.textContent =
           "Zulässige Werte: 0 - 50 % der Breite und 0 - 100 % der Höhe.";
         isUsefull = false;
@@ -72,18 +63,16 @@ export default function Config() {
 
       if (isUsefull) {
         setQm(
-          ((+gateWidth * +gateHeight) / 1000000).toLocaleString(undefined, {
+          ((+width * +height) / 10000).toLocaleString(undefined, {
             maximumFractionDigits: 2,
             minimumFractionDigits: 2,
           })
         );
-        //if (+gateWidthPrev.current < +gateWidth) {
-        //setStep(10);
-        //}
+
         drawIt();
       }
     }
-  }, [gateHeight, gateWidth, radius]);
+  }, [height, width, radius]);
 
   function handleChange(e) {
     if (isNaN(e.target.value)) {
@@ -91,10 +80,10 @@ export default function Config() {
     }
     switch (e.target.id) {
       case "gateW":
-        setGateWidth(e.target.value);
+        setWidth(e.target.value);
         break;
       case "gateH":
-        setGateHeight(e.target.value);
+        setHeight(e.target.value);
         break;
       case "radius":
         setRadius(e.target.value);
@@ -106,40 +95,62 @@ export default function Config() {
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
+    let torBreite = +width;
+    let torBreitePrev = prevWidth;
+    let torBreiteTemp = tempWidth;
+
+    let torHoehe = +height;
+    let torHoehePrev = prevHeight;
+    let torHoeheTemp = tempHeight;
+
+    let torRadius = +radius;
+    let torRadiusPrev = prevRadius;
+    let torRadiusTemp = tempRadius;
+
     let startY = 340;
     let canvBreite = canv.width;
-
-    let torBreitePrev = prevWidth;
-    let torBreiteTemp = tempW;
-    let torBreite = +gateWidth;
-    console.log(
-      "prevW: " +
-        torBreitePrev +
-        " - tempW: " +
-        torBreiteTemp +
-        " - W: " +
-        torBreite
-    );
-
     let startXTemp = (canvBreite - torBreiteTemp) / 2;
 
-    let torHoehe = +gateHeight;
-    let torHoehePrev = torHoehe;
-
-    let radiusPrev = +radius;
-
-    let step = 0;
+    let stepW = 0;
     if (torBreitePrev < torBreite) {
-      step = 1;
+      stepW = 1;
     } else if (torBreitePrev > torBreite) {
-      step = -1;
+      stepW = -1;
     }
 
-    if (tempW === torBreite) {
-      console.log("tempW: " + tempW);
+    let stepH = 0;
+    if (torHoehePrev < torHoehe) {
+      stepH = 1;
+    } else if (torHoehePrev > torHoehe) {
+      stepH = -1;
+    }
+
+    let stepR = 0;
+    if (torRadiusPrev < torRadius) {
+      stepR = 1;
+    } else if (torRadiusPrev > torRadius) {
+      stepR = -1;
+    }
+
+    if (tempWidth === torBreite) {
+      console.log("tempWidth: " + tempWidth);
       setPrevWidth(torBreite);
     } else {
-      setTempW((prev) => prev + step);
+      setTempWidth((prev) => prev + stepW);
+    }
+
+    if (tempHeight === torHoehe) {
+      console.log("tempHeight: " + tempHeight);
+      setPrevHeight(torHoehe);
+    } else {
+      setTempHeight((prev) => prev + stepH);
+    }
+
+    if (tempRadius === torRadius) {
+      console.log("tempRadius: " + tempRadius);
+      setPrevRadius(torRadius);
+    } else {
+      setTempRadius((prev) => prev + stepR);
     }
 
     ctx.clearRect(0, 0, canv.width, canv.height);
@@ -147,21 +158,24 @@ export default function Config() {
 
     ctx.beginPath();
     ctx.moveTo(startXTemp, startY);
-    ctx.lineTo(startXTemp, startY - torHoehePrev + radiusPrev);
+    ctx.lineTo(startXTemp, startY - torHoeheTemp + torRadiusTemp);
     ctx.arcTo(
       startXTemp,
-      startY - torHoehePrev,
-      startXTemp + radiusPrev,
-      startY - torHoehePrev,
-      radiusPrev
+      startY - torHoeheTemp,
+      startXTemp + torRadiusTemp,
+      startY - torHoeheTemp,
+      torRadiusTemp
     );
-    ctx.lineTo(startXTemp + torBreiteTemp - radiusPrev, startY - torHoehePrev);
+    ctx.lineTo(
+      startXTemp + torBreiteTemp - torRadiusTemp,
+      startY - torHoeheTemp
+    );
     ctx.arcTo(
       startXTemp + torBreiteTemp,
-      startY - torHoehePrev,
+      startY - torHoeheTemp,
       startXTemp + torBreiteTemp,
-      startY - torHoehePrev + radiusPrev,
-      radiusPrev
+      startY - torHoeheTemp + torRadiusTemp,
+      torRadiusTemp
     );
     ctx.lineTo(startXTemp + torBreiteTemp, startY);
     ctx.closePath();
@@ -174,6 +188,15 @@ export default function Config() {
     ctx.stroke();
   }
 
+  const onFocus = (e) => {
+    if (e.which === 9) {
+      return false;
+    }
+    setTimeout(() => {
+      e.target.select();
+    }, 100);
+  };
+
   return (
     <>
       <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
@@ -184,28 +207,34 @@ export default function Config() {
 
       <label htmlFor="gateW">Tor-Breite in cm</label>
       <StyledInput
+        value={width}
         id="gateW"
         type="text"
+        autoComplete="off"
         onChange={handleChange}
-        value={gateWidth}
+        onFocus={onFocus}
       ></StyledInput>
       <StyledMessage ref={messageWidthRef}></StyledMessage>
 
       <label htmlFor="gateH">Tor-Höhe in cm</label>
       <StyledInput
+        value={height}
         id="gateH"
         type="text"
+        autoComplete="off"
         onChange={handleChange}
-        value={gateHeight}
+        onFocus={onFocus}
       ></StyledInput>
       <StyledMessage ref={messageHeightRef}></StyledMessage>
 
       <label htmlFor="radius">Torbogen-Radius in cm</label>
       <StyledInput
+        value={radius}
         id="radius"
         type="text"
+        autoComplete="off"
         onChange={handleChange}
-        value={radius}
+        onFocus={onFocus}
       ></StyledInput>
       <StyledMessage ref={messageRadiusRef}></StyledMessage>
     </>
@@ -225,12 +254,23 @@ const StyledH3 = styled.h3`
 const StyledInput = styled.input`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2em;
+  padding: 3px;
+  border: 2px solid;
+  border-color: burlywood;
+  border-radius: 6px;
+  outline: none;
+  background-color: rgba(250, 235, 215, 0.41);
+
+  &:focus {
+    background-color: lightblue;
+    border-color: cadetblue;
+  }
 `;
 
 const StyledMessage = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
-  color: violet;
+  color: blue;
   margin-bottom: 10px;
   height: 1.1em;
 `;
