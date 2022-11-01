@@ -1,21 +1,14 @@
-import styled from "styled-components";
 import Config from "./pages/Config";
+import { Routes, Route } from "react-router-dom";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
-    <Container>
-      <Config></Config>
-    </Container>
+    <Routes>
+      <Route path="/" element={<Config />} />
+      <Route path="/cart" element={<Cart />} />
+    </Routes>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-`;
 
 export default App;

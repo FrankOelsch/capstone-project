@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Config() {
@@ -198,7 +199,7 @@ export default function Config() {
   };
 
   return (
-    <>
+    <Container>
       <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
         Your browser does not support the HTML5 canvas tag.
       </StyledCanvas>
@@ -237,9 +238,20 @@ export default function Config() {
         onFocus={onFocus}
       ></StyledInput>
       <StyledMessage ref={messageRadiusRef}></StyledMessage>
-    </>
+
+      <StyledLink to="/cart">Cart</StyledLink>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
 
 const StyledCanvas = styled.canvas`
   border: 1px solid #d3d3d3;
@@ -265,6 +277,18 @@ const StyledInput = styled.input`
     background-color: lightblue;
     border-color: cadetblue;
   }
+`;
+
+const StyledLink = styled(Link)`
+  background-color: #04aa6d;
+  border: none;
+  font-size: 20px;
+  color: #ffffff;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 `;
 
 const StyledMessage = styled.p`
