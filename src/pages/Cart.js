@@ -26,7 +26,7 @@ const shopItems = [
     qu: "qm",
     price: 80,
     quantity: 1,
-    inCart: true,
+    inCart: false,
   },
   {
     id: "4",
@@ -65,28 +65,22 @@ export default function Cart() {
     }
   });
 
-  console.log("cartArray: " + cartArray.length);
-  console.log("falseArray: " + falseArray.length);
-  console.log("toggleID: " + toggleID);
-
   const filterArray = search(searchString, falseArray, {
     keySelector: (obj) => obj.name,
   });
 
   function getFilteredItems(e) {
-    console.log("search: " + e.target.value);
     setToggleID("");
     setSearchString(e.target.value);
   }
 
   function toggleSelect(e) {
-    console.log("ID: " + e.target.id);
     setToggleID(e.target.id);
   }
 
   return (
     <Container>
-      <label>Warenkorb:</label>
+      <StyledH2>Warenkorb:</StyledH2>
       <section className="cart">
         {cartArray.map((item) => (
           <Item
@@ -100,8 +94,7 @@ export default function Cart() {
         ))}
       </section>
 
-      <label>Artikel-Suche:</label>
-      <br />
+      <StyledH2>Artikel-Suche:</StyledH2>
       <TextInput id="searchInput" onInput={getFilteredItems} />
       <section className="shop">
         {filterArray.map((item) => (
@@ -126,4 +119,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+`;
+
+const StyledH2 = styled.h2`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.4em;
+  margin-top: 10px;
 `;

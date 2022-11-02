@@ -135,21 +135,18 @@ export default function Config() {
     }
 
     if (tempWidth === torBreite) {
-      console.log("tempWidth: " + tempWidth);
       setPrevWidth(torBreite);
     } else {
       setTempWidth((prev) => prev + stepW);
     }
 
     if (tempHeight === torHoehe) {
-      console.log("tempHeight: " + tempHeight);
       setPrevHeight(torHoehe);
     } else {
       setTempHeight((prev) => prev + stepH);
     }
 
     if (tempRadius === torRadius) {
-      console.log("tempRadius: " + tempRadius);
       setPrevRadius(torRadius);
     } else {
       setTempRadius((prev) => prev + stepR);
