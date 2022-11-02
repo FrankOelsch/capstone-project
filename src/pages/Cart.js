@@ -1,13 +1,11 @@
 import { useState, useRef } from "react";
 import TextInput from "../components/input/TextInput";
-
-const language = {
-  SearchText: { de: "Artikel-Suche", en: "Search for items" },
-  CartText: { de: "Warenkorb", en: "Shopping cart" },
-};
+import Item from "../components/Item";
+import styled from "styled-components";
 
 const shopItems = [
   {
+    id: "1",
     name: "Decken-Sectionaltor Holz",
     qu: "qm",
     price: 180,
@@ -15,14 +13,23 @@ const shopItems = [
     inCart: false,
   },
   {
+    id: "2",
     name: "Decken-Sectionaltor Stahl",
     qu: "qm",
     price: 120,
     quantity: 1,
     inCart: false,
   },
-  { name: "Rundlauftor Holz", qu: "qm", price: 80, quantity: 1, inCart: false },
   {
+    id: "3",
+    name: "Rundlauftor Holz",
+    qu: "qm",
+    price: 80,
+    quantity: 1,
+    inCart: false,
+  },
+  {
+    id: "4",
     name: "Rundlauftor Aluminium",
     qu: "qm",
     price: 150,
@@ -70,19 +77,21 @@ export default function Cart() {
   }
 
   return (
-    <>
-      <label>
-        {lang === "de" ? language.CartText.de : language.CartText.en}:
-      </label>
+    <Container>
+      <label>Warenkorb:</label>
       <section className="cart">
-        {cartArray.map((e) => (
-          <p>{e.name}</p>
+        {cartArray.map((item) => (
+          <Item
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            price={item.price}
+            inCart={item.inCart}
+          />
         ))}
       </section>
 
-      <label>
-        {lang === "de" ? language.SearchText.de : language.SearchText.en}:
-      </label>
+      <label>Artikel-Suche:</label>
       <br />
       <TextInput
         id="searchInput"
@@ -90,10 +99,25 @@ export default function Cart() {
         onInput={getFilteredItems}
       />
       <section className="shop">
-        {filterArray.map((e) => (
-          <p>{e.name}</p>
+        {filterArray.map((item) => (
+          <Item
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            price={item.price}
+            inCart={item.inCart}
+          />
         ))}
       </section>
-    </>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
