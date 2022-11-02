@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import TextInput from "../components/input/TextInput";
 import Item from "../components/Item";
 import styled from "styled-components";
@@ -26,7 +26,7 @@ const shopItems = [
     qu: "qm",
     price: 80,
     quantity: 1,
-    inCart: false,
+    inCart: true,
   },
   {
     id: "4",
@@ -42,19 +42,22 @@ export default function Cart() {
   const [data, setData] = useState(shopItems);
   const [searchString, setSearchString] = useState("");
   const [toggleID, setToggleID] = useState("");
-  const [lang, setLang] = useState("de");
-
-  const searchInput = useRef(null);
 
   const { search } = require("fast-fuzzy");
 
   const falseArray = [];
   const cartArray = [];
 
+  useEffect(() => {
+    data.forEach((item) => {
+      if (item.id === toggleID) {
+        item.inCart = !item.inCart;
+        setToggleID("");
+      }
+    });
+  }, [toggleID]);
+
   data.forEach((item) => {
-    if (item._id === toggleID) {
-      item.inCart = !item.inCart;
-    }
     if (item.inCart) {
       cartArray.push(item);
     } else {
@@ -71,9 +74,14 @@ export default function Cart() {
   });
 
   function getFilteredItems(e) {
-    console.log(e.target.value);
+    console.log("search: " + e.target.value);
     setToggleID("");
     setSearchString(e.target.value);
+  }
+
+  function toggleSelect(e) {
+    console.log("ID: " + e.target.id);
+    setToggleID(e.target.id);
   }
 
   return (
@@ -87,17 +95,14 @@ export default function Cart() {
             name={item.name}
             price={item.price}
             inCart={item.inCart}
+            onSelect={toggleSelect}
           />
         ))}
       </section>
 
       <label>Artikel-Suche:</label>
       <br />
-      <TextInput
-        id="searchInput"
-        ref={searchInput}
-        onInput={getFilteredItems}
-      />
+      <TextInput id="searchInput" onInput={getFilteredItems} />
       <section className="shop">
         {filterArray.map((item) => (
           <Item
@@ -106,6 +111,7 @@ export default function Cart() {
             name={item.name}
             price={item.price}
             inCart={item.inCart}
+            onSelect={toggleSelect}
           />
         ))}
       </section>

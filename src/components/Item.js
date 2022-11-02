@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Food({ id, name, price, onSelect, inCart }) {
+export default function Food({ id, name, price, inCart, onSelect }) {
   return (
     <StyledH3 variante={inCart} id={id} onClick={(e) => onSelect(e)}>
       {name + " - " + price + " € / qm"}
