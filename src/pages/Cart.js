@@ -85,7 +85,6 @@ export default function Cart() {
         {cartArray.map((item) => (
           <Item
             key={item.id}
-            id={item.id}
             name={item.name}
             price={item.price}
             inCart={item.inCart}
@@ -100,7 +99,6 @@ export default function Cart() {
         {filterArray.map((item) => (
           <Item
             key={item.id}
-            id={item.id}
             name={item.name}
             price={item.price}
             inCart={item.inCart}

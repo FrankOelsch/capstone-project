@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-export default function Item({ id, name, price, inCart, onSelect }) {
+export default function Item({ name, price, inCart, onSelect }) {
   return (
-    <StyledH3 variante={inCart} id={id} onClick={(e) => onSelect(e)}>
+    <StyledArticle variante={inCart} onClick={(e) => onSelect(e)}>
       {name + " - " + price + " € / qm"}
-    </StyledH3>
+    </StyledArticle>
   );
 }
 
-const StyledH3 = styled.h3`
+const StyledArticle = styled.article`
   font-size: 1em;
   margin: 8px;
   padding: 6px;

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export default function TextInput(props) {
-  const onFocus = (e) => {
-    if (e.which === 9) {
+  const onFocus = (event) => {
+    if (event.key === "Tab") {
       return false;
     }
     setTimeout(() => {
-      e.target.select();
+      event.target.select();
     }, 100);
   };
 
