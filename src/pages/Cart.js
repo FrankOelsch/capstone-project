@@ -70,12 +70,11 @@ export default function Cart() {
   });
 
   function getFilteredItems(e) {
-    setToggleID("");
     setSearchString(e.target.value);
   }
 
-  function toggleSelect(e) {
-    setToggleID(e.target.id);
+  function toggleItem(id) {
+    setToggleID(id);
   }
 
   return (
@@ -84,11 +83,12 @@ export default function Cart() {
       <section className="cart">
         {cartArray.map((item) => (
           <Item
+            id={item.id}
             key={item.id}
             name={item.name}
             price={item.price}
             inCart={item.inCart}
-            onSelect={toggleSelect}
+            onToggle={toggleItem}
           />
         ))}
       </section>
@@ -98,11 +98,12 @@ export default function Cart() {
       <section className="shop">
         {filterArray.map((item) => (
           <Item
+            id={item.id}
             key={item.id}
             name={item.name}
             price={item.price}
             inCart={item.inCart}
-            onSelect={toggleSelect}
+            onToggle={toggleItem}
           />
         ))}
       </section>

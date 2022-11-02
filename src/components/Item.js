@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function Item({ name, price, inCart, onSelect }) {
+export default function Item({ id, name, price, inCart, onToggle }) {
   return (
-    <StyledArticle variante={inCart} onClick={(e) => onSelect(e)}>
+    <StyledArticle variante={inCart} onClick={() => onToggle(id)}>
       {name + " - " + price + " € / qm"}
     </StyledArticle>
   );
