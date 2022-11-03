@@ -49,12 +49,17 @@ export default function Cart() {
   const cartArray = [];
 
   useEffect(() => {
-    data.forEach((item) => {
-      if (item.id === toggleID) {
-        item.inCart = !item.inCart;
-        setToggleID("");
-      }
-    });
+    if (!toggleID) return;
+    setData(
+      data.map((item) => {
+        if (item.id === toggleID) {
+          setToggleID("");
+          return { ...item, inCart: !item.inCart };
+        } else {
+          return item;
+        }
+      })
+    );
   }, [toggleID]);
 
   data.forEach((item) => {
@@ -112,6 +117,8 @@ export default function Cart() {
 }
 
 const Container = styled.div`
+  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
