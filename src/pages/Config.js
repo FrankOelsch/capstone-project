@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
 
 export default function Config() {
@@ -197,42 +199,46 @@ export default function Config() {
   };
 
   return (
-    <Container>
-      <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
-        Your browser does not support the HTML5 canvas tag.
-      </StyledCanvas>
+    <>
+      <Header />
+      <Container>
+        <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
+          Your browser does not support the HTML5 canvas tag.
+        </StyledCanvas>
 
-      <StyledH3>Torfläche: {qm} qm</StyledH3>
+        <StyledH3>Torfläche: {qm} qm</StyledH3>
 
-      <label htmlFor="gateW">Tor-Breite in cm</label>
-      <TextInput
-        value={width}
-        id="gateW"
-        onChange={handleChange}
-        onFocus={onFocus}
-      />
-      <StyledMessage ref={messageWidthRef}></StyledMessage>
+        <label htmlFor="gateW">Tor-Breite in cm</label>
+        <TextInput
+          value={width}
+          id="gateW"
+          onChange={handleChange}
+          onFocus={onFocus}
+        />
+        <StyledMessage ref={messageWidthRef}></StyledMessage>
 
-      <label htmlFor="gateH">Tor-Höhe in cm</label>
-      <TextInput
-        value={height}
-        id="gateH"
-        onChange={handleChange}
-        onFocus={onFocus}
-      />
-      <StyledMessage ref={messageHeightRef}></StyledMessage>
+        <label htmlFor="gateH">Tor-Höhe in cm</label>
+        <TextInput
+          value={height}
+          id="gateH"
+          onChange={handleChange}
+          onFocus={onFocus}
+        />
+        <StyledMessage ref={messageHeightRef}></StyledMessage>
 
-      <label htmlFor="radius">Torbogen-Radius in cm</label>
-      <TextInput
-        value={radius}
-        id="radius"
-        onChange={handleChange}
-        onFocus={onFocus}
-      />
-      <StyledMessage ref={messageRadiusRef}></StyledMessage>
+        <label htmlFor="radius">Torbogen-Radius in cm</label>
+        <TextInput
+          value={radius}
+          id="radius"
+          onChange={handleChange}
+          onFocus={onFocus}
+        />
+        <StyledMessage ref={messageRadiusRef}></StyledMessage>
 
-      <StyledLink to="/cart">Cart</StyledLink>
-    </Container>
+        <StyledLink to="/cart">Cart</StyledLink>
+      </Container>
+      <Footer />
+    </>
   );
 }
 

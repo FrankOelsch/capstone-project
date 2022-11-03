@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import TextInput from "../components/input/TextInput";
 import Item from "../components/Item";
 import styled from "styled-components";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const shopItems = [
   {
@@ -83,36 +85,40 @@ export default function Cart() {
   }
 
   return (
-    <Container>
-      <StyledH2>Warenkorb:</StyledH2>
-      <section className="cart">
-        {cartArray.map((item) => (
-          <Item
-            id={item.id}
-            key={item.id}
-            name={item.name}
-            price={item.price}
-            inCart={item.inCart}
-            onToggle={toggleItem}
-          />
-        ))}
-      </section>
+    <>
+      <Header />
+      <Container>
+        <StyledH2>Warenkorb:</StyledH2>
+        <section className="cart">
+          {cartArray.map((item) => (
+            <Item
+              id={item.id}
+              key={item.id}
+              name={item.name}
+              price={item.price}
+              inCart={item.inCart}
+              onToggle={toggleItem}
+            />
+          ))}
+        </section>
 
-      <StyledH2>Artikel-Suche:</StyledH2>
-      <TextInput id="searchInput" onInput={getFilteredItems} />
-      <section className="shop">
-        {filterArray.map((item) => (
-          <Item
-            id={item.id}
-            key={item.id}
-            name={item.name}
-            price={item.price}
-            inCart={item.inCart}
-            onToggle={toggleItem}
-          />
-        ))}
-      </section>
-    </Container>
+        <StyledH2>Artikel-Suche:</StyledH2>
+        <TextInput id="searchInput" onInput={getFilteredItems} />
+        <section className="shop">
+          {filterArray.map((item) => (
+            <Item
+              id={item.id}
+              key={item.id}
+              name={item.name}
+              price={item.price}
+              inCart={item.inCart}
+              onToggle={toggleItem}
+            />
+          ))}
+        </section>
+      </Container>
+      <Footer />
+    </>
   );
 }
 
