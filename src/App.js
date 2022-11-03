@@ -9,6 +9,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/config" element={<Config />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="*" element={<h1>Diese Seite existiert nicht</h1>} />
     </Routes>
   );
 }

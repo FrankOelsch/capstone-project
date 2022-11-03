@@ -1,8 +1,24 @@
 import { createGlobalStyle } from "styled-components";
 import NotoSans from "./fonts/noto-sans-v27-latin-regular.woff";
 import NotoSans2 from "./fonts/noto-sans-v27-latin-regular.woff2";
+import Abel from "./fonts/abel-v18-latin-regular.woff";
+import Abel2 from "./fonts/abel-v18-latin-regular.woff2";
+import MeriendaOne from "./fonts/merienda-one-v16-latin-regular.woff";
+import MeriendaOne2 from "./fonts/merienda-one-v16-latin-regular.woff2";
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Abel';
+    src: url(${Abel2}) format('woff2'),
+        url(${Abel}) format('woff');
+  }
+  
+  @font-face {
+    font-family: 'Merienda One';
+    src: url(${MeriendaOne2}) format('woff2'),
+    url(${MeriendaOne}) format('woff');
+  }
+
   @font-face {
     font-family: 'Noto Sans';
     src: url(${NotoSans2}) format('woff2'),
@@ -29,6 +45,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
   }
+
+
+
+
 `;
 
 export default GlobalStyle;

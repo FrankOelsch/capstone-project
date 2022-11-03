@@ -1,13 +1,28 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <Container>
-      <StyledH2>Bitte wählen sie das <br/>gewünschte Torsystem:</StyledH2>
-      <StyledLink to="/config">Sectionaltor</StyledLink>
-      <StyledLink to="/config">Rundlauftor</StyledLink>
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <StyledDiv to="/">
+          <StyledH3>
+            Bitte wählen sie das <br />
+            gewünschte Torsystem:
+          </StyledH3>
+        </StyledDiv>
+        <StyledDiv>
+          <StyledLink to="/config">Sectionaltor</StyledLink>
+        </StyledDiv>
+        <StyledDiv>
+          <StyledLink to="/config">Rundlauftor</StyledLink>
+        </StyledDiv>
+      </Container>
+      <Footer />
+    </>
   );
 }
 
@@ -20,6 +35,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 60px;
   background-image: url("background.png");
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -27,23 +43,29 @@ const Container = styled.div`
   background-position: center;
 `;
 
-const StyledLink = styled(Link)`
-  font-size: 2em;
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: rgba(95, 158, 160, 0.85);
   box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.8);
   border: none;
   border-radius: 8px;
-  color: #ffffff;
-  padding: 46px 0;
   width: 60%;
-  height: 140px;
-  margin: 40px;
-  text-align: center;
+  min-width: 240px;
+  height: 120px;
+`;
+
+const StyledLink = styled(Link)`
+  font-size: 2em;
+  padding: 40px;
+  color: #ffffff;
   text-decoration: none;
   cursor: pointer;
 `;
 
-const StyledH2 = styled.h2`
-  position: absolute;
-  top: 40px;
+const StyledH3 = styled.h3`
+  font-size: 1em;
+  color: #ffffff;
 `;
