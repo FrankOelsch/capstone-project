@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import TextInput from "../components/input/TextInput";
 
 export default function Config() {
   const canvasRef = useRef(null);
@@ -133,21 +135,18 @@ export default function Config() {
     }
 
     if (tempWidth === torBreite) {
-      console.log("tempWidth: " + tempWidth);
       setPrevWidth(torBreite);
     } else {
       setTempWidth((prev) => prev + stepW);
     }
 
     if (tempHeight === torHoehe) {
-      console.log("tempHeight: " + tempHeight);
       setPrevHeight(torHoehe);
     } else {
       setTempHeight((prev) => prev + stepH);
     }
 
     if (tempRadius === torRadius) {
-      console.log("tempRadius: " + tempRadius);
       setPrevRadius(torRadius);
     } else {
       setTempRadius((prev) => prev + stepR);
@@ -198,7 +197,7 @@ export default function Config() {
   };
 
   return (
-    <>
+    <Container>
       <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
         Your browser does not support the HTML5 canvas tag.
       </StyledCanvas>
@@ -206,40 +205,45 @@ export default function Config() {
       <StyledH3>Torfläche: {qm} qm</StyledH3>
 
       <label htmlFor="gateW">Tor-Breite in cm</label>
-      <StyledInput
+      <TextInput
         value={width}
         id="gateW"
-        type="text"
-        autoComplete="off"
         onChange={handleChange}
         onFocus={onFocus}
-      ></StyledInput>
+      />
       <StyledMessage ref={messageWidthRef}></StyledMessage>
 
       <label htmlFor="gateH">Tor-Höhe in cm</label>
-      <StyledInput
+      <TextInput
         value={height}
         id="gateH"
-        type="text"
-        autoComplete="off"
         onChange={handleChange}
         onFocus={onFocus}
-      ></StyledInput>
+      />
       <StyledMessage ref={messageHeightRef}></StyledMessage>
 
       <label htmlFor="radius">Torbogen-Radius in cm</label>
-      <StyledInput
+      <TextInput
         value={radius}
         id="radius"
-        type="text"
-        autoComplete="off"
         onChange={handleChange}
         onFocus={onFocus}
-      ></StyledInput>
+      />
       <StyledMessage ref={messageRadiusRef}></StyledMessage>
-    </>
+
+      <StyledLink to="/cart">Cart</StyledLink>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
 
 const StyledCanvas = styled.canvas`
   border: 1px solid #d3d3d3;
@@ -251,20 +255,16 @@ const StyledH3 = styled.h3`
   margin: 10px;
 `;
 
-const StyledInput = styled.input`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  padding: 3px;
-  border: 2px solid;
-  border-color: burlywood;
-  border-radius: 6px;
-  outline: none;
-  background-color: rgba(250, 235, 215, 0.41);
-
-  &:focus {
-    background-color: lightblue;
-    border-color: cadetblue;
-  }
+const StyledLink = styled(Link)`
+  background-color: #04aa6d;
+  border: none;
+  font-size: 20px;
+  color: #ffffff;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 `;
 
 const StyledMessage = styled.p`
