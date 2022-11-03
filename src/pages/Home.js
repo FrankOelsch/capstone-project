@@ -8,18 +8,12 @@ export default function Home() {
     <>
       <Header />
       <Container>
-        <StyledDiv to="/">
-          <StyledH3>
-            Bitte wählen sie das <br />
-            gewünschte Torsystem:
-          </StyledH3>
-        </StyledDiv>
-        <StyledDiv>
-          <StyledLink to="/config">Sectionaltor</StyledLink>
-        </StyledDiv>
-        <StyledDiv>
-          <StyledLink to="/config">Rundlauftor</StyledLink>
-        </StyledDiv>
+        <StyledH3>
+          Bitte wählen sie das <br />
+          gewünschte Torsystem:
+        </StyledH3>
+        <StyledLink to="/config">Sectionaltor</StyledLink>
+        <StyledLink to="/config">Rundlauftor</StyledLink>
       </Container>
       <Footer />
     </>
@@ -43,29 +37,22 @@ const Container = styled.div`
   background-position: center;
 `;
 
-const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const StyledLink = styled(Link)`
   background-color: rgba(95, 158, 160, 0.85);
   box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.8);
-  border: none;
   border-radius: 8px;
-  width: 60%;
-  min-width: 240px;
-  height: 120px;
-`;
-
-const StyledLink = styled(Link)`
   font-size: 2em;
-  padding: 40px;
+  padding: 30px 40px;
   color: #ffffff;
   text-decoration: none;
   cursor: pointer;
 `;
 
 const StyledH3 = styled.h3`
+  background-color: rgba(95, 158, 160, 0.85);
+  box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
   font-size: 1em;
+  padding: 30px 40px;
   color: #ffffff;
 `;
