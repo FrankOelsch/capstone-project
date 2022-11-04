@@ -186,6 +186,10 @@ export default function Config() {
       setTempRadius((prev) => prev + stepR);
     }
 
+    if (torRadiusTemp < 0) {
+      torRadiusTemp = 0;
+    }
+
     ctx.clearRect(0, 0, canv.width, canv.height);
     ctx.lineWidth = 4;
 
