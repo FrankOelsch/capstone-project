@@ -112,6 +112,22 @@ export default function Config() {
   }
 
   function drawIt() {
+    // temporäre Lösung:
+    if (+config.width < 100 || +config.width > 500) {
+      return;
+    }
+    if (+config.height < 180 || +config.height > 300) {
+      return;
+    }
+    if (
+      +config.radius < 0 ||
+      +config.radius > +config.width / 2 ||
+      +config.radius > +config.height ||
+      !config.radius
+    ) {
+      return;
+    }
+
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
