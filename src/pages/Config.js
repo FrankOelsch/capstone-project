@@ -27,13 +27,11 @@ function getFromLocalStorage(key) {
 export default function Config() {
   const canvasRef = useRef(null);
 
-  const [config, setConfig] = useState(
-    getFromLocalStorage("DoorConfig") ?? DoorConfig
-  );
-
   // const [config, setConfig] = useState(
-  //   useLocalStorage("DoorConfig", { DoorConfig })
+  //   getFromLocalStorage("DoorConfig") ?? DoorConfig
   // );
+
+  const [config, setConfig] = useLocalStorage("DoorConfig", DoorConfig);
 
   const [messageW, setMessageW] = useState("");
   const [messageH, setMessageH] = useState("");
@@ -104,7 +102,7 @@ export default function Config() {
           })
         );
 
-        saveInLocalStorage("DoorConfig", config);
+        // saveInLocalStorage("DoorConfig", config);
 
         drawIt();
       }
