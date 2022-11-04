@@ -12,26 +12,11 @@ const DoorConfig = {
   radius: "30",
 };
 
-function saveInLocalStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-function getFromLocalStorage(key) {
-  try {
-    return JSON.parse(localStorage.getItem(key));
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
 export default function Config() {
   const canvasRef = useRef(null);
 
-  // const [config, setConfig] = useState(
-  //   getFromLocalStorage("DoorConfig") ?? DoorConfig
-  // );
-
-  const [config, setConfig] = useLocalStorage("DoorConfig", DoorConfig);
+  const [doorConfig, setDoorConfig] = useLocalStorage("DoorConfig", DoorConfig);
+  const [config, setConfig] = useState(doorConfig || DoorConfig);
 
   const [messageW, setMessageW] = useState("");
   const [messageH, setMessageH] = useState("");
@@ -102,7 +87,7 @@ export default function Config() {
           })
         );
 
-        // saveInLocalStorage("DoorConfig", config);
+        setDoorConfig(config);
 
         drawIt();
       }
