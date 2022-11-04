@@ -5,16 +5,34 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
 
+const DoorConfig = {
+  width: "250",
+  height: "200",
+  radius: "30",
+};
+
+function saveInLocalStorage(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function getFromLocalStorage(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key));
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 export default function Config() {
   const canvasRef = useRef(null);
+
+  const [config, setConfig] = useState(
+    getFromLocalStorage("DoorConfig") ?? DoorConfig
+  );
 
   const messageWidthRef = useRef(null);
   const messageHeightRef = useRef(null);
   const messageRadiusRef = useRef(null);
-
-  const [width, setWidth] = useState("250");
-  const [height, setHeight] = useState("200");
-  const [radius, setRadius] = useState("30");
 
   const [prevWidth, setPrevWidth] = useState(150);
   const [prevHeight, setPrevHeight] = useState(200);
@@ -25,7 +43,7 @@ export default function Config() {
   const [tempRadius, setTempRadius] = useState(30);
 
   const [qm, setQm] = useState(
-    ((+width * +height) / 10000).toLocaleString(undefined, {
+    ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     })
@@ -33,6 +51,10 @@ export default function Config() {
 
   let ctx = null;
   let canv = null;
+
+  useEffect(() => {
+    saveInLocalStorage("DoorConfig", config);
+  }, [config]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -48,18 +70,23 @@ export default function Config() {
 
     let isUsefull = true;
 
-    if (isNaN(height) || isNaN(width) || isNaN(radius)) {
+    if (isNaN(config.height) || isNaN(config.width) || isNaN(config.radius)) {
       return;
     } else {
-      if (+width < 100 || +width > 500) {
+      if (+config.width < 100 || +config.width > 500) {
         messageWidthRef.current.textContent = "Zulässige Werte: 100 - 500 cm.";
         isUsefull = false;
       }
-      if (+height < 180 || +height > 300) {
+      if (+config.height < 180 || +config.height > 300) {
         messageHeightRef.current.textContent = "Zulässige Werte: 180 - 300 mm.";
         isUsefull = false;
       }
-      if (+radius < 0 || +radius > +width / 2 || +radius > +height || !radius) {
+      if (
+        +config.radius < 0 ||
+        +config.radius > +config.width / 2 ||
+        +config.radius > +config.height ||
+        !config.radius
+      ) {
         messageRadiusRef.current.textContent =
           "Zulässige Werte: 0 - 50 % der Breite und 0 - 100 % der Höhe.";
         isUsefull = false;
@@ -67,7 +94,7 @@ export default function Config() {
 
       if (isUsefull) {
         setQm(
-          ((+width * +height) / 10000).toLocaleString(undefined, {
+          ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
             maximumFractionDigits: 2,
             minimumFractionDigits: 2,
           })
@@ -76,7 +103,7 @@ export default function Config() {
         drawIt();
       }
     }
-  }, [height, width, radius]);
+  }, [config]);
 
   function handleChange(e) {
     if (isNaN(e.target.value)) {
@@ -84,13 +111,13 @@ export default function Config() {
     }
     switch (e.target.id) {
       case "gateW":
-        setWidth(e.target.value);
+        setConfig({ ...config, width: e.target.value });
         break;
       case "gateH":
-        setHeight(e.target.value);
+        setConfig({ ...config, height: e.target.value });
         break;
       case "radius":
-        setRadius(e.target.value);
+        setConfig({ ...config, radius: e.target.value });
         break;
     }
   }
@@ -99,15 +126,15 @@ export default function Config() {
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
-    let torBreite = +width;
+    let torBreite = +config.width;
     let torBreitePrev = prevWidth;
     let torBreiteTemp = tempWidth;
 
-    let torHoehe = +height;
+    let torHoehe = +config.height;
     let torHoehePrev = prevHeight;
     let torHoeheTemp = tempHeight;
 
-    let torRadius = +radius;
+    let torRadius = +config.radius;
     let torRadiusPrev = prevRadius;
     let torRadiusTemp = tempRadius;
 
@@ -210,7 +237,7 @@ export default function Config() {
 
         <label htmlFor="gateW">Tor-Breite in cm</label>
         <TextInput
-          value={width}
+          value={config.width}
           id="gateW"
           onChange={handleChange}
           onFocus={onFocus}
@@ -219,7 +246,7 @@ export default function Config() {
 
         <label htmlFor="gateH">Tor-Höhe in cm</label>
         <TextInput
-          value={height}
+          value={config.height}
           id="gateH"
           onChange={handleChange}
           onFocus={onFocus}
@@ -228,7 +255,7 @@ export default function Config() {
 
         <label htmlFor="radius">Torbogen-Radius in cm</label>
         <TextInput
-          value={radius}
+          value={config.radius}
           id="radius"
           onChange={handleChange}
           onFocus={onFocus}
