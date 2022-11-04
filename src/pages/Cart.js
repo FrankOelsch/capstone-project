@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import TextInput from "../components/input/TextInput";
 import Item from "../components/Item";
 import styled from "styled-components";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const shopItems = [
   {
@@ -49,12 +51,17 @@ export default function Cart() {
   const cartArray = [];
 
   useEffect(() => {
-    data.forEach((item) => {
-      if (item.id === toggleID) {
-        item.inCart = !item.inCart;
-        setToggleID("");
-      }
-    });
+    if (!toggleID) return;
+    setData(
+      data.map((item) => {
+        if (item.id === toggleID) {
+          setToggleID("");
+          return { ...item, inCart: !item.inCart };
+        } else {
+          return item;
+        }
+      })
+    );
   }, [toggleID]);
 
   data.forEach((item) => {
@@ -78,40 +85,46 @@ export default function Cart() {
   }
 
   return (
-    <Container>
-      <StyledH2>Warenkorb:</StyledH2>
-      <section className="cart">
-        {cartArray.map((item) => (
-          <Item
-            id={item.id}
-            key={item.id}
-            name={item.name}
-            price={item.price}
-            inCart={item.inCart}
-            onToggle={toggleItem}
-          />
-        ))}
-      </section>
+    <>
+      <Header />
+      <Container>
+        <StyledH2>Warenkorb:</StyledH2>
+        <section className="cart">
+          {cartArray.map((item) => (
+            <Item
+              id={item.id}
+              key={item.id}
+              name={item.name}
+              price={item.price}
+              inCart={item.inCart}
+              onToggle={toggleItem}
+            />
+          ))}
+        </section>
 
-      <StyledH2>Artikel-Suche:</StyledH2>
-      <TextInput id="searchInput" onInput={getFilteredItems} />
-      <section className="shop">
-        {filterArray.map((item) => (
-          <Item
-            id={item.id}
-            key={item.id}
-            name={item.name}
-            price={item.price}
-            inCart={item.inCart}
-            onToggle={toggleItem}
-          />
-        ))}
-      </section>
-    </Container>
+        <StyledH2>Artikel-Suche:</StyledH2>
+        <TextInput id="searchInput" onInput={getFilteredItems} />
+        <section className="shop">
+          {filterArray.map((item) => (
+            <Item
+              id={item.id}
+              key={item.id}
+              name={item.name}
+              price={item.price}
+              inCart={item.inCart}
+              onToggle={toggleItem}
+            />
+          ))}
+        </section>
+      </Container>
+      <Footer />
+    </>
   );
 }
 
 const Container = styled.div`
+  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
