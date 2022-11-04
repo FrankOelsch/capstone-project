@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
+import { useLocalStorage } from "../useLocalStorage";
 
 const DoorConfig = {
   width: "250",
@@ -30,9 +31,13 @@ export default function Config() {
     getFromLocalStorage("DoorConfig") ?? DoorConfig
   );
 
-  const messageWidthRef = useRef(null);
-  const messageHeightRef = useRef(null);
-  const messageRadiusRef = useRef(null);
+  // const [config, setConfig] = useState(
+  //   useLocalStorage("DoorConfig", { DoorConfig })
+  // );
+
+  const [messageW, setMessageW] = useState("");
+  const [messageH, setMessageH] = useState("");
+  const [messageR, setMessageR] = useState("");
 
   const [prevWidth, setPrevWidth] = useState(150);
   const [prevHeight, setPrevHeight] = useState(200);
@@ -53,10 +58,6 @@ export default function Config() {
   let canv = null;
 
   useEffect(() => {
-    saveInLocalStorage("DoorConfig", config);
-  }, [config]);
-
-  useEffect(() => {
     const timeout = setTimeout(() => {
       drawIt();
     }, 2);
@@ -64,22 +65,22 @@ export default function Config() {
   }, [tempWidth, tempHeight, tempRadius]);
 
   useEffect(() => {
-    messageWidthRef.current.textContent = "";
-    messageHeightRef.current.textContent = "";
-    messageRadiusRef.current.textContent = "";
-
     let isUsefull = true;
 
     if (isNaN(config.height) || isNaN(config.width) || isNaN(config.radius)) {
       return;
     } else {
       if (+config.width < 100 || +config.width > 500) {
-        messageWidthRef.current.textContent = "Zulässige Werte: 100 - 500 cm.";
+        setMessageW("Zulässige Werte: 100 - 500 cm.");
         isUsefull = false;
+      } else {
+        setMessageW("");
       }
       if (+config.height < 180 || +config.height > 300) {
-        messageHeightRef.current.textContent = "Zulässige Werte: 180 - 300 mm.";
+        setMessageH("Zulässige Werte: 180 - 300 mm.");
         isUsefull = false;
+      } else {
+        setMessageH("");
       }
       if (
         +config.radius < 0 ||
@@ -87,9 +88,12 @@ export default function Config() {
         +config.radius > +config.height ||
         !config.radius
       ) {
-        messageRadiusRef.current.textContent =
-          "Zulässige Werte: 0 - 50 % der Breite und 0 - 100 % der Höhe.";
+        setMessageR(
+          "Zulässige Werte: 0 - 50 % der Breite und 0 - 100 % der Höhe."
+        );
         isUsefull = false;
+      } else {
+        setMessageR("");
       }
 
       if (isUsefull) {
@@ -99,6 +103,8 @@ export default function Config() {
             minimumFractionDigits: 2,
           })
         );
+
+        saveInLocalStorage("DoorConfig", config);
 
         drawIt();
       }
@@ -242,7 +248,7 @@ export default function Config() {
           onChange={handleChange}
           onFocus={onFocus}
         />
-        <StyledMessage ref={messageWidthRef}></StyledMessage>
+        <StyledMessage> {messageW}</StyledMessage>
 
         <label htmlFor="gateH">Tor-Höhe in cm</label>
         <TextInput
@@ -251,7 +257,7 @@ export default function Config() {
           onChange={handleChange}
           onFocus={onFocus}
         />
-        <StyledMessage ref={messageHeightRef}></StyledMessage>
+        <StyledMessage> {messageH}</StyledMessage>
 
         <label htmlFor="radius">Torbogen-Radius in cm</label>
         <TextInput
@@ -260,7 +266,7 @@ export default function Config() {
           onChange={handleChange}
           onFocus={onFocus}
         />
-        <StyledMessage ref={messageRadiusRef}></StyledMessage>
+        <StyledMessage> {messageR}</StyledMessage>
 
         <StyledLink to="/cart">Cart</StyledLink>
       </Container>
