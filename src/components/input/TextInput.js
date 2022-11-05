@@ -28,14 +28,14 @@ const StyledInput = styled.input`
   width: 200px;
   padding: 3px;
   border: 3px solid;
-  border-color: burlywood;
+  border-color: hsl(216, 65%, 80%);
   border-radius: 6px;
   outline: none;
-  background-color: rgba(250, 235, 215, 0.41);
+  background-color: aliceblue;
   box-shadow: 3px 3px 3px lightgrey;
 
   &:focus {
-    background-color: lightblue;
-    border-color: cadetblue;
+    background-color: aliceblue;
+    border-color: hsl(216, 65%, 50%);
   }
 `;

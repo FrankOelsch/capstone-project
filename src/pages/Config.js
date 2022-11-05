@@ -255,8 +255,6 @@ export default function Config() {
           onKeyDown={handleKeyDown}
         />
         <StyledMessage> {messageR}</StyledMessage>
-
-        <StyledLink to="/cart">Cart</StyledLink>
       </Container>
       <Footer />
     </>
