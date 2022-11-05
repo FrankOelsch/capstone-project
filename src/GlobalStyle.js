@@ -25,13 +25,16 @@ const GlobalStyle = createGlobalStyle`
         url(${NotoSans}) format('woff');
   }
 
-  * {
+  *, 
+  ::before, 
+  ::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
 
   body {
+    position: relative;
     height: 100%;
     background-color: antiquewhite;
     font-family: 'Noto Sans', 'Segoe UI', 'Roboto', 'Oxygen',
