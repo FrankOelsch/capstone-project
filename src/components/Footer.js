@@ -14,7 +14,7 @@ const StyledFooter = styled.footer`
   width: 100%;
   height: 60px;
   padding: 10px;
-  background-color: darkgoldenrod;
+  background-color: hsl(216, 65%, 50%);
   color: white;
   z-index: 2;
 `;

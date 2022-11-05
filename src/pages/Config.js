@@ -4,17 +4,26 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
+import { useLocalStorage } from "../useLocalStorage";
+
+const DoorConfig = {
+  width: "250",
+  height: "200",
+  radius: "30",
+};
 
 export default function Config() {
   const canvasRef = useRef(null);
 
-  const messageWidthRef = useRef(null);
-  const messageHeightRef = useRef(null);
-  const messageRadiusRef = useRef(null);
+  const [configForSave, setConfigForSave] = useLocalStorage(
+    "DoorConfig",
+    DoorConfig
+  );
+  const [config, setConfig] = useState(configForSave || DoorConfig);
 
-  const [width, setWidth] = useState("250");
-  const [height, setHeight] = useState("200");
-  const [radius, setRadius] = useState("30");
+  const [messageW, setMessageW] = useState("");
+  const [messageH, setMessageH] = useState("");
+  const [messageR, setMessageR] = useState("");
 
   const [prevWidth, setPrevWidth] = useState(150);
   const [prevHeight, setPrevHeight] = useState(200);
@@ -25,7 +34,7 @@ export default function Config() {
   const [tempRadius, setTempRadius] = useState(30);
 
   const [qm, setQm] = useState(
-    ((+width * +height) / 10000).toLocaleString(undefined, {
+    ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     })
@@ -41,42 +50,52 @@ export default function Config() {
     return () => clearTimeout(timeout);
   }, [tempWidth, tempHeight, tempRadius]);
 
-  useEffect(() => {
-    messageWidthRef.current.textContent = "";
-    messageHeightRef.current.textContent = "";
-    messageRadiusRef.current.textContent = "";
-
+  function checkInput() {
     let isUsefull = true;
 
-    if (isNaN(height) || isNaN(width) || isNaN(radius)) {
+    if (isNaN(config.height) || isNaN(config.width) || isNaN(config.radius)) {
       return;
     } else {
-      if (+width < 100 || +width > 500) {
-        messageWidthRef.current.textContent = "Zulässige Werte: 100 - 500 cm.";
+      if (+config.width < 100 || +config.width > 500) {
+        setMessageW("Zulässige Werte: 100 - 500 cm.");
         isUsefull = false;
+      } else {
+        setMessageW("");
       }
-      if (+height < 180 || +height > 300) {
-        messageHeightRef.current.textContent = "Zulässige Werte: 180 - 300 mm.";
+      if (+config.height < 180 || +config.height > 300) {
+        setMessageH("Zulässige Werte: 180 - 300 mm.");
         isUsefull = false;
+      } else {
+        setMessageH("");
       }
-      if (+radius < 0 || +radius > +width / 2 || +radius > +height || !radius) {
-        messageRadiusRef.current.textContent =
-          "Zulässige Werte: 0 - 50 % der Breite und 0 - 100 % der Höhe.";
+      if (
+        +config.radius < 0 ||
+        +config.radius > +config.width / 2 ||
+        +config.radius > +config.height ||
+        !config.radius
+      ) {
+        setMessageR(
+          "Zulässige Werte: 0 - 50 % der Breite und 0 - 100 % der Höhe."
+        );
         isUsefull = false;
+      } else {
+        setMessageR("");
       }
 
       if (isUsefull) {
         setQm(
-          ((+width * +height) / 10000).toLocaleString(undefined, {
+          ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
             maximumFractionDigits: 2,
             minimumFractionDigits: 2,
           })
         );
 
+        setConfigForSave(config);
+
         drawIt();
       }
     }
-  }, [height, width, radius]);
+  }
 
   function handleChange(e) {
     if (isNaN(e.target.value)) {
@@ -84,14 +103,21 @@ export default function Config() {
     }
     switch (e.target.id) {
       case "gateW":
-        setWidth(e.target.value);
+        setConfig({ ...config, width: e.target.value });
         break;
       case "gateH":
-        setHeight(e.target.value);
+        setConfig({ ...config, height: e.target.value });
         break;
       case "radius":
-        setRadius(e.target.value);
+        setConfig({ ...config, radius: e.target.value });
         break;
+    }
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter" || e.key === "Tab") {
+      checkInput();
+      e.target.select();
     }
   }
 
@@ -99,15 +125,15 @@ export default function Config() {
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
-    let torBreite = +width;
+    let torBreite = +config.width;
     let torBreitePrev = prevWidth;
     let torBreiteTemp = tempWidth;
 
-    let torHoehe = +height;
+    let torHoehe = +config.height;
     let torHoehePrev = prevHeight;
     let torHoeheTemp = tempHeight;
 
-    let torRadius = +radius;
+    let torRadius = +config.radius;
     let torRadiusPrev = prevRadius;
     let torRadiusTemp = tempRadius;
 
@@ -154,6 +180,10 @@ export default function Config() {
       setTempRadius((prev) => prev + stepR);
     }
 
+    if (torBreiteTemp < 0) torBreiteTemp = 0;
+    if (torHoeheTemp < 0) torHoeheTemp = 0;
+    if (torRadiusTemp < 0) torRadiusTemp = 0;
+
     ctx.clearRect(0, 0, canv.width, canv.height);
     ctx.lineWidth = 4;
 
@@ -189,15 +219,6 @@ export default function Config() {
     ctx.stroke();
   }
 
-  const onFocus = (e) => {
-    if (e.which === 9) {
-      return false;
-    }
-    setTimeout(() => {
-      e.target.select();
-    }, 100);
-  };
-
   return (
     <>
       <Header />
@@ -210,30 +231,30 @@ export default function Config() {
 
         <label htmlFor="gateW">Tor-Breite in cm</label>
         <TextInput
-          value={width}
+          value={config.width}
           id="gateW"
           onChange={handleChange}
-          onFocus={onFocus}
+          onKeyDown={handleKeyDown}
         />
-        <StyledMessage ref={messageWidthRef}></StyledMessage>
+        <StyledMessage> {messageW}</StyledMessage>
 
         <label htmlFor="gateH">Tor-Höhe in cm</label>
         <TextInput
-          value={height}
+          value={config.height}
           id="gateH"
           onChange={handleChange}
-          onFocus={onFocus}
+          onKeyDown={handleKeyDown}
         />
-        <StyledMessage ref={messageHeightRef}></StyledMessage>
+        <StyledMessage> {messageH}</StyledMessage>
 
         <label htmlFor="radius">Torbogen-Radius in cm</label>
         <TextInput
-          value={radius}
+          value={config.radius}
           id="radius"
           onChange={handleChange}
-          onFocus={onFocus}
+          onKeyDown={handleKeyDown}
         />
-        <StyledMessage ref={messageRadiusRef}></StyledMessage>
+        <StyledMessage> {messageR}</StyledMessage>
 
         <StyledLink to="/cart">Cart</StyledLink>
       </Container>
