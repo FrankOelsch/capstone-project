@@ -15,8 +15,11 @@ const DoorConfig = {
 export default function Config() {
   const canvasRef = useRef(null);
 
-  const [doorConfig, setDoorConfig] = useLocalStorage("DoorConfig", DoorConfig);
-  const [config, setConfig] = useState(doorConfig || DoorConfig);
+  const [configForSave, setConfigForSave] = useLocalStorage(
+    "DoorConfig",
+    DoorConfig
+  );
+  const [config, setConfig] = useState(configForSave || DoorConfig);
 
   const [messageW, setMessageW] = useState("");
   const [messageH, setMessageH] = useState("");
@@ -47,7 +50,7 @@ export default function Config() {
     return () => clearTimeout(timeout);
   }, [tempWidth, tempHeight, tempRadius]);
 
-  useEffect(() => {
+  function checkInput() {
     let isUsefull = true;
 
     if (isNaN(config.height) || isNaN(config.width) || isNaN(config.radius)) {
@@ -87,12 +90,12 @@ export default function Config() {
           })
         );
 
-        setDoorConfig(config);
+        setConfigForSave(config);
 
         drawIt();
       }
     }
-  }, [config]);
+  }
 
   function handleChange(e) {
     if (isNaN(e.target.value)) {
@@ -111,23 +114,14 @@ export default function Config() {
     }
   }
 
-  function drawIt() {
-    // temporäre Lösung:
-    if (+config.width < 100 || +config.width > 500) {
-      return;
+  function handleKeyDown(e) {
+    if (e.key === "Enter" || e.key === "Tab") {
+      checkInput();
+      e.target.select();
     }
-    if (+config.height < 180 || +config.height > 300) {
-      return;
-    }
-    if (
-      +config.radius < 0 ||
-      +config.radius > +config.width / 2 ||
-      +config.radius > +config.height ||
-      !config.radius
-    ) {
-      return;
-    }
+  }
 
+  function drawIt() {
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
@@ -186,9 +180,9 @@ export default function Config() {
       setTempRadius((prev) => prev + stepR);
     }
 
-    if (torRadiusTemp < 0) {
-      torRadiusTemp = 0;
-    }
+    if (torBreiteTemp < 0) torBreiteTemp = 0;
+    if (torHoeheTemp < 0) torHoeheTemp = 0;
+    if (torRadiusTemp < 0) torRadiusTemp = 0;
 
     ctx.clearRect(0, 0, canv.width, canv.height);
     ctx.lineWidth = 4;
@@ -225,15 +219,6 @@ export default function Config() {
     ctx.stroke();
   }
 
-  const onFocus = (e) => {
-    if (e.which === 9) {
-      return false;
-    }
-    setTimeout(() => {
-      e.target.select();
-    }, 100);
-  };
-
   return (
     <>
       <Header />
@@ -249,7 +234,7 @@ export default function Config() {
           value={config.width}
           id="gateW"
           onChange={handleChange}
-          onFocus={onFocus}
+          onKeyDown={handleKeyDown}
         />
         <StyledMessage> {messageW}</StyledMessage>
 
@@ -258,7 +243,7 @@ export default function Config() {
           value={config.height}
           id="gateH"
           onChange={handleChange}
-          onFocus={onFocus}
+          onKeyDown={handleKeyDown}
         />
         <StyledMessage> {messageH}</StyledMessage>
 
@@ -267,7 +252,7 @@ export default function Config() {
           value={config.radius}
           id="radius"
           onChange={handleChange}
-          onFocus={onFocus}
+          onKeyDown={handleKeyDown}
         />
         <StyledMessage> {messageR}</StyledMessage>
 
