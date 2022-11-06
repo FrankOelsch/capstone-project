@@ -17,6 +17,7 @@ export default function Config2() {
 const Container = styled.div`
   height: 100%;
   min-height: 100vh;
+  padding: 60px 0;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
