@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -280,18 +279,6 @@ const StyledCanvas = styled.canvas`
 
 const StyledH3 = styled.h3`
   margin: 10px;
-`;
-
-const StyledLink = styled(Link)`
-  background-color: #04aa6d;
-  border: none;
-  font-size: 20px;
-  color: #ffffff;
-  padding: 10px;
-  width: 200px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
 `;
 
 const StyledMessage = styled.p`

@@ -37,9 +37,6 @@ const GlobalStyle = createGlobalStyle`
     position: relative;
     height: 100%;
     background-color: aliceblue;
-    //background-color: ghostwhite;
-    //background-color: ivory;
-    //background-color: whitesmoke;
     font-family: 'Noto Sans', 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
