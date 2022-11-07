@@ -43,7 +43,7 @@ const StyledNav = styled.nav`
 
 const StyledNavLink = styled(NavLink)`
   height: 60px;
-  padding: 10px;
+  padding: 13px;
   width: 25%;
   text-align: center;
   background-color: hsl(216, 65%, 60%);
