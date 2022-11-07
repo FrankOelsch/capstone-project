@@ -3,13 +3,27 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
+import Select from "../components/select/Select";
 import { useLocalStorage } from "../useLocalStorage";
 
 const DoorConfig = {
+  system: "Sectionaltor",
   width: "250",
   height: "200",
   radius: "30",
 };
+
+function setToLocalStorage(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function getFromLocalStorage(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key));
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 
 export default function Config() {
   const canvasRef = useRef(null);
@@ -18,7 +32,15 @@ export default function Config() {
     "DoorConfig",
     DoorConfig
   );
+  // const [configForSave, setConfigForSave] = useState(DoorConfig);
+  // useEffect(() => {
+  //   const result = getFromLocalStorage("DoorConfig");
+  //   console.log("result: " + result);
+  //   setConfigForSave(result);
+  // }, []);
+
   const [config, setConfig] = useState(configForSave || DoorConfig);
+  // const [config, setConfig] = useState(configForSave || DoorConfig);
 
   const [messageW, setMessageW] = useState("");
   const [messageH, setMessageH] = useState("");
@@ -90,6 +112,7 @@ export default function Config() {
         );
 
         setConfigForSave(config);
+        // setToLocalStorage("DoorConfig", config);
 
         drawIt();
       }
@@ -116,8 +139,18 @@ export default function Config() {
   function handleKeyDown(e) {
     if (e.key === "Enter" || e.key === "Tab") {
       checkInput();
-      e.target.select();
+      if (!e.target === "select") {
+        e.target.select();
+      }
     }
+  }
+
+  function handleSelect(e) {
+    setConfig({ ...config, system: e.target.value });
+  }
+
+  function handleClick(e) {
+    checkInput();
   }
 
   function drawIt() {
@@ -226,7 +259,22 @@ export default function Config() {
           Your browser does not support the HTML5 canvas tag.
         </StyledCanvas>
 
-        <StyledH3>Torfläche: {qm} qm</StyledH3>
+        <StyledH3>
+          {configForSave.system}: {qm} qm
+        </StyledH3>
+
+        <div>
+          <select
+            onChange={handleSelect}
+            onKeyDown={handleKeyDown}
+            value={config.system}
+            label="Single select"
+          >
+            <option value={"Sectionaltor"}>Sectionaltor</option>
+            <option value={"Rundlauftor"}>Rundlauftor</option>
+          </select>
+          <button onClick={handleClick}>Ok</button>
+        </div>
 
         <label htmlFor="gateW">Tor-Breite in cm</label>
         <TextInput
