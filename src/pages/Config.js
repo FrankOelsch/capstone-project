@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
+import { CheckConfig } from "../components/Logic";
+import Select from "../components/select/Select";
 
 export default function Config({
   config,
@@ -41,7 +43,7 @@ export default function Config({
     return () => clearTimeout(timeout);
   }, [tempWidth, tempHeight, tempRadius]);
 
-  function checkInput() {
+  function checkConfig() {
     let isUsefull = true;
 
     if (isNaN(config.height) || isNaN(config.width) || isNaN(config.radius)) {
@@ -107,7 +109,16 @@ export default function Config({
 
   function handleKeyDown(e) {
     if (e.key === "Enter" || e.key === "Tab") {
-      checkInput();
+      // checkConfig();
+      CheckConfig(
+        config,
+        setConfigForSave,
+        setMessageW,
+        setMessageH,
+        setMessageR,
+        setQm,
+        drawIt
+      );
       if (!e.target === "select") {
         e.target.select();
       }
@@ -118,8 +129,17 @@ export default function Config({
     setConfig({ ...config, system: e.target.value });
   }
 
-  function handleClick(e) {
-    checkInput();
+  function handleClick() {
+    // checkConfig();
+    CheckConfig(
+      config,
+      setConfigForSave,
+      setMessageW,
+      setMessageH,
+      setMessageR,
+      setQm,
+      drawIt
+    );
   }
 
   function drawIt() {
@@ -224,26 +244,32 @@ export default function Config({
     <>
       <Header />
       <Container>
-        <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
-          Your browser does not support the HTML5 canvas tag.
-        </StyledCanvas>
-
         <StyledH3>
           {configForSave.system}: {qm} qm
         </StyledH3>
 
-        <div>
+        <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
+          Your browser does not support the HTML5 canvas tag.
+        </StyledCanvas>
+
+        <Select
+          onChange={handleSelect}
+          onKeyDown={handleKeyDown}
+          onClick={handleClick}
+          value={config.system}
+        />
+
+        {/* <div>
           <select
             onChange={handleSelect}
             onKeyDown={handleKeyDown}
             value={config.system}
-            label="Single select"
           >
             <option value={"Sectionaltor"}>Sectionaltor</option>
             <option value={"Rundlauftor"}>Rundlauftor</option>
           </select>
           <button onClick={handleClick}>Ok</button>
-        </div>
+        </div> */}
 
         <label htmlFor="gateW">Tor-Breite in cm</label>
         <TextInput
