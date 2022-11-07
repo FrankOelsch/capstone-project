@@ -3,15 +3,28 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-export default function Home() {
+export default function Home({
+  config,
+  setConfig,
+  configForSave,
+  setConfigForSave,
+}) {
+  function handleClickSectional() {
+    setConfig({ ...config, system: "Sectionaltor" });
+    setConfigForSave({ ...configForSave, system: "Sectionaltor" });
+  }
+
+  function handleClickRundlauf() {
+    setConfig({ ...config, system: "Rundlauftor" });
+    setConfigForSave({ ...configForSave, system: "Rundlauftor" });
+  }
+
   return (
     <>
       <Header />
       <Container>
-        <section>
-          Diese Torsysteme stehen für die Konfiguration zur Verfügung:
-        </section>
-        <section>
+        <section>Bitte wählen sie das gewünschte Torsystem:</section>
+        <StyledLink to="/config" onClick={handleClickSectional}>
           <h2>Sectionaltor</h2>
           <p>
             Öffnet nach oben
@@ -24,8 +37,8 @@ export default function Home() {
             <br />
             Seitliche Innenwände frei
           </p>
-        </section>
-        <section>
+        </StyledLink>
+        <StyledLink to="/config" onClick={handleClickRundlauf}>
           <h2>Rundlauftor</h2>
           <p>
             Öffnet seitlich
@@ -38,8 +51,7 @@ export default function Home() {
             <br />
             Deckenbereich frei
           </p>
-        </section>
-        <StyledLink to="/config">Zur Konfiguration</StyledLink>
+        </StyledLink>
       </Container>
       <Footer />
     </>
@@ -72,6 +84,17 @@ const Container = styled.div`
     padding: 10px;
     color: hsl(216, 65%, 0%);
   }
+`;
+
+const StyledLink = styled(Link)`
+  color: hsl(216, 65%, 0%);
+  background-color: rgba(95, 158, 160, 0.75);
+  box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  width: 280px;
+  padding: 10px;
+  text-decoration: none;
+  cursor: pointer;
 
   p {
     font-family: "Noto Sans", Arial, Helvetica, sans-serif;
@@ -84,18 +107,4 @@ const Container = styled.div`
     font-size: 1.6em;
     color: hsl(216, 65%, 0%);
   }
-`;
-
-const StyledLink = styled(Link)`
-  font-family: "Abel", Arial, Helvetica, sans-serif;
-  font-size: 1.8em;
-  font-weight: bold;
-  color: hsl(216, 65%, 0%);
-  background-color: rgba(95, 158, 160, 0.75);
-  box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
-  width: 280px;
-  padding: 10px;
-  text-decoration: none;
-  cursor: pointer;
 `;

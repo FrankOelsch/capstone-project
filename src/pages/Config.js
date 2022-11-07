@@ -3,44 +3,14 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
-import Select from "../components/select/Select";
-import { useLocalStorage } from "../useLocalStorage";
 
-const DoorConfig = {
-  system: "Sectionaltor",
-  width: "250",
-  height: "200",
-  radius: "30",
-};
-
-function setToLocalStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-function getFromLocalStorage(key) {
-  try {
-    return JSON.parse(localStorage.getItem(key));
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
-export default function Config() {
+export default function Config({
+  config,
+  setConfig,
+  configForSave,
+  setConfigForSave,
+}) {
   const canvasRef = useRef(null);
-
-  const [configForSave, setConfigForSave] = useLocalStorage(
-    "DoorConfig",
-    DoorConfig
-  );
-  // const [configForSave, setConfigForSave] = useState(DoorConfig);
-  // useEffect(() => {
-  //   const result = getFromLocalStorage("DoorConfig");
-  //   console.log("result: " + result);
-  //   setConfigForSave(result);
-  // }, []);
-
-  const [config, setConfig] = useState(configForSave || DoorConfig);
-  // const [config, setConfig] = useState(configForSave || DoorConfig);
 
   const [messageW, setMessageW] = useState("");
   const [messageH, setMessageH] = useState("");
@@ -112,7 +82,6 @@ export default function Config() {
         );
 
         setConfigForSave(config);
-        // setToLocalStorage("DoorConfig", config);
 
         drawIt();
       }
