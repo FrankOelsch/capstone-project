@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Theme from "../../Theme";
 
 export default function TextInput(props) {
   const onFocus = (event) => {
@@ -11,14 +12,16 @@ export default function TextInput(props) {
   };
 
   return (
-    <>
-      <StyledInput
-        type="text"
-        autoComplete="off"
-        onFocus={onFocus}
-        {...props}
-      />
-    </>
+    <Theme>
+      <div>
+        <StyledInput
+          type="text"
+          autoComplete="off"
+          onFocus={onFocus}
+          {...props}
+        />
+      </div>
+    </Theme>
   );
 }
 
@@ -28,14 +31,13 @@ const StyledInput = styled.input`
   width: 200px;
   padding: 3px;
   border: 3px solid;
-  border-color: hsl(216, 65%, 80%);
+  border-color: ${({ theme: { colors } }) => colors.inputBorder};
   border-radius: 6px;
   outline: none;
-  background-color: aliceblue;
+  background-color: ${({ theme: { colors } }) => colors.inputBackground};
   box-shadow: 3px 3px 3px lightgrey;
 
   &:focus {
-    background-color: aliceblue;
     border-color: hsl(216, 65%, 50%);
   }
 `;

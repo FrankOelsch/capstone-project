@@ -3,32 +3,25 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
-import { useLocalStorage } from "../useLocalStorage";
+import Select from "../components/select/Select";
 
-const DoorConfig = {
-  width: "250",
-  height: "200",
-  radius: "30",
-};
-
-export default function Config() {
+export default function Config({
+  config,
+  setConfig,
+  configForSave,
+  setConfigForSave,
+}) {
   const canvasRef = useRef(null);
-
-  const [configForSave, setConfigForSave] = useLocalStorage(
-    "DoorConfig",
-    DoorConfig
-  );
-  const [config, setConfig] = useState(configForSave || DoorConfig);
 
   const [messageW, setMessageW] = useState("");
   const [messageH, setMessageH] = useState("");
   const [messageR, setMessageR] = useState("");
 
-  const [prevWidth, setPrevWidth] = useState(150);
+  const [prevWidth, setPrevWidth] = useState(250);
   const [prevHeight, setPrevHeight] = useState(200);
   const [prevRadius, setPrevRadius] = useState(30);
 
-  const [tempWidth, setTempWidth] = useState(150);
+  const [tempWidth, setTempWidth] = useState(250);
   const [tempHeight, setTempHeight] = useState(200);
   const [tempRadius, setTempRadius] = useState(30);
 
@@ -43,30 +36,60 @@ export default function Config() {
   let canv = null;
 
   useEffect(() => {
+    checkConfig();
+  }, [messageW, messageH, messageR]);
+
+  useEffect(() => {
     const timeout = setTimeout(() => {
       drawIt();
     }, 2);
     return () => clearTimeout(timeout);
   }, [tempWidth, tempHeight, tempRadius]);
 
-  function checkInput() {
+  function checkConfig() {
     let isUsefull = true;
+    const RUNDLAUF = "Rundlauftor";
+    const SECTIONAL = "Sectionaltor";
+    const system = config.system;
 
-    if (isNaN(config.height) || isNaN(config.width) || isNaN(config.radius)) {
+    if (
+      isNaN(config.height) ||
+      isNaN(config.width) ||
+      isNaN(config.radius) ||
+      !config.system
+    ) {
       return;
     } else {
-      if (+config.width < 100 || +config.width > 500) {
-        setMessageW("Zulässige Werte: 100 - 500 cm.");
-        isUsefull = false;
-      } else {
-        setMessageW("");
+      if (system === RUNDLAUF) {
+        if (+config.width < 200 || +config.width > 600) {
+          setMessageW("Zulässige Werte: 200 - 600 cm.");
+          isUsefull = false;
+        } else {
+          setMessageW("");
+        }
+        if (+config.height < 180 || +config.height > 300) {
+          setMessageH("Zulässige Werte: 175 - 300 mm.");
+          isUsefull = false;
+        } else {
+          setMessageH("");
+        }
       }
-      if (+config.height < 180 || +config.height > 300) {
-        setMessageH("Zulässige Werte: 180 - 300 mm.");
-        isUsefull = false;
-      } else {
-        setMessageH("");
+
+      if (system === SECTIONAL) {
+        if (+config.width < 200 || +config.width > 500) {
+          setMessageW("Zulässige Werte: 200 - 500 cm.");
+          isUsefull = false;
+        } else {
+          setMessageW("");
+        }
+        if (+config.height < 180 || +config.height > 250) {
+          setMessageH("Zulässige Werte: 175 - 250 mm.");
+          isUsefull = false;
+        } else {
+          setMessageH("");
+        }
       }
+
       if (
         +config.radius < 0 ||
         +config.radius > +config.width / 2 ||
@@ -115,12 +138,26 @@ export default function Config() {
 
   function handleKeyDown(e) {
     if (e.key === "Enter" || e.key === "Tab") {
-      checkInput();
-      e.target.select();
+      checkConfig();
+      if (!e.target === "select") {
+        e.target.select();
+      }
     }
   }
 
+  function handleSelect(e) {
+    setConfig({ ...config, system: e.target.value });
+  }
+
+  function handleClick() {
+    checkConfig();
+  }
+
   function drawIt() {
+    if (messageW || messageH || messageR) {
+      return;
+    }
+
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
@@ -222,36 +259,49 @@ export default function Config() {
     <>
       <Header />
       <Container>
-        <StyledCanvas id="canvas" ref={canvasRef} width={600} height={400}>
+        <StyledH3>
+          {configForSave.system}: {qm} qm
+        </StyledH3>
+
+        <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
           Your browser does not support the HTML5 canvas tag.
         </StyledCanvas>
 
-        <StyledH3>Torfläche: {qm} qm</StyledH3>
+        <Select
+          onChange={handleSelect}
+          onKeyDown={handleKeyDown}
+          onClick={handleClick}
+          value={config.system}
+        />
+        <StyledMessage></StyledMessage>
 
-        <label htmlFor="gateW">Tor-Breite in cm</label>
+        <StyledLabel htmlFor="gateW">Tor-Breite in cm</StyledLabel>
         <TextInput
-          value={config.width}
           id="gateW"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          onClick={handleClick}
+          value={config.width}
         />
         <StyledMessage> {messageW}</StyledMessage>
 
         <label htmlFor="gateH">Tor-Höhe in cm</label>
         <TextInput
-          value={config.height}
           id="gateH"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          onClick={handleClick}
+          value={config.height}
         />
         <StyledMessage> {messageH}</StyledMessage>
 
         <label htmlFor="radius">Torbogen-Radius in cm</label>
         <TextInput
-          value={config.radius}
           id="radius"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          onClick={handleClick}
+          value={config.radius}
         />
         <StyledMessage> {messageR}</StyledMessage>
       </Container>
@@ -278,6 +328,10 @@ const StyledCanvas = styled.canvas`
   width: 90%;
 `;
 
+const StyledLabel = styled.label`
+  text-align: left;
+`;
+
 const StyledH3 = styled.h3`
   margin: 10px;
 `;
@@ -287,5 +341,4 @@ const StyledMessage = styled.p`
   font-size: 1em;
   color: blue;
   margin-bottom: 10px;
-  height: 1.1em;
 `;

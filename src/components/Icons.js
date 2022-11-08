@@ -1,8 +1,8 @@
 export function HomeIcon() {
   return (
     <svg
-      width="40"
-      height="40"
+      width="32"
+      height="32"
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -18,8 +18,8 @@ export function HomeIcon() {
 export function ConfigIcon() {
   return (
     <svg
-      width="40"
-      height="40"
+      width="32"
+      height="32"
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +45,8 @@ export function ConfigIcon() {
 export function Config2Icon() {
   return (
     <svg
-      width="40"
-      height="40"
+      width="32"
+      height="32"
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -70,8 +70,8 @@ export function Config2Icon() {
 export function CartIcon() {
   return (
     <svg
-      width="40"
-      height="40"
+      width="32"
+      height="32"
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
