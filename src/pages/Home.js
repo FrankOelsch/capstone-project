@@ -69,7 +69,6 @@ const Container = styled.div`
   justify-content: center;
   text-align: center;
   gap: 30px;
-  background-image: url("background.png");
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
