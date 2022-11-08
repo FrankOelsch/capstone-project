@@ -1,13 +1,18 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { UserContext } from "../UserContext";
 
-export default function Config2() {
+export default function Design() {
+  const { config } = useContext(UserContext);
+
   return (
     <>
       <Header />
       <Container>
-        <h1>Config2 Is Under Construction</h1>
+        <h1>Design-Page Is Under Construction</h1>
+        <h1>{config.system}</h1>
       </Container>
       <Footer />
     </>

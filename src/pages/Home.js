@@ -3,20 +3,13 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-export default function Home({
-  config,
-  setConfig,
-  configForSave,
-  setConfigForSave,
-}) {
+export default function Home({ config, setConfig }) {
   function handleClickSectional() {
     setConfig({ ...config, system: "Sectionaltor" });
-    // setConfigForSave({ ...configForSave, system: "Sectionaltor" });
   }
 
   function handleClickRundlauf() {
     setConfig({ ...config, system: "Rundlauftor" });
-    // setConfigForSave({ ...configForSave, system: "Rundlauftor" });
   }
 
   return (

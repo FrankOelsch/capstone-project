@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
 import Select from "../components/select/Select";
 
-export default function Config({
+export default function Measure({
   config,
   setConfig,
   configForSave,
