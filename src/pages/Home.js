@@ -11,12 +11,12 @@ export default function Home({
 }) {
   function handleClickSectional() {
     setConfig({ ...config, system: "Sectionaltor" });
-    setConfigForSave({ ...configForSave, system: "Sectionaltor" });
+    // setConfigForSave({ ...configForSave, system: "Sectionaltor" });
   }
 
   function handleClickRundlauf() {
     setConfig({ ...config, system: "Rundlauftor" });
-    setConfigForSave({ ...configForSave, system: "Rundlauftor" });
+    // setConfigForSave({ ...configForSave, system: "Rundlauftor" });
   }
 
   return (
@@ -24,7 +24,7 @@ export default function Home({
       <Header />
       <Container>
         <section>Bitte wählen sie das gewünschte Torsystem:</section>
-        <StyledLink to="/config" onClick={handleClickSectional}>
+        <StyledLink to="/measure" onClick={handleClickSectional}>
           <h2>Sectionaltor</h2>
           <p>
             Öffnet nach oben
@@ -38,7 +38,7 @@ export default function Home({
             Seitliche Innenwände frei
           </p>
         </StyledLink>
-        <StyledLink to="/config" onClick={handleClickRundlauf}>
+        <StyledLink to="/measure" onClick={handleClickRundlauf}>
           <h2>Rundlauftor</h2>
           <p>
             Öffnet seitlich

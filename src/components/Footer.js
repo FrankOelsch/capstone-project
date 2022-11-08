@@ -9,10 +9,10 @@ export default function Footer() {
         <StyledNavLink to="/" end>
           <HomeIcon />
         </StyledNavLink>
-        <StyledNavLink to="/config">
+        <StyledNavLink to="/measure">
           <ConfigIcon />
         </StyledNavLink>
-        <StyledNavLink to="/config2">
+        <StyledNavLink to="/design">
           <Config2Icon />
         </StyledNavLink>
         <StyledNavLink to="/cart">

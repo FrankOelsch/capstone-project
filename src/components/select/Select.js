@@ -31,20 +31,3 @@ const StyledSelect = styled.select`
     border-color: hsl(216, 65%, 50%);
   }
 `;
-
-const StyledButton = styled.button`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  width: 40px;
-  padding: 3px;
-  border: 3px solid;
-  border-color: ${({ theme: { colors } }) => colors.inputBorder};
-  border-radius: 6px;
-  outline: none;
-  background-color: ${({ theme: { colors } }) => colors.inputBackground};
-  box-shadow: 3px 3px 3px lightgrey;
-
-  &:focus {
-    border-color: hsl(216, 65%, 50%);
-  }
-`;

@@ -36,7 +36,7 @@ function App() {
           }
         />
         <Route
-          path="/config"
+          path="/measure"
           element={
             <Config
               config={config}
@@ -47,7 +47,7 @@ function App() {
           }
         />
         <Route
-          path="/config2"
+          path="/design"
           element={
             <Config2
               config={config}

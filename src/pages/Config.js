@@ -120,6 +120,8 @@ export default function Config({
   }
 
   function handleChange(e) {
+    console.log(e);
+
     if (isNaN(e.target.value)) {
       return;
     }
@@ -136,20 +138,14 @@ export default function Config({
     }
   }
 
-  function handleKeyDown(e) {
-    if (e.key === "Enter" || e.key === "Tab") {
-      checkConfig();
-      if (!e.target === "select") {
-        e.target.select();
-      }
-    }
-  }
-
   function handleSelect(e) {
+    console.log(e);
+
     setConfig({ ...config, system: e.target.value });
   }
 
-  function handleClick() {
+  function handleSubmit(e) {
+    e.preventDefault();
     checkConfig();
   }
 
@@ -267,43 +263,36 @@ export default function Config({
           Your browser does not support the HTML5 canvas tag.
         </StyledCanvas>
 
-        <Select
-          onChange={handleSelect}
-          onKeyDown={handleKeyDown}
-          onClick={handleClick}
-          value={config.system}
-        />
-        <StyledMessage></StyledMessage>
+        <form onSubmit={handleSubmit}>
+          <Select onChange={handleSelect} value={config.system} />
+          <StyledMessage></StyledMessage>
 
-        <StyledLabel htmlFor="gateW">Tor-Breite in cm</StyledLabel>
-        <TextInput
-          id="gateW"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onClick={handleClick}
-          value={config.width}
-        />
-        <StyledMessage> {messageW}</StyledMessage>
+          <StyledLabel htmlFor="gateW">Tor-Breite in cm</StyledLabel>
+          <TextInput
+            required
+            type="number"
+            id="gateW"
+            min="200"
+            max="600"
+            onChange={handleChange}
+            value={config.width}
+          />
+          <StyledMessage> {messageW}</StyledMessage>
 
-        <label htmlFor="gateH">Tor-Höhe in cm</label>
-        <TextInput
-          id="gateH"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onClick={handleClick}
-          value={config.height}
-        />
-        <StyledMessage> {messageH}</StyledMessage>
+          <label htmlFor="gateH">Tor-Höhe in cm</label>
+          <TextInput id="gateH" onChange={handleChange} value={config.height} />
+          <StyledMessage> {messageH}</StyledMessage>
 
-        <label htmlFor="radius">Torbogen-Radius in cm</label>
-        <TextInput
-          id="radius"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onClick={handleClick}
-          value={config.radius}
-        />
-        <StyledMessage> {messageR}</StyledMessage>
+          <label htmlFor="radius">Torbogen-Radius in cm</label>
+          <TextInput
+            id="radius"
+            onChange={handleChange}
+            value={config.radius}
+          />
+          <StyledMessage> {messageR}</StyledMessage>
+
+          <StyledButton type="submit">Submit</StyledButton>
+        </form>
       </Container>
       <Footer />
     </>
@@ -341,4 +330,22 @@ const StyledMessage = styled.p`
   font-size: 1em;
   color: blue;
   margin-bottom: 10px;
+`;
+
+const StyledButton = styled.button`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  width: 200px;
+  padding: 3px;
+  margin-top: 20px;
+  border: 3px solid;
+  border-color: hsl(216, 65%, 80%);
+  border-radius: 6px;
+  outline: none;
+  background-color: hsl(216, 65%, 80%);
+  box-shadow: 3px 3px 3px lightgrey;
+
+  &:focus {
+    border-color: hsl(216, 65%, 50%);
+  }
 `;
