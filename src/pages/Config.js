@@ -17,11 +17,11 @@ export default function Config({
   const [messageH, setMessageH] = useState("");
   const [messageR, setMessageR] = useState("");
 
-  const [prevWidth, setPrevWidth] = useState(150);
+  const [prevWidth, setPrevWidth] = useState(250);
   const [prevHeight, setPrevHeight] = useState(200);
   const [prevRadius, setPrevRadius] = useState(30);
 
-  const [tempWidth, setTempWidth] = useState(150);
+  const [tempWidth, setTempWidth] = useState(250);
   const [tempHeight, setTempHeight] = useState(200);
   const [tempRadius, setTempRadius] = useState(30);
 
@@ -34,6 +34,10 @@ export default function Config({
 
   let ctx = null;
   let canv = null;
+
+  useEffect(() => {
+    checkConfig();
+  }, [messageW, messageH, messageR]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -150,6 +154,10 @@ export default function Config({
   }
 
   function drawIt() {
+    if (messageW || messageH || messageR) {
+      return;
+    }
+
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 

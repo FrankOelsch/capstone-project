@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Theme from "../../Theme";
 
-export default function Select({ onChange, onKeyDown, onClick, value }) {
+export default function Select({ onChange, onKeyDown, value }) {
   return (
     <Theme>
       <div>
@@ -9,7 +9,6 @@ export default function Select({ onChange, onKeyDown, onClick, value }) {
           <option value={"Sectionaltor"}>Sectionaltor</option>
           <option value={"Rundlauftor"}>Rundlauftor</option>
         </StyledSelect>
-        <StyledButton onClick={onClick}>Ok</StyledButton>
       </div>
     </Theme>
   );
@@ -18,7 +17,7 @@ export default function Select({ onChange, onKeyDown, onClick, value }) {
 const StyledSelect = styled.select`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2em;
-  width: 160px;
+  width: 200px;
   padding: 3px;
   border: 3px solid;
   border-color: ${({ theme: { colors } }) => colors.inputBorder};
