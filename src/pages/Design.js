@@ -5,14 +5,19 @@ import Header from "../components/Header";
 import { UserContext } from "../UserContext";
 
 export default function Design() {
-  const { config } = useContext(UserContext);
+  const { config, setConfig } = useContext(UserContext);
+
+  function handleClick() {
+    setConfig({ ...config, width: "333" });
+  }
 
   return (
     <>
       <Header />
       <Container>
         <h1>Design-Page Is Under Construction</h1>
-        <h1>{config.system}</h1>
+        <h1>Torbreite: {config.width}</h1>
+        <button onClick={handleClick}>Setze Torbreite auf 333</button>
       </Container>
       <Footer />
     </>

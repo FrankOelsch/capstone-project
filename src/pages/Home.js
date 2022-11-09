@@ -2,8 +2,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
 
-export default function Home({ config, setConfig }) {
+export default function Home() {
+  const { config, setConfig } = useContext(UserContext);
+
   function handleClickSectional() {
     setConfig({ ...config, system: "Sectionaltor" });
   }
@@ -24,7 +28,7 @@ export default function Home({ config, setConfig }) {
             <br />
             Breite bis 500 cm möglich
             <br />
-            Höhe abhängig von Breite
+            Höhe bis 250 möglich
             <br />
             Keine Bodenschiene
             <br />

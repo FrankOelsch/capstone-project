@@ -1,7 +1,8 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 import Theme from "../../Theme";
 
-export default function TextInput(props) {
+const TextInput = forwardRef((props, ref) => {
   const onFocus = (event) => {
     if (event.key === "Tab") {
       return false;
@@ -19,11 +20,12 @@ export default function TextInput(props) {
           autoComplete="off"
           onFocus={onFocus}
           {...props}
+          ref={ref}
         />
       </div>
     </Theme>
   );
-}
+});
 
 const StyledInput = styled.input`
   font-family: Arial, Helvetica, sans-serif;
@@ -41,3 +43,5 @@ const StyledInput = styled.input`
     border-color: hsl(216, 65%, 50%);
   }
 `;
+
+export default TextInput;

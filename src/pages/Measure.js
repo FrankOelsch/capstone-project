@@ -1,17 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
 import Select from "../components/select/Select";
+import { UserContext } from "../UserContext";
 
-export default function Measure({
-  config,
-  setConfig,
-  configForSave,
-  setConfigForSave,
-}) {
+export default function Measure() {
+  const { config, setConfig, configForSave, setConfigForSave } =
+    useContext(UserContext);
+
   const canvasRef = useRef(null);
+
+  const inputWidthRef = useRef(null);
+  const inputHeightRef = useRef(null);
+  const inputRadiusRef = useRef(null);
 
   const [messageW, setMessageW] = useState("");
   const [messageH, setMessageH] = useState("");
@@ -34,6 +37,12 @@ export default function Measure({
 
   let ctx = null;
   let canv = null;
+  let inputWidth = null;
+  let inputHeight = null;
+  let inputRadius = null;
+
+  const RUNDLAUF = "Rundlauftor";
+  const SECTIONAL = "Sectionaltor";
 
   useEffect(() => {
     checkConfig();
@@ -48,8 +57,6 @@ export default function Measure({
 
   function checkConfig() {
     let isUsefull = true;
-    const RUNDLAUF = "Rundlauftor";
-    const SECTIONAL = "Sectionaltor";
     const system = config.system;
 
     if (
@@ -120,16 +127,18 @@ export default function Measure({
   }
 
   function handleChange(e) {
-    console.log(e);
-
     if (isNaN(e.target.value)) {
       return;
     }
+
+    const doorSystem = config.system;
+    changeInputMinMax(doorSystem);
+
     switch (e.target.id) {
-      case "gateW":
+      case "gateWidth":
         setConfig({ ...config, width: e.target.value });
         break;
-      case "gateH":
+      case "gateHeight":
         setConfig({ ...config, height: e.target.value });
         break;
       case "radius":
@@ -138,10 +147,29 @@ export default function Measure({
     }
   }
 
-  function handleSelect(e) {
-    console.log(e);
+  function changeInputMinMax(doorSystem) {
+    inputWidth = inputWidthRef.current;
+    inputHeight = inputHeightRef.current;
+    inputRadius = inputRadiusRef.current;
 
-    setConfig({ ...config, system: e.target.value });
+    const w = inputWidth.value;
+    const h = inputHeight.value;
+    const radiusMax = Math.min(Math.trunc(+w / 2), +h);
+    inputRadius.max = radiusMax.toString();
+
+    if (doorSystem === SECTIONAL) {
+      inputWidth.max = "500";
+      inputHeight.max = "250";
+    } else {
+      inputWidth.max = "600";
+      inputHeight.max = "300";
+    }
+  }
+
+  function handleSelect(e) {
+    const value = e.target.value;
+    changeInputMinMax(value);
+    setConfig({ ...config, system: value });
   }
 
   function handleSubmit(e) {
@@ -267,27 +295,42 @@ export default function Measure({
           <Select onChange={handleSelect} value={config.system} />
           <StyledMessage></StyledMessage>
 
-          <StyledLabel htmlFor="gateW">Tor-Breite in cm</StyledLabel>
+          <StyledLabel htmlFor="gateWidth">Tor-Breite in cm</StyledLabel>
           <TextInput
             required
             type="number"
-            id="gateW"
+            id="gateWidth"
             min="200"
-            max="600"
+            max="500"
             onChange={handleChange}
             value={config.width}
+            ref={inputWidthRef}
           />
           <StyledMessage> {messageW}</StyledMessage>
 
-          <label htmlFor="gateH">Tor-Höhe in cm</label>
-          <TextInput id="gateH" onChange={handleChange} value={config.height} />
+          <label htmlFor="gateHeight">Tor-Höhe in cm</label>
+          <TextInput
+            required
+            type="number"
+            id="gateHeight"
+            min="175"
+            max="250"
+            onChange={handleChange}
+            value={config.height}
+            ref={inputHeightRef}
+          />
           <StyledMessage> {messageH}</StyledMessage>
 
           <label htmlFor="radius">Torbogen-Radius in cm</label>
           <TextInput
+            required
+            type="number"
             id="radius"
+            min="0"
+            max="100"
             onChange={handleChange}
             value={config.radius}
+            ref={inputRadiusRef}
           />
           <StyledMessage> {messageR}</StyledMessage>
 
