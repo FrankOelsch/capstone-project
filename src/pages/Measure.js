@@ -7,22 +7,20 @@ import Select from "../components/select/Select";
 import { UserContext } from "../UserContext";
 
 export default function Measure() {
-  const { config, setConfig, configForSave, setConfigForSave } =
-    useContext(UserContext);
+  const {
+    config,
+    setConfig,
+    configForSave,
+    setConfigForSave,
+    prevConfig,
+    setPrevConfig,
+  } = useContext(UserContext);
 
   const canvasRef = useRef(null);
 
   const inputWidthRef = useRef(null);
   const inputHeightRef = useRef(null);
   const inputRadiusRef = useRef(null);
-
-  const [messageW, setMessageW] = useState("");
-  const [messageH, setMessageH] = useState("");
-  const [messageR, setMessageR] = useState("");
-
-  const [prevWidth, setPrevWidth] = useState(250);
-  const [prevHeight, setPrevHeight] = useState(200);
-  const [prevRadius, setPrevRadius] = useState(30);
 
   const [tempWidth, setTempWidth] = useState(250);
   const [tempHeight, setTempHeight] = useState(200);
@@ -46,7 +44,7 @@ export default function Measure() {
 
   useEffect(() => {
     checkConfig();
-  }, [messageW, messageH, messageR]);
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -56,6 +54,7 @@ export default function Measure() {
   }, [tempWidth, tempHeight, tempRadius]);
 
   function checkConfig() {
+    console.log("checkConfig");
     let isUsefull = true;
     const system = config.system;
 
@@ -67,33 +66,22 @@ export default function Measure() {
     ) {
       return;
     } else {
+      console.log("else");
       if (system === RUNDLAUF) {
         if (+config.width < 200 || +config.width > 600) {
-          setMessageW("Zulässige Werte: 200 - 600 cm.");
           isUsefull = false;
-        } else {
-          setMessageW("");
         }
         if (+config.height < 180 || +config.height > 300) {
-          setMessageH("Zulässige Werte: 175 - 300 mm.");
           isUsefull = false;
-        } else {
-          setMessageH("");
         }
       }
 
       if (system === SECTIONAL) {
         if (+config.width < 200 || +config.width > 500) {
-          setMessageW("Zulässige Werte: 200 - 500 cm.");
           isUsefull = false;
-        } else {
-          setMessageW("");
         }
         if (+config.height < 180 || +config.height > 250) {
-          setMessageH("Zulässige Werte: 175 - 250 mm.");
           isUsefull = false;
-        } else {
-          setMessageH("");
         }
       }
 
@@ -103,15 +91,11 @@ export default function Measure() {
         +config.radius > +config.height ||
         !config.radius
       ) {
-        setMessageR(
-          "Zulässige Werte: 0 - 50 % der Breite und 0 - 100 % der Höhe."
-        );
         isUsefull = false;
-      } else {
-        setMessageR("");
       }
 
       if (isUsefull) {
+        console.log("isUsefull");
         setQm(
           ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
             maximumFractionDigits: 2,
@@ -120,6 +104,12 @@ export default function Measure() {
         );
 
         setConfigForSave(config);
+        const w = +prevConfig.width;
+        setTempWidth(w);
+        const h = +prevConfig.height;
+        setTempHeight(h);
+        const r = +prevConfig.radius;
+        setTempRadius(r);
 
         drawIt();
       }
@@ -178,28 +168,23 @@ export default function Measure() {
   }
 
   function drawIt() {
-    if (messageW || messageH || messageR) {
-      return;
-    }
+    console.log("drawIt");
 
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
     let torBreite = +config.width;
-    let torBreitePrev = prevWidth;
-    let torBreiteTemp = tempWidth;
+    let torBreitePrev = +prevConfig.width;
 
     let torHoehe = +config.height;
-    let torHoehePrev = prevHeight;
-    let torHoeheTemp = tempHeight;
+    let torHoehePrev = +prevConfig.height;
 
     let torRadius = +config.radius;
-    let torRadiusPrev = prevRadius;
-    let torRadiusTemp = tempRadius;
+    let torRadiusPrev = +prevConfig.radius;
 
     let startY = 340;
     let canvBreite = canv.width;
-    let startXTemp = (canvBreite - torBreiteTemp) / 2;
+    let startXTemp = (canvBreite - tempWidth) / 2;
 
     let stepW = 0;
     if (torBreitePrev < torBreite) {
@@ -207,6 +192,17 @@ export default function Measure() {
     } else if (torBreitePrev > torBreite) {
       stepW = -1;
     }
+
+    console.log(
+      " - torBreite: " +
+        torBreite +
+        " - torBreitePrev: " +
+        torBreitePrev +
+        " - tempWidth: " +
+        tempWidth +
+        " - stepW: " +
+        stepW
+    );
 
     let stepH = 0;
     if (torHoehePrev < torHoehe) {
@@ -223,52 +219,58 @@ export default function Measure() {
     }
 
     if (tempWidth === torBreite) {
-      setPrevWidth(torBreite);
+      setPrevConfig({
+        ...prevConfig,
+        width: torBreite.toString(),
+      });
     } else {
       setTempWidth((prev) => prev + stepW);
     }
 
     if (tempHeight === torHoehe) {
-      setPrevHeight(torHoehe);
+      setPrevConfig({
+        ...prevConfig,
+        height: torHoehe.toString(),
+      });
     } else {
       setTempHeight((prev) => prev + stepH);
     }
 
     if (tempRadius === torRadius) {
-      setPrevRadius(torRadius);
+      setPrevConfig({
+        ...prevConfig,
+        radius: torRadius.toString(),
+      });
     } else {
       setTempRadius((prev) => prev + stepR);
     }
 
-    if (torBreiteTemp < 0) torBreiteTemp = 0;
-    if (torHoeheTemp < 0) torHoeheTemp = 0;
-    if (torRadiusTemp < 0) torRadiusTemp = 0;
+    if (tempWidth < 0) setTempWidth(0);
+    if (tempHeight < 0) setTempHeight(0);
+    if (tempRadius < 0) setTempRadius(0);
 
     ctx.clearRect(0, 0, canv.width, canv.height);
     ctx.lineWidth = 4;
 
     ctx.beginPath();
     ctx.moveTo(startXTemp, startY);
-    ctx.lineTo(startXTemp, startY - torHoeheTemp + torRadiusTemp);
+    ctx.lineTo(startXTemp, startY - tempHeight + tempRadius);
     ctx.arcTo(
       startXTemp,
-      startY - torHoeheTemp,
-      startXTemp + torRadiusTemp,
-      startY - torHoeheTemp,
-      torRadiusTemp
+      startY - tempHeight,
+      startXTemp + tempRadius,
+      startY - tempHeight,
+      tempRadius
     );
-    ctx.lineTo(
-      startXTemp + torBreiteTemp - torRadiusTemp,
-      startY - torHoeheTemp
-    );
+    ctx.lineTo(startXTemp + tempWidth - tempRadius, startY - tempHeight);
     ctx.arcTo(
-      startXTemp + torBreiteTemp,
-      startY - torHoeheTemp,
-      startXTemp + torBreiteTemp,
-      startY - torHoeheTemp + torRadiusTemp,
-      torRadiusTemp
+      startXTemp + tempWidth,
+      startY - tempHeight,
+      startXTemp + tempWidth,
+      startY - tempHeight + tempRadius,
+      tempRadius
     );
-    ctx.lineTo(startXTemp + torBreiteTemp, startY);
+    ctx.lineTo(startXTemp + tempWidth, startY);
     ctx.closePath();
     ctx.stroke();
 
@@ -306,7 +308,7 @@ export default function Measure() {
             value={config.width}
             ref={inputWidthRef}
           />
-          <StyledMessage> {messageW}</StyledMessage>
+          {/* <StyledMessage> {messageW}</StyledMessage> */}
 
           <label htmlFor="gateHeight">Tor-Höhe in cm</label>
           <TextInput
@@ -319,7 +321,7 @@ export default function Measure() {
             value={config.height}
             ref={inputHeightRef}
           />
-          <StyledMessage> {messageH}</StyledMessage>
+          {/* <StyledMessage> {messageH}</StyledMessage> */}
 
           <label htmlFor="radius">Torbogen-Radius in cm</label>
           <TextInput
@@ -332,7 +334,7 @@ export default function Measure() {
             value={config.radius}
             ref={inputRadiusRef}
           />
-          <StyledMessage> {messageR}</StyledMessage>
+          {/* <StyledMessage> {messageR}</StyledMessage> */}
 
           <StyledButton type="submit">Submit</StyledButton>
         </form>

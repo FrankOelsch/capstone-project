@@ -28,12 +28,9 @@ function App() {
   );
   const [config, setConfig] = useState(configForSave || DoorConfig);
 
-  const [prevConfigForSave, setPrevConfigForSave] = useLocalStorage(
+  const [prevConfig, setPrevConfig] = useLocalStorage(
     "PrevDoorConfig",
     PrevDoorConfig
-  );
-  const [prevConfig, setPrevConfig] = useState(
-    prevConfigForSave || PrevDoorConfig
   );
 
   return (
@@ -45,8 +42,6 @@ function App() {
         setConfigForSave,
         prevConfig,
         setPrevConfig,
-        prevConfigForSave,
-        setPrevConfigForSave,
       }}
     >
       <Routes>
