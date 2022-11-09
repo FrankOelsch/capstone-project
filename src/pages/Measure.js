@@ -104,6 +104,7 @@ export default function Measure() {
         );
 
         setConfigForSave(config);
+
         const w = +prevConfig.width;
         setTempWidth(w);
         const h = +prevConfig.height;
@@ -218,35 +219,39 @@ export default function Measure() {
       stepR = -1;
     }
 
+    let isBreiteEqual = false;
+    let isHoeheEqual = false;
+    let isRadiusEqual = false;
+
     if (tempWidth === torBreite) {
-      setPrevConfig({
-        ...prevConfig,
-        width: torBreite.toString(),
-      });
+      isBreiteEqual = true;
     } else {
       setTempWidth((prev) => prev + stepW);
     }
 
     if (tempHeight === torHoehe) {
-      setPrevConfig({
-        ...prevConfig,
-        height: torHoehe.toString(),
-      });
+      isHoeheEqual = true;
     } else {
       setTempHeight((prev) => prev + stepH);
     }
 
     if (tempRadius === torRadius) {
-      setPrevConfig({
-        ...prevConfig,
-        radius: torRadius.toString(),
-      });
+      isRadiusEqual = true;
     } else {
       setTempRadius((prev) => prev + stepR);
     }
 
-    if (tempWidth < 0) setTempWidth(0);
-    if (tempHeight < 0) setTempHeight(0);
+    if (isBreiteEqual && isHoeheEqual && isRadiusEqual) {
+      setPrevConfig({
+        ...prevConfig,
+        width: torBreite.toString(),
+        height: torHoehe.toString(),
+        radius: torRadius.toString(),
+      });
+    }
+
+    if (tempWidth < 200) setTempWidth(200);
+    if (tempHeight < 175) setTempHeight(175);
     if (tempRadius < 0) setTempRadius(0);
 
     ctx.clearRect(0, 0, canv.width, canv.height);
