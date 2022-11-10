@@ -14,8 +14,8 @@ const DoorConfig = {
   radius: "30",
   material: "Metall",
   design: "Sicke",
-  wallColor: "beige",
-  doorColor: "White",
+  wallColor: "#EAE6CA",
+  doorColor: "#F6F6F6",
 };
 
 const PrevDoorConfig = {

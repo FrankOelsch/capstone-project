@@ -12,7 +12,7 @@ export default function Select({ onChange, onKeyDown, value, options, id }) {
           id={id}
         >
           {options.map((item) => (
-            <option key={item.id} value={item.de}>
+            <option key={item.id} value={item.id}>
               {item.de}
             </option>
           ))}

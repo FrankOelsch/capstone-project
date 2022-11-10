@@ -54,7 +54,6 @@ export default function Measure() {
   }, [tempWidth, tempHeight, tempRadius]);
 
   function checkConfig() {
-    // console.log("checkConfig");
     let isUsefull = true;
     const system = config.system;
 
@@ -66,7 +65,6 @@ export default function Measure() {
     ) {
       return;
     } else {
-      // console.log("else");
       if (system === RUNDLAUF) {
         if (+config.width < 200 || +config.width > 600) {
           isUsefull = false;
@@ -95,7 +93,6 @@ export default function Measure() {
       }
 
       if (isUsefull) {
-        // console.log("isUsefull");
         setQm(
           ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
             maximumFractionDigits: 2,
@@ -169,8 +166,6 @@ export default function Measure() {
   }
 
   function drawIt() {
-    // console.log("drawIt");
-
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
 
@@ -193,17 +188,6 @@ export default function Measure() {
     } else if (torBreitePrev > torBreite) {
       stepW = -1;
     }
-
-    console.log(
-      " - torBreite: " +
-        torBreite +
-        " - torBreitePrev: " +
-        torBreitePrev +
-        " - tempWidth: " +
-        tempWidth +
-        " - stepW: " +
-        stepW
-    );
 
     let stepH = 0;
     if (torHoehePrev < torHoehe) {
@@ -321,7 +305,6 @@ export default function Measure() {
             value={config.width}
             ref={inputWidthRef}
           />
-          {/* <StyledMessage> {messageW}</StyledMessage> */}
 
           <label htmlFor="gateHeight">Tor-Höhe in cm</label>
           <TextInput
@@ -334,7 +317,6 @@ export default function Measure() {
             value={config.height}
             ref={inputHeightRef}
           />
-          {/* <StyledMessage> {messageH}</StyledMessage> */}
 
           <label htmlFor="radius">Torbogen-Radius in cm</label>
           <TextInput
@@ -347,7 +329,6 @@ export default function Measure() {
             value={config.radius}
             ref={inputRadiusRef}
           />
-          {/* <StyledMessage> {messageR}</StyledMessage> */}
 
           <StyledButton type="submit">Submit</StyledButton>
         </form>
@@ -381,13 +362,6 @@ const StyledLabel = styled.label`
 
 const StyledH3 = styled.h3`
   margin: 10px;
-`;
-
-const StyledMessage = styled.p`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1em;
-  color: blue;
-  margin-bottom: 10px;
 `;
 
 const StyledButton = styled.button`

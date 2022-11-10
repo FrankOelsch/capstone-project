@@ -12,6 +12,9 @@ export default function Design() {
 
   const canvasRef = useRef(null);
 
+  let ctx = null;
+  let canv = null;
+
   const [qm, setQm] = useState(
     ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
       maximumFractionDigits: 2,
@@ -21,18 +24,20 @@ export default function Design() {
 
   useEffect(() => {
     checkConfig();
-    setConfigForSave(config);
   }, []);
 
   function checkConfig() {
     setConfigForSave(config);
+    drawIt();
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    checkConfig();
   }
 
   function handleSelect(e) {
     const value = e.target.value;
-
-    console.log("value");
-    console.log(e.target.value);
 
     switch (e.target.id) {
       case "material":
@@ -48,7 +53,60 @@ export default function Design() {
         setConfig({ ...config, doorColor: value });
         break;
     }
-    checkConfig();
+  }
+
+  function drawIt() {
+    canv = canvasRef.current;
+    ctx = canv.getContext("2d");
+
+    let tempWidth = +config.width;
+    let tempHeight = +config.height;
+    let tempRadius = +config.radius;
+
+    let wallColor = config.wallColor;
+    let doorColor = config.doorColor;
+
+    let startY = 340;
+    let canvBreite = canv.width;
+    let startXTemp = (canvBreite - tempWidth) / 2;
+
+    ctx.clearRect(0, 0, canv.width, canv.height);
+
+    ctx.beginPath();
+    ctx.rect(0, 0, 650, 340);
+    ctx.fillStyle = wallColor;
+    ctx.fill();
+
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(startXTemp, startY);
+    ctx.lineTo(startXTemp, startY - tempHeight + tempRadius);
+    ctx.arcTo(
+      startXTemp,
+      startY - tempHeight,
+      startXTemp + tempRadius,
+      startY - tempHeight,
+      tempRadius
+    );
+    ctx.lineTo(startXTemp + tempWidth - tempRadius, startY - tempHeight);
+    ctx.arcTo(
+      startXTemp + tempWidth,
+      startY - tempHeight,
+      startXTemp + tempWidth,
+      startY - tempHeight + tempRadius,
+      tempRadius
+    );
+    ctx.lineTo(startXTemp + tempWidth, startY);
+    ctx.closePath();
+    ctx.fillStyle = doorColor;
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, startY);
+    ctx.lineTo(canvBreite, startY);
+    ctx.stroke();
   }
 
   return (
@@ -63,44 +121,48 @@ export default function Design() {
           Your browser does not support the HTML5 canvas tag.
         </StyledCanvas>
 
-        <StyledLabel htmlFor="material">Material</StyledLabel>
-        <Select
-          id="material"
-          onChange={handleSelect}
-          value={config.material}
-          options={[
-            { de: "Metall", id: "Metall" },
-            { de: "Holz", id: "Holz" },
-          ]}
-        />
+        <form onSubmit={handleSubmit}>
+          <StyledLabel htmlFor="wallColor">Hauswand</StyledLabel>
+          <Select
+            id="wallColor"
+            onChange={handleSelect}
+            value={config.wallColor}
+            options={RALColors}
+          />
 
-        <StyledLabel htmlFor="design">Design</StyledLabel>
-        <Select
-          id="design"
-          onChange={handleSelect}
-          value={config.design}
-          options={[
-            { de: "Sicke", id: "Sicke" },
-            { de: "Großsicke", id: "Großsicke" },
-            { de: "Kassette", id: "Kassette" },
-          ]}
-        />
+          <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
+          <Select
+            id="material"
+            onChange={handleSelect}
+            value={config.material}
+            options={[
+              { de: "Metall", id: "Metall" },
+              { de: "Holz", id: "Holz" },
+            ]}
+          />
 
-        <StyledLabel htmlFor="wallColor">Farbe Hauswand</StyledLabel>
-        <Select
-          id="wallColor"
-          onChange={handleSelect}
-          value={config.wallColor}
-          options={RALColors}
-        />
+          <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
+          <Select
+            id="design"
+            onChange={handleSelect}
+            value={config.design}
+            options={[
+              { de: "Sicke", id: "Sicke" },
+              { de: "Großsicke", id: "Großsicke" },
+              { de: "Kassette", id: "Kassette" },
+            ]}
+          />
 
-        <StyledLabel htmlFor="doorColor">Farbe Hauswand</StyledLabel>
-        <Select
-          id="doorColor"
-          onChange={handleSelect}
-          value={config.doorColor}
-          options={RALColors}
-        />
+          <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
+          <Select
+            id="doorColor"
+            onChange={handleSelect}
+            value={config.doorColor}
+            options={RALColors}
+          />
+
+          <StyledButton type="submit">Submit</StyledButton>
+        </form>
       </Container>
       <Footer />
     </>
@@ -123,6 +185,7 @@ const StyledCanvas = styled.canvas`
   border: 1px solid #d3d3d3;
   margin: 10px auto;
   width: 90%;
+  background-color: grey;
 `;
 
 const StyledLabel = styled.label`
@@ -131,4 +194,22 @@ const StyledLabel = styled.label`
 
 const StyledH3 = styled.h3`
   margin: 10px;
+`;
+
+const StyledButton = styled.button`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  width: 200px;
+  padding: 3px;
+  margin-top: 20px;
+  border: 3px solid;
+  border-color: hsl(216, 65%, 80%);
+  border-radius: 6px;
+  outline: none;
+  background-color: hsl(216, 65%, 80%);
+  box-shadow: 3px 3px 3px lightgrey;
+
+  &:focus {
+    border-color: hsl(216, 65%, 50%);
+  }
 `;
