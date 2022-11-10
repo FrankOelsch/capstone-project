@@ -9,34 +9,121 @@ import { UserContext } from "../UserContext";
 const shopItems = [
   {
     id: "1",
-    name: "Decken-Sectionaltor Holz",
-    qu: "qm",
-    price: 180,
+    name: "Zahnriemenantrieb für Sectionaltore, mit Funksteuerung 868MHz und 4-Kanal-Handsender",
+    unit: "Stück",
+    price: 720,
     quantity: 1,
+    for: "sect",
     inCart: false,
   },
+
   {
     id: "2",
-    name: "Decken-Sectionaltor Stahl",
-    qu: "qm",
-    price: 120,
+    name: "Spezialantrieb für Rundlauftore, mit Funksteuerung 868MHz, 4-Kanal-Handsender und Drucktaster",
+    unit: "Stück",
+    price: 920,
     quantity: 1,
+    for: "rund",
     inCart: false,
   },
+
   {
     id: "3",
-    name: "Rundlauftor Holz",
-    qu: "qm",
-    price: 80,
+    name: "Zusätzlicher 4-Kanal-Handsender",
+    unit: "Stück",
+    price: 75,
     quantity: 1,
+    for: "all",
     inCart: false,
   },
+
   {
     id: "4",
-    name: "Rundlauftor Aluminium",
-    qu: "qm",
-    price: 150,
+    name: "Funk-Codetaster Aufputz",
+    unit: "Stück",
+    price: 160,
     quantity: 1,
+    for: "all",
+    inCart: false,
+  },
+
+  {
+    id: "5",
+    name: "Schlüsselschalter Aufputz oder Unterputz",
+    unit: "Stück",
+    price: 79,
+    quantity: 1,
+    for: "all",
+    inCart: false,
+  },
+
+  {
+    id: "6",
+    name: "Fingerscan-Schalter",
+    unit: "Stück",
+    price: 480,
+    quantity: 1,
+    for: "all",
+    inCart: false,
+  },
+
+  {
+    id: "7",
+    name: "Funkempfänger für Fremdantriebe",
+    unit: "Stück",
+    price: 145,
+    quantity: 1,
+    for: "all",
+    inCart: false,
+  },
+
+  {
+    id: "8",
+    name: "Notentriegelung (falls kein zweiter Zugang zur Garage)",
+    unit: "Stück",
+    price: 70,
+    quantity: 1,
+    for: "all",
+    inCart: false,
+  },
+
+  {
+    id: "9",
+    name: "Gleichschließender Zylinder",
+    unit: "Stück",
+    price: 15,
+    quantity: 1,
+    for: "all",
+    inCart: false,
+  },
+
+  {
+    id: "10",
+    name: "Schienenheizung komplett für Bodenschiene im Einfahrtsbereich",
+    unit: "Stück",
+    price: 540,
+    quantity: 1,
+    for: "rund",
+    inCart: false,
+  },
+
+  {
+    id: "11",
+    name: "Dumnmy",
+    unit: "Stück",
+    price: 540,
+    quantity: 1,
+    for: "rund",
+    inCart: false,
+  },
+
+  {
+    id: "12",
+    name: "Dumnmy",
+    unit: "Stück",
+    price: 540,
+    quantity: 1,
+    for: "rund",
     inCart: false,
   },
 ];
@@ -94,14 +181,7 @@ export default function Cart() {
         <StyledH2>Warenkorb:</StyledH2>
         <section className="cart">
           {cartArray.map((item) => (
-            <Item
-              id={item.id}
-              key={item.id}
-              name={item.name}
-              price={item.price}
-              inCart={item.inCart}
-              onToggle={toggleItem}
-            />
+            <Item key={item.id} item={item} onToggle={toggleItem} />
           ))}
         </section>
 
@@ -109,14 +189,7 @@ export default function Cart() {
         <TextInput id="searchInput" onInput={getFilteredItems} />
         <section className="shop">
           {filterArray.map((item) => (
-            <Item
-              id={item.id}
-              key={item.id}
-              name={item.name}
-              price={item.price}
-              inCart={item.inCart}
-              onToggle={toggleItem}
-            />
+            <Item key={item.id} item={item} onToggle={toggleItem} />
           ))}
         </section>
       </Container>
