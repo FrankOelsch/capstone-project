@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import TextInput from "../components/input/TextInput";
 import Item from "../components/Item";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { UserContext } from "../UserContext";
 
 const shopItems = [
   {
@@ -41,6 +42,8 @@ const shopItems = [
 ];
 
 export default function Cart() {
+  const { config, setConfig } = useContext(UserContext);
+
   const [data, setData] = useState(shopItems);
   const [searchString, setSearchString] = useState("");
   const [toggleID, setToggleID] = useState("");

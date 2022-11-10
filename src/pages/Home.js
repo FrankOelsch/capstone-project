@@ -2,21 +2,18 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
 
-export default function Home({
-  config,
-  setConfig,
-  configForSave,
-  setConfigForSave,
-}) {
+export default function Home() {
+  const { config, setConfig } = useContext(UserContext);
+
   function handleClickSectional() {
     setConfig({ ...config, system: "Sectionaltor" });
-    setConfigForSave({ ...configForSave, system: "Sectionaltor" });
   }
 
   function handleClickRundlauf() {
     setConfig({ ...config, system: "Rundlauftor" });
-    setConfigForSave({ ...configForSave, system: "Rundlauftor" });
   }
 
   return (
@@ -24,21 +21,21 @@ export default function Home({
       <Header />
       <Container>
         <section>Bitte wählen sie das gewünschte Torsystem:</section>
-        <StyledLink to="/config" onClick={handleClickSectional}>
+        <StyledLink to="/measure" onClick={handleClickSectional}>
           <h2>Sectionaltor</h2>
           <p>
             Öffnet nach oben
             <br />
             Breite bis 500 cm möglich
             <br />
-            Höhe abhängig von Breite
+            Höhe bis 250 möglich
             <br />
             Keine Bodenschiene
             <br />
             Seitliche Innenwände frei
           </p>
         </StyledLink>
-        <StyledLink to="/config" onClick={handleClickRundlauf}>
+        <StyledLink to="/measure" onClick={handleClickRundlauf}>
           <h2>Rundlauftor</h2>
           <p>
             Öffnet seitlich

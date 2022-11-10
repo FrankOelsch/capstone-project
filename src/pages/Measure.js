@@ -1,25 +1,26 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextInput from "../components/input/TextInput";
 import Select from "../components/select/Select";
+import { UserContext } from "../UserContext";
 
-export default function Config({
-  config,
-  setConfig,
-  configForSave,
-  setConfigForSave,
-}) {
+export default function Measure() {
+  const {
+    config,
+    setConfig,
+    configForSave,
+    setConfigForSave,
+    prevConfig,
+    setPrevConfig,
+  } = useContext(UserContext);
+
   const canvasRef = useRef(null);
 
-  const [messageW, setMessageW] = useState("");
-  const [messageH, setMessageH] = useState("");
-  const [messageR, setMessageR] = useState("");
-
-  const [prevWidth, setPrevWidth] = useState(250);
-  const [prevHeight, setPrevHeight] = useState(200);
-  const [prevRadius, setPrevRadius] = useState(30);
+  const inputWidthRef = useRef(null);
+  const inputHeightRef = useRef(null);
+  const inputRadiusRef = useRef(null);
 
   const [tempWidth, setTempWidth] = useState(250);
   const [tempHeight, setTempHeight] = useState(200);
@@ -32,12 +33,12 @@ export default function Config({
     })
   );
 
-  let ctx = null;
-  let canv = null;
+  const RUNDLAUF = "Rundlauftor";
+  const SECTIONAL = "Sectionaltor";
 
   useEffect(() => {
     checkConfig();
-  }, [messageW, messageH, messageR]);
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -48,8 +49,6 @@ export default function Config({
 
   function checkConfig() {
     let isUsefull = true;
-    const RUNDLAUF = "Rundlauftor";
-    const SECTIONAL = "Sectionaltor";
     const system = config.system;
 
     if (
@@ -62,31 +61,19 @@ export default function Config({
     } else {
       if (system === RUNDLAUF) {
         if (+config.width < 200 || +config.width > 600) {
-          setMessageW("Zulässige Werte: 200 - 600 cm.");
           isUsefull = false;
-        } else {
-          setMessageW("");
         }
         if (+config.height < 180 || +config.height > 300) {
-          setMessageH("Zulässige Werte: 175 - 300 mm.");
           isUsefull = false;
-        } else {
-          setMessageH("");
         }
       }
 
       if (system === SECTIONAL) {
         if (+config.width < 200 || +config.width > 500) {
-          setMessageW("Zulässige Werte: 200 - 500 cm.");
           isUsefull = false;
-        } else {
-          setMessageW("");
         }
         if (+config.height < 180 || +config.height > 250) {
-          setMessageH("Zulässige Werte: 175 - 250 mm.");
           isUsefull = false;
-        } else {
-          setMessageH("");
         }
       }
 
@@ -96,12 +83,7 @@ export default function Config({
         +config.radius > +config.height ||
         !config.radius
       ) {
-        setMessageR(
-          "Zulässige Werte: 0 - 50 % der Breite und 0 - 100 % der Höhe."
-        );
         isUsefull = false;
-      } else {
-        setMessageR("");
       }
 
       if (isUsefull) {
@@ -114,6 +96,13 @@ export default function Config({
 
         setConfigForSave(config);
 
+        const w = +prevConfig.width;
+        setTempWidth(w);
+        const h = +prevConfig.height;
+        setTempHeight(h);
+        const r = +prevConfig.radius;
+        setTempRadius(r);
+
         drawIt();
       }
     }
@@ -123,59 +112,71 @@ export default function Config({
     if (isNaN(e.target.value)) {
       return;
     }
+
+    const doorSystem = config.system;
+    changeInputMinMax(doorSystem);
+
     switch (e.target.id) {
-      case "gateW":
+      case "gateWidth":
         setConfig({ ...config, width: e.target.value });
         break;
-      case "gateH":
+      case "gateHeight":
         setConfig({ ...config, height: e.target.value });
         break;
       case "radius":
         setConfig({ ...config, radius: e.target.value });
         break;
+      default:
+        break;
     }
   }
 
-  function handleKeyDown(e) {
-    if (e.key === "Enter" || e.key === "Tab") {
-      checkConfig();
-      if (!e.target === "select") {
-        e.target.select();
-      }
+  function changeInputMinMax(doorSystem) {
+    let inputWidth = inputWidthRef.current;
+    let inputHeight = inputHeightRef.current;
+    let inputRadius = inputRadiusRef.current;
+
+    const w = inputWidth.value;
+    const h = inputHeight.value;
+    const radiusMax = Math.min(Math.trunc(+w / 2), +h);
+    inputRadius.max = radiusMax.toString();
+
+    if (doorSystem === SECTIONAL) {
+      inputWidth.max = "500";
+      inputHeight.max = "250";
+    } else {
+      inputWidth.max = "600";
+      inputHeight.max = "300";
     }
   }
 
   function handleSelect(e) {
-    setConfig({ ...config, system: e.target.value });
+    const value = e.target.value;
+    changeInputMinMax(value);
+    setConfig({ ...config, system: value });
   }
 
-  function handleClick() {
+  function handleSubmit(e) {
+    e.preventDefault();
     checkConfig();
   }
 
   function drawIt() {
-    if (messageW || messageH || messageR) {
-      return;
-    }
-
-    canv = canvasRef.current;
-    ctx = canv.getContext("2d");
+    let canv = canvasRef.current;
+    let ctx = canv.getContext("2d");
 
     let torBreite = +config.width;
-    let torBreitePrev = prevWidth;
-    let torBreiteTemp = tempWidth;
+    let torBreitePrev = +prevConfig.width;
 
     let torHoehe = +config.height;
-    let torHoehePrev = prevHeight;
-    let torHoeheTemp = tempHeight;
+    let torHoehePrev = +prevConfig.height;
 
     let torRadius = +config.radius;
-    let torRadiusPrev = prevRadius;
-    let torRadiusTemp = tempRadius;
+    let torRadiusPrev = +prevConfig.radius;
 
     let startY = 340;
     let canvBreite = canv.width;
-    let startXTemp = (canvBreite - torBreiteTemp) / 2;
+    let startXTemp = (canvBreite - tempWidth) / 2;
 
     let stepW = 0;
     if (torBreitePrev < torBreite) {
@@ -198,53 +199,63 @@ export default function Config({
       stepR = -1;
     }
 
+    let isBreiteEqual = false;
+    let isHoeheEqual = false;
+    let isRadiusEqual = false;
+
     if (tempWidth === torBreite) {
-      setPrevWidth(torBreite);
+      isBreiteEqual = true;
     } else {
       setTempWidth((prev) => prev + stepW);
     }
 
     if (tempHeight === torHoehe) {
-      setPrevHeight(torHoehe);
+      isHoeheEqual = true;
     } else {
       setTempHeight((prev) => prev + stepH);
     }
 
     if (tempRadius === torRadius) {
-      setPrevRadius(torRadius);
+      isRadiusEqual = true;
     } else {
       setTempRadius((prev) => prev + stepR);
     }
 
-    if (torBreiteTemp < 0) torBreiteTemp = 0;
-    if (torHoeheTemp < 0) torHoeheTemp = 0;
-    if (torRadiusTemp < 0) torRadiusTemp = 0;
+    if (isBreiteEqual && isHoeheEqual && isRadiusEqual) {
+      setPrevConfig({
+        ...prevConfig,
+        width: torBreite.toString(),
+        height: torHoehe.toString(),
+        radius: torRadius.toString(),
+      });
+    }
+
+    if (tempWidth < 200) setTempWidth(200);
+    if (tempHeight < 175) setTempHeight(175);
+    if (tempRadius < 0) setTempRadius(0);
 
     ctx.clearRect(0, 0, canv.width, canv.height);
     ctx.lineWidth = 4;
 
     ctx.beginPath();
     ctx.moveTo(startXTemp, startY);
-    ctx.lineTo(startXTemp, startY - torHoeheTemp + torRadiusTemp);
+    ctx.lineTo(startXTemp, startY - tempHeight + tempRadius);
     ctx.arcTo(
       startXTemp,
-      startY - torHoeheTemp,
-      startXTemp + torRadiusTemp,
-      startY - torHoeheTemp,
-      torRadiusTemp
+      startY - tempHeight,
+      startXTemp + tempRadius,
+      startY - tempHeight,
+      tempRadius
     );
-    ctx.lineTo(
-      startXTemp + torBreiteTemp - torRadiusTemp,
-      startY - torHoeheTemp
-    );
+    ctx.lineTo(startXTemp + tempWidth - tempRadius, startY - tempHeight);
     ctx.arcTo(
-      startXTemp + torBreiteTemp,
-      startY - torHoeheTemp,
-      startXTemp + torBreiteTemp,
-      startY - torHoeheTemp + torRadiusTemp,
-      torRadiusTemp
+      startXTemp + tempWidth,
+      startY - tempHeight,
+      startXTemp + tempWidth,
+      startY - tempHeight + tempRadius,
+      tempRadius
     );
-    ctx.lineTo(startXTemp + torBreiteTemp, startY);
+    ctx.lineTo(startXTemp + tempWidth, startY);
     ctx.closePath();
     ctx.stroke();
 
@@ -267,43 +278,56 @@ export default function Config({
           Your browser does not support the HTML5 canvas tag.
         </StyledCanvas>
 
-        <Select
-          onChange={handleSelect}
-          onKeyDown={handleKeyDown}
-          onClick={handleClick}
-          value={config.system}
-        />
-        <StyledMessage></StyledMessage>
+        <form onSubmit={handleSubmit}>
+          <StyledLabel htmlFor="system">Torsystem</StyledLabel>
+          <Select
+            id="system"
+            onChange={handleSelect}
+            value={config.system}
+            options={[
+              { name: "Sectionaltor", id: "Sectionaltor" },
+              { name: "Rundumtor", id: "Rundumtor" },
+            ]}
+          />
 
-        <StyledLabel htmlFor="gateW">Tor-Breite in cm</StyledLabel>
-        <TextInput
-          id="gateW"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onClick={handleClick}
-          value={config.width}
-        />
-        <StyledMessage> {messageW}</StyledMessage>
+          <StyledLabel htmlFor="gateWidth">Tor-Breite in cm</StyledLabel>
+          <TextInput
+            required
+            type="number"
+            id="gateWidth"
+            min="200"
+            max="500"
+            onChange={handleChange}
+            value={config.width}
+            ref={inputWidthRef}
+          />
 
-        <label htmlFor="gateH">Tor-Höhe in cm</label>
-        <TextInput
-          id="gateH"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onClick={handleClick}
-          value={config.height}
-        />
-        <StyledMessage> {messageH}</StyledMessage>
+          <label htmlFor="gateHeight">Tor-Höhe in cm</label>
+          <TextInput
+            required
+            type="number"
+            id="gateHeight"
+            min="175"
+            max="250"
+            onChange={handleChange}
+            value={config.height}
+            ref={inputHeightRef}
+          />
 
-        <label htmlFor="radius">Torbogen-Radius in cm</label>
-        <TextInput
-          id="radius"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onClick={handleClick}
-          value={config.radius}
-        />
-        <StyledMessage> {messageR}</StyledMessage>
+          <label htmlFor="radius">Torbogen-Radius in cm</label>
+          <TextInput
+            required
+            type="number"
+            id="radius"
+            min="0"
+            max="100"
+            onChange={handleChange}
+            value={config.radius}
+            ref={inputRadiusRef}
+          />
+
+          <StyledButton type="submit">Submit</StyledButton>
+        </form>
       </Container>
       <Footer />
     </>
@@ -336,9 +360,20 @@ const StyledH3 = styled.h3`
   margin: 10px;
 `;
 
-const StyledMessage = styled.p`
+const StyledButton = styled.button`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1em;
-  color: blue;
-  margin-bottom: 10px;
+  font-size: 1.2em;
+  width: 200px;
+  padding: 3px;
+  margin-top: 20px;
+  border: 3px solid;
+  border-color: hsl(216, 65%, 80%);
+  border-radius: 6px;
+  outline: none;
+  background-color: hsl(216, 65%, 80%);
+  box-shadow: 3px 3px 3px lightgrey;
+
+  &:focus {
+    border-color: hsl(216, 65%, 50%);
+  }
 `;
