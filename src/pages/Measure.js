@@ -33,12 +33,6 @@ export default function Measure() {
     })
   );
 
-  let ctx = null;
-  let canv = null;
-  let inputWidth = null;
-  let inputHeight = null;
-  let inputRadius = null;
-
   const RUNDLAUF = "Rundlauftor";
   const SECTIONAL = "Sectionaltor";
 
@@ -132,13 +126,15 @@ export default function Measure() {
       case "radius":
         setConfig({ ...config, radius: e.target.value });
         break;
+      default:
+        break;
     }
   }
 
   function changeInputMinMax(doorSystem) {
-    inputWidth = inputWidthRef.current;
-    inputHeight = inputHeightRef.current;
-    inputRadius = inputRadiusRef.current;
+    let inputWidth = inputWidthRef.current;
+    let inputHeight = inputHeightRef.current;
+    let inputRadius = inputRadiusRef.current;
 
     const w = inputWidth.value;
     const h = inputHeight.value;
@@ -166,8 +162,8 @@ export default function Measure() {
   }
 
   function drawIt() {
-    canv = canvasRef.current;
-    ctx = canv.getContext("2d");
+    let canv = canvasRef.current;
+    let ctx = canv.getContext("2d");
 
     let torBreite = +config.width;
     let torBreitePrev = +prevConfig.width;
@@ -289,8 +285,8 @@ export default function Measure() {
             onChange={handleSelect}
             value={config.system}
             options={[
-              { de: "Sectionaltor", id: "Sectionaltor" },
-              { de: "Rundumtor", id: "Rundumtor" },
+              { name: "Sectionaltor", id: "Sectionaltor" },
+              { name: "Rundumtor", id: "Rundumtor" },
             ]}
           />
 

@@ -3,25 +3,10 @@ import styled from "styled-components";
 import Theme from "../../Theme";
 
 const TextInput = forwardRef((props, ref) => {
-  const onFocus = (event) => {
-    if (event.key === "Tab") {
-      return false;
-    }
-    setTimeout(() => {
-      event.target.select();
-    }, 100);
-  };
-
   return (
     <Theme>
       <div>
-        <StyledInput
-          type="text"
-          autoComplete="off"
-          onFocus={onFocus}
-          {...props}
-          ref={ref}
-        />
+        <StyledInput type="text" autoComplete="off" {...props} ref={ref} />
       </div>
     </Theme>
   );

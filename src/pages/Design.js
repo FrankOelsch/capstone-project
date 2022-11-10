@@ -12,9 +12,6 @@ export default function Design() {
 
   const canvasRef = useRef(null);
 
-  let ctx = null;
-  let canv = null;
-
   const [qm, setQm] = useState(
     ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
       maximumFractionDigits: 2,
@@ -56,8 +53,8 @@ export default function Design() {
   }
 
   function drawIt() {
-    canv = canvasRef.current;
-    ctx = canv.getContext("2d");
+    let canv = canvasRef.current;
+    let ctx = canv.getContext("2d");
 
     let tempWidth = +config.width;
     let tempHeight = +config.height;
@@ -136,8 +133,8 @@ export default function Design() {
             onChange={handleSelect}
             value={config.material}
             options={[
-              { de: "Metall", id: "Metall" },
-              { de: "Holz", id: "Holz" },
+              { name: "Metall", id: "Metall" },
+              { name: "Holz", id: "Holz" },
             ]}
           />
 
@@ -147,9 +144,9 @@ export default function Design() {
             onChange={handleSelect}
             value={config.design}
             options={[
-              { de: "Sicke", id: "Sicke" },
-              { de: "Großsicke", id: "Großsicke" },
-              { de: "Kassette", id: "Kassette" },
+              { name: "Sicke", id: "Sicke" },
+              { name: "Großsicke", id: "Großsicke" },
+              { name: "Kassette", id: "Kassette" },
             ]}
           />
 
