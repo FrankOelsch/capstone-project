@@ -1,13 +1,21 @@
 import styled from "styled-components";
 import Theme from "../../Theme";
 
-export default function Select({ onChange, onKeyDown, value }) {
+export default function Select({ onChange, onKeyDown, value, options, id }) {
   return (
     <Theme>
       <div>
-        <StyledSelect onChange={onChange} onKeyDown={onKeyDown} value={value}>
-          <option value={"Sectionaltor"}>Sectionaltor</option>
-          <option value={"Rundlauftor"}>Rundlauftor</option>
+        <StyledSelect
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={value}
+          id={id}
+        >
+          {options.map((item) => (
+            <option key={item.id} value={item.de}>
+              {item.de}
+            </option>
+          ))}
         </StyledSelect>
       </div>
     </Theme>

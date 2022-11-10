@@ -54,7 +54,7 @@ export default function Measure() {
   }, [tempWidth, tempHeight, tempRadius]);
 
   function checkConfig() {
-    console.log("checkConfig");
+    // console.log("checkConfig");
     let isUsefull = true;
     const system = config.system;
 
@@ -66,7 +66,7 @@ export default function Measure() {
     ) {
       return;
     } else {
-      console.log("else");
+      // console.log("else");
       if (system === RUNDLAUF) {
         if (+config.width < 200 || +config.width > 600) {
           isUsefull = false;
@@ -95,7 +95,7 @@ export default function Measure() {
       }
 
       if (isUsefull) {
-        console.log("isUsefull");
+        // console.log("isUsefull");
         setQm(
           ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
             maximumFractionDigits: 2,
@@ -169,7 +169,7 @@ export default function Measure() {
   }
 
   function drawIt() {
-    console.log("drawIt");
+    // console.log("drawIt");
 
     canv = canvasRef.current;
     ctx = canv.getContext("2d");
@@ -299,8 +299,16 @@ export default function Measure() {
         </StyledCanvas>
 
         <form onSubmit={handleSubmit}>
-          <Select onChange={handleSelect} value={config.system} />
-          <StyledMessage></StyledMessage>
+          <StyledLabel htmlFor="system">Torsystem</StyledLabel>
+          <Select
+            id="system"
+            onChange={handleSelect}
+            value={config.system}
+            options={[
+              { de: "Sectionaltor", id: "Sectionaltor" },
+              { de: "Rundumtor", id: "Rundumtor" },
+            ]}
+          />
 
           <StyledLabel htmlFor="gateWidth">Tor-Breite in cm</StyledLabel>
           <TextInput

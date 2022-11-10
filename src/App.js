@@ -12,6 +12,10 @@ const DoorConfig = {
   width: "250",
   height: "200",
   radius: "30",
+  material: "Metall",
+  design: "Sicke",
+  wallColor: "beige",
+  doorColor: "White",
 };
 
 const PrevDoorConfig = {
