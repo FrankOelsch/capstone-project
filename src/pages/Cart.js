@@ -71,6 +71,9 @@ export default function Cart() {
             <Item key={item.id} item={item} onToggle={toggleItem} />
           ))}
         </StyledSection>
+
+        <Box></Box>
+        <PropsBox background="blue" />
       </Container>
       <Footer />
     </>
@@ -98,3 +101,14 @@ const StyledH2 = styled.h2`
 const StyledSection = styled.section`
   width: 98%;
 `;
+
+const Box = styled.div({
+  background: "palevioletred",
+  height: "50px",
+  width: "50px",
+});
+const PropsBox = styled.div((props) => ({
+  background: props.background,
+  height: "50px",
+  width: "50px",
+}));

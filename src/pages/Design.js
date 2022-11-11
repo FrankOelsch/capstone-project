@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Select from "../components/select/Select";
 import { UserContext } from "../UserContext";
 import { RALColors } from "../data/ralColors";
+import { getLocaleString } from "../components/helper";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =
@@ -13,10 +14,7 @@ export default function Design() {
   const canvasRef = useRef(null);
 
   const [qm, setQm] = useState(
-    ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-    })
+    getLocaleString((+config.width * +config.height) / 10000)
   );
 
   useEffect(() => {
