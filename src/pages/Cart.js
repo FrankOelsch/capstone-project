@@ -13,19 +13,19 @@ export default function Cart() {
   const [shopItems, setShopItems] = useState(ShopItems);
   const [clickID, setClickID] = useState("");
 
-  useEffect(() => {
-    if (!clickID) return;
-    setShopItems(
-      shopItems.map((item) => {
-        if (item.id === clickID) {
-          setClickID("");
-          return { ...item, inCart: !item.inCart };
-        } else {
-          return item;
-        }
-      })
-    );
-  }, [clickID]);
+  // useEffect(() => {
+  //   if (!clickID) return;
+  //   setShopItems(
+  //     shopItems.map((item) => {
+  //       if (item.id === clickID) {
+  //         setClickID("");
+  //         return { ...item, inCart: !item.inCart };
+  //       } else {
+  //         return item;
+  //       }
+  //     })
+  //   );
+  // }, [clickID]);
 
   function handleCreate(id) {
     let bereitsInCart = false;
