@@ -1,4 +1,4 @@
-export const RALColors = [
+export const RalColors = [
   {
     ral: "1000",
     rgb: "190-189-127",

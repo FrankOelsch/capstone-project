@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Select from "../components/select/Select";
 import { UserContext } from "../UserContext";
-import { RALColors } from "../data/RALColors";
+import { RalColors } from "../data/RalColors";
 import { getLocaleString } from "../components/helper";
 
 export default function Design() {
@@ -46,6 +46,8 @@ export default function Design() {
         break;
       case "doorColor":
         setConfig({ ...config, doorColor: value });
+        break;
+      default:
         break;
     }
   }
@@ -122,7 +124,7 @@ export default function Design() {
             id="wallColor"
             onChange={handleSelect}
             value={config.wallColor}
-            options={RALColors}
+            options={RalColors}
           />
 
           <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
@@ -153,7 +155,7 @@ export default function Design() {
             id="doorColor"
             onChange={handleSelect}
             value={config.doorColor}
-            options={RALColors}
+            options={RalColors}
           />
 
           <StyledButton type="submit">Submit</StyledButton>
