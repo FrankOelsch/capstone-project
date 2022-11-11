@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Select from "../components/select/Select";
 import { UserContext } from "../UserContext";
-import { RALColors } from "../data/ral-colors";
+import { RALColors } from "../data/ralColors";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =

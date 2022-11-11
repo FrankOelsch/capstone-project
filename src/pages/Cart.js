@@ -5,128 +5,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { UserContext } from "../UserContext";
-
-const shopItems = [
-  {
-    id: "1",
-    name: "Zahnriemenantrieb für Sectionaltore, mit Funksteuerung 868MHz und 4-Kanal-Handsender",
-    unit: "Stück",
-    price: 720,
-    quantity: 1,
-    for: "sect",
-    inCart: false,
-  },
-
-  {
-    id: "2",
-    name: "Spezialantrieb für Rundlauftore, mit Funksteuerung 868MHz, 4-Kanal-Handsender und Drucktaster",
-    unit: "Stück",
-    price: 920,
-    quantity: 1,
-    for: "rund",
-    inCart: false,
-  },
-
-  {
-    id: "3",
-    name: "Zusätzlicher 4-Kanal-Handsender",
-    unit: "Stück",
-    price: 75,
-    quantity: 1,
-    for: "all",
-    inCart: false,
-  },
-
-  {
-    id: "4",
-    name: "Funk-Codetaster Aufputz",
-    unit: "Stück",
-    price: 160,
-    quantity: 1,
-    for: "all",
-    inCart: false,
-  },
-
-  {
-    id: "5",
-    name: "Schlüsselschalter Aufputz oder Unterputz",
-    unit: "Stück",
-    price: 79,
-    quantity: 1,
-    for: "all",
-    inCart: false,
-  },
-
-  {
-    id: "6",
-    name: "Fingerscan-Schalter",
-    unit: "Stück",
-    price: 480,
-    quantity: 1,
-    for: "all",
-    inCart: false,
-  },
-
-  {
-    id: "7",
-    name: "Funkempfänger für Fremdantriebe",
-    unit: "Stück",
-    price: 145,
-    quantity: 1,
-    for: "all",
-    inCart: false,
-  },
-
-  {
-    id: "8",
-    name: "Notentriegelung (falls kein zweiter Zugang zur Garage)",
-    unit: "Stück",
-    price: 70,
-    quantity: 1,
-    for: "all",
-    inCart: false,
-  },
-
-  {
-    id: "9",
-    name: "Gleichschließender Zylinder",
-    unit: "Stück",
-    price: 15,
-    quantity: 1,
-    for: "all",
-    inCart: false,
-  },
-
-  {
-    id: "10",
-    name: "Schienenheizung komplett für Bodenschiene im Einfahrtsbereich",
-    unit: "Stück",
-    price: 540,
-    quantity: 1,
-    for: "rund",
-    inCart: false,
-  },
-
-  {
-    id: "11",
-    name: "Dumnmy",
-    unit: "Stück",
-    price: 540,
-    quantity: 1,
-    for: "rund",
-    inCart: false,
-  },
-
-  {
-    id: "12",
-    name: "Dumnmy",
-    unit: "Stück",
-    price: 540,
-    quantity: 1,
-    for: "rund",
-    inCart: false,
-  },
-];
+import { shopItems } from "../data/shopItems";
 
 export default function Cart() {
   const { config, setConfig } = useContext(UserContext);
@@ -179,19 +58,19 @@ export default function Cart() {
       <Header />
       <Container>
         <StyledH2>Warenkorb:</StyledH2>
-        <section className="cart">
+        <StyledSection>
           {cartArray.map((item) => (
             <Item key={item.id} item={item} onToggle={toggleItem} />
           ))}
-        </section>
+        </StyledSection>
 
-        <StyledH2>Artikel-Suche:</StyledH2>
+        <StyledH2>Artikel:</StyledH2>
         <TextInput id="searchInput" onInput={getFilteredItems} />
-        <section className="shop">
+        <StyledSection>
           {filterArray.map((item) => (
             <Item key={item.id} item={item} onToggle={toggleItem} />
           ))}
-        </section>
+        </StyledSection>
       </Container>
       <Footer />
     </>
@@ -214,4 +93,8 @@ const StyledH2 = styled.h2`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.4em;
   margin-top: 10px;
+`;
+
+const StyledSection = styled.section`
+  width: 98%;
 `;
