@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Select from "../components/select/Select";
 import { UserContext } from "../UserContext";
-import { RALColors } from "../data/ralColors";
+import { RALColors } from "../data/RALColors";
 import { getLocaleString } from "../components/helper";
 
 export default function Design() {

@@ -1,15 +1,4 @@
-export const shopItems = [
-  {
-    id: "1",
-    name: "Sectionaltor",
-    description: "Sectionaltor",
-    unit: "qm",
-    price: 300,
-    quantity: 10,
-    for: "all",
-    inCart: true,
-    autoCreated: true,
-  },
+export const ShopItems = [
   {
     id: "2",
     name: "Zahnriemenantrieb",
