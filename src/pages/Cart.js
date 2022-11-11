@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { UserContext } from "../UserContext";
-import { ShopItems } from "../data/ShopItems";
+import { ShopItems } from "../data/Items";
 
 export default function Cart() {
   const { config, setConfig, cartItems, setCartItems } =
