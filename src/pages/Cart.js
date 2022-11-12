@@ -5,6 +5,24 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { UserContext } from "../UserContext";
 import { ShopItems } from "../data/Items";
+import ReactModal from "react-modal";
+
+const customStyles = {
+  overlay: {
+    backgroundColor: "papayawhip",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "lightsteelblue",
+  },
+};
+
+ReactModal.setAppElement("body");
 
 export default function Cart() {
   const { config, setConfig, cartItems, setCartItems } =
@@ -15,6 +33,10 @@ export default function Cart() {
   const filteredShopItems = shopItems.filter((item) => {
     return item.for === "all" || item.for === config.system;
   });
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  let subtitle;
+  const [cartItem, setCartItem] = useState({ name: "blub", id: "0" });
 
   function handleCreate(id) {
     let bereitsInCart = false;
@@ -55,7 +77,49 @@ export default function Cart() {
   }
 
   function handleEdit(id) {
-    //setClickID(id);
+    const newArray = cartItems.filter((item) => {
+      return item.id === id;
+    });
+
+    if (newArray) {
+      const newItem = newArray[0];
+      setCartItem(newItem);
+    }
+
+    setModalIsOpen(true);
+  }
+
+  function handleOnChange(event) {
+    const value = event.target.value;
+    setCartItem({ ...cartItem, name: value });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const values = Object.fromEntries(data);
+
+    setCartItems(
+      cartItems.map((item) => {
+        if (item.id === values.id) {
+          return { ...item, name: values.name };
+        } else {
+          return item;
+        }
+      })
+    );
+
+    console.log("handleEdit");
+    // console.log(values.name);
+    // console.log(values.id);
+  }
+
+  function closeModal(e) {
+    setModalIsOpen(false);
+  }
+
+  function handleAfterClose() {
+    console.log("handleAfterClose");
   }
 
   return (
@@ -74,6 +138,32 @@ export default function Cart() {
             />
           ))}
         </StyledSection>
+
+        <ReactModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          onAfterClose={handleAfterClose}
+          style={customStyles}
+          contentLabel="Artikel Bearbeiten"
+          preventScroll={true}
+        >
+          <StyledH3>Artikel bearbeiten</StyledH3>
+          <form onSubmit={handleSubmit}>
+            <input type="hidden" name="id" value={cartItem.id} />
+            <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
+            <br />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={cartItem.name}
+              onChange={handleOnChange}
+            />
+            <br />
+            <button type="submit">Speichern</button>
+          </form>
+          <button onClick={closeModal}>Zurück</button>
+        </ReactModal>
 
         <StyledH2>Artikel:</StyledH2>
         <StyledSection>
@@ -111,6 +201,18 @@ const StyledH2 = styled.h2`
   margin-top: 10px;
 `;
 
+const StyledH3 = styled.h3`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  margin: 10px;
+`;
+
 const StyledSection = styled.section`
   width: 98%;
+`;
+
+const StyledLabel = styled.label`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  color: black;
 `;
