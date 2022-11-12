@@ -54,33 +54,27 @@ export default function Cart() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const [cartItem, setCartItem] = useState({ name: "blub", id: "0" });
+  const [cartItem, setCartItem] = useState({ name: "", id: "0" });
 
   function handleCreate(id) {
-    let bereitsInCart = false;
+    const result = cartItems.find((item) => item.id === id);
 
-    setCartItems(
-      cartItems.map((item) => {
-        if (item.id === id) {
-          bereitsInCart = true;
-          return { ...item, quantity: +item.quantity + 1 };
-        } else {
-          return item;
-        }
-      })
-    );
-
-    if (!bereitsInCart) {
-      const newArray = shopItems.filter((item) => {
-        return item.id === id;
-      });
-
-      if (newArray) {
-        const newItem = newArray[0];
-
+    if (result) {
+      setCartItems(
+        cartItems.map((item) => {
+          if (item.id === id) {
+            return { ...item, quantity: +item.quantity + 1 };
+          } else {
+            return item;
+          }
+        })
+      );
+    } else {
+      const newItem = shopItems.find((item) => item.id === id);
+      if (newItem) {
         setCartItems((cartItems) => [
           ...cartItems,
-          { ...newItem, inCart: !newItem.inCart },
+          { ...newItem, inCart: true },
         ]);
       }
     }
@@ -99,7 +93,7 @@ export default function Cart() {
       return item.id === id;
     });
 
-    if (newArray) {
+    if (newArray.length > 0) {
       const newItem = newArray[0];
       setCartItem(newItem);
     }
