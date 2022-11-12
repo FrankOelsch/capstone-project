@@ -138,9 +138,9 @@ const Actions = styled.div`
 
 const Create = styled.button`
   grid-area: create;
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
   border-style: none;
   background-color: blue;
   justify-self: end;
@@ -150,9 +150,9 @@ const Create = styled.button`
 
 const Edit = styled.button`
   grid-area: edit;
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
   border-style: none;
   background-color: green;
   justify-self: end;
@@ -162,9 +162,9 @@ const Edit = styled.button`
 
 const Delete = styled.button`
   grid-area: delete;
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
   border-style: none;
   background-color: red;
   justify-self: end;

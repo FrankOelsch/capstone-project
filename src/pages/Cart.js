@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import Item from "../components/Item";
 import styled from "styled-components";
 import Header from "../components/Header";
@@ -11,21 +11,10 @@ export default function Cart() {
     useContext(UserContext);
 
   const [shopItems, setShopItems] = useState(ShopItems);
-  const [clickID, setClickID] = useState("");
 
-  // useEffect(() => {
-  //   if (!clickID) return;
-  //   setShopItems(
-  //     shopItems.map((item) => {
-  //       if (item.id === clickID) {
-  //         setClickID("");
-  //         return { ...item, inCart: !item.inCart };
-  //       } else {
-  //         return item;
-  //       }
-  //     })
-  //   );
-  // }, [clickID]);
+  const filteredShopItems = shopItems.filter((item) => {
+    return item.for === "all" || item.for === config.system;
+  });
 
   function handleCreate(id) {
     let bereitsInCart = false;
@@ -58,11 +47,15 @@ export default function Cart() {
   }
 
   function handleDelete(id) {
-    setClickID(id);
+    setCartItems(
+      cartItems.filter((item) => {
+        return item.id !== id;
+      })
+    );
   }
 
   function handleEdit(id) {
-    setClickID(id);
+    //setClickID(id);
   }
 
   return (
@@ -84,7 +77,7 @@ export default function Cart() {
 
         <StyledH2>Artikel:</StyledH2>
         <StyledSection>
-          {shopItems.map((item) => (
+          {filteredShopItems.map((item) => (
             <Item
               key={item.id}
               item={item}
