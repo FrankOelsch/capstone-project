@@ -14,7 +14,7 @@ export default function Item({ item, onCreate, onEdit, onDelete }) {
       <Price>{getLocaleString(+item.price * +item.quantity)}</Price>
 
       <Actions id="actions">
-        {item.inCart && (
+        {item.inCart && !item.autoCreated && (
           <div id="edit">
             <Edit
               data-tip
@@ -49,6 +49,19 @@ export default function Item({ item, onCreate, onEdit, onDelete }) {
             ></Create>
             <ReactTooltip id="ttcreate" type="info">
               In Warenkorb
+            </ReactTooltip>
+          </div>
+        )}
+
+        {item.inCart && item.autoCreated && (
+          <div id="autocreated">
+            <AutoCreated data-tip data-for="ttauto"></AutoCreated>
+            <ReactTooltip id="ttauto" type="info">
+              Wurde automatisch
+              <br />
+              entsprechend den
+              <br />
+              Einstellungen erstellt
             </ReactTooltip>
           </div>
         )}
@@ -142,7 +155,7 @@ const Create = styled.button`
   height: 20px;
   border-radius: 10px;
   border-style: none;
-  background-color: blue;
+  background-color: green;
   justify-self: end;
   margin-left: 4px;
   cursor: pointer;
@@ -154,7 +167,7 @@ const Edit = styled.button`
   height: 20px;
   border-radius: 10px;
   border-style: none;
-  background-color: green;
+  background-color: blue;
   justify-self: end;
   margin-left: 4px;
   cursor: pointer;
@@ -167,6 +180,18 @@ const Delete = styled.button`
   border-radius: 10px;
   border-style: none;
   background-color: red;
+  justify-self: end;
+  margin-left: 4px;
+  cursor: pointer;
+`;
+
+const AutoCreated = styled.button`
+  grid-area: delete;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border-style: none;
+  background-color: green;
   justify-self: end;
   margin-left: 4px;
   cursor: pointer;

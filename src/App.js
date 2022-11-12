@@ -20,7 +20,7 @@ const DoorConfig = {
 
 const PrevDoorConfig = {
   system: "Sectionaltor",
-  width: "200",
+  width: "250",
   height: "200",
   radius: "30",
 };
@@ -33,7 +33,18 @@ const CartItems = [
     unit: "qm",
     price: 300,
     quantity: 10,
-    for: "all",
+    for: "Sectionaltor",
+    inCart: true,
+    autoCreated: true,
+  },
+  {
+    id: "2",
+    name: "Rundlauftor",
+    description: "Rundlauftor",
+    unit: "qm",
+    price: 300,
+    quantity: 10,
+    for: "Rundlauftor",
     inCart: true,
     autoCreated: true,
   },

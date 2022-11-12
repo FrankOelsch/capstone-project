@@ -279,7 +279,7 @@ export default function Measure() {
             value={config.system}
             options={[
               { name: "Sectionaltor", id: "Sectionaltor" },
-              { name: "Rundumtor", id: "Rundumtor" },
+              { name: "Rundlauftor", id: "Rundlauftor" },
             ]}
           />
 

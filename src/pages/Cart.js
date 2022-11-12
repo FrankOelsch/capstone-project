@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Item from "../components/Item";
 import styled from "styled-components";
 import Header from "../components/Header";
@@ -25,8 +25,7 @@ const customStyles = {
 ReactModal.setAppElement("body");
 
 export default function Cart() {
-  const { config, setConfig, cartItems, setCartItems } =
-    useContext(UserContext);
+  const { config, cartItems, setCartItems } = useContext(UserContext);
 
   const [shopItems, setShopItems] = useState(ShopItems);
 
@@ -34,8 +33,27 @@ export default function Cart() {
     return item.for === "all" || item.for === config.system;
   });
 
+  useEffect(() => {
+    setCartItems(
+      cartItems.map((item) => {
+        if (item.autoCreated) {
+          return {
+            ...item,
+            quantity: (+config.width * +config.height) / 10000,
+          };
+        } else {
+          return item;
+        }
+      })
+    );
+  }, []);
+
+  const filteredCartItems = cartItems.filter((item) => {
+    return item.for === config.system || item.for === "all";
+  });
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  let subtitle;
+
   const [cartItem, setCartItem] = useState({ name: "blub", id: "0" });
 
   function handleCreate(id) {
@@ -108,18 +126,10 @@ export default function Cart() {
         }
       })
     );
-
-    console.log("handleEdit");
-    // console.log(values.name);
-    // console.log(values.id);
   }
 
   function closeModal(e) {
     setModalIsOpen(false);
-  }
-
-  function handleAfterClose() {
-    console.log("handleAfterClose");
   }
 
   return (
@@ -128,7 +138,7 @@ export default function Cart() {
       <Container>
         <StyledH2>Warenkorb:</StyledH2>
         <StyledSection>
-          {cartItems.map((item) => (
+          {filteredCartItems.map((item) => (
             <Item
               key={item.id}
               item={item}
@@ -142,7 +152,6 @@ export default function Cart() {
         <ReactModal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
-          onAfterClose={handleAfterClose}
           style={customStyles}
           contentLabel="Artikel Bearbeiten"
           preventScroll={true}

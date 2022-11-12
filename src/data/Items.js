@@ -1,6 +1,6 @@
 export const ShopItems = [
   {
-    id: "2",
+    id: "3",
     name: "Zahnriemenantrieb",
     description:
       "Zahnriemenantrieb für Sectionaltore, mit Funksteuerung 868MHz und 4-Kanal-Handsender",
@@ -12,7 +12,7 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "3",
+    id: "4",
     name: "Spezialantrieb",
     description:
       "Spezialantrieb für Rundlauftore, mit Funksteuerung 868MHz, 4-Kanal-Handsender und Drucktaster",
@@ -24,7 +24,7 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "4",
+    id: "5",
     name: "Handsender",
     description: "Zusätzlicher 4-Kanal-Handsender",
     unit: "Stück",
@@ -35,7 +35,7 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "5",
+    id: "6",
     name: "Codetaster",
     description: "Funk-Codetaster Aufputz",
     unit: "Stück",
@@ -46,7 +46,7 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "6",
+    id: "7",
     name: "Schlüsselschalter",
     description: "Schlüsselschalter Aufputz oder Unterputz",
     unit: "Stück",
@@ -57,7 +57,7 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "7",
+    id: "8",
     name: "Fingerscan",
     description: "Fingerscan-Schalter",
     unit: "Stück",
@@ -68,7 +68,7 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "8",
+    id: "9",
     name: "Funkempfänger",
     description: "Funkempfänger für Fremdantriebe",
     unit: "Stück",
@@ -79,7 +79,7 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "9",
+    id: "10",
     name: "Notentriegelung",
     description: "Notentriegelung (falls kein zweiter Zugang zur Garage)",
     unit: "Stück",
@@ -90,7 +90,7 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "10",
+    id: "11",
     name: "Zylinder",
     description: "Gleichschließender Zylinder",
     unit: "Stück",
@@ -101,21 +101,10 @@ export const ShopItems = [
     autoCreated: false,
   },
   {
-    id: "11",
+    id: "12",
     name: "Schienenheizung",
     description:
       "Schienenheizung komplett für Bodenschiene im Einfahrtsbereich",
-    unit: "Stück",
-    price: 540,
-    quantity: 1,
-    for: "Rundlauftor",
-    inCart: false,
-    autoCreated: false,
-  },
-  {
-    id: "12",
-    name: "Dummy",
-    description: "Dumnmy",
     unit: "Stück",
     price: 540,
     quantity: 1,
