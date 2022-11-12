@@ -1,90 +1,129 @@
-import { useState, useEffect, useContext } from "react";
-import TextInput from "../components/input/TextInput";
+import { useState, useContext, useEffect } from "react";
 import Item from "../components/Item";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { UserContext } from "../UserContext";
+import { ShopItems } from "../data/Items";
+import ReactModal from "react-modal";
 
-const shopItems = [
-  {
-    id: "1",
-    name: "Decken-Sectionaltor Holz",
-    qu: "qm",
-    price: 180,
-    quantity: 1,
-    inCart: false,
+const customStyles = {
+  overlay: {
+    backgroundColor: "papayawhip",
   },
-  {
-    id: "2",
-    name: "Decken-Sectionaltor Stahl",
-    qu: "qm",
-    price: 120,
-    quantity: 1,
-    inCart: false,
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "lightsteelblue",
   },
-  {
-    id: "3",
-    name: "Rundlauftor Holz",
-    qu: "qm",
-    price: 80,
-    quantity: 1,
-    inCart: false,
-  },
-  {
-    id: "4",
-    name: "Rundlauftor Aluminium",
-    qu: "qm",
-    price: 150,
-    quantity: 1,
-    inCart: false,
-  },
-];
+};
+
+ReactModal.setAppElement("body");
 
 export default function Cart() {
-  const { config, setConfig } = useContext(UserContext);
+  const { config, cartItems, setCartItems } = useContext(UserContext);
 
-  const [data, setData] = useState(shopItems);
-  const [searchString, setSearchString] = useState("");
-  const [toggleID, setToggleID] = useState("");
+  const [shopItems, setShopItems] = useState(ShopItems);
 
-  const { search } = require("fast-fuzzy");
-
-  const falseArray = [];
-  const cartArray = [];
+  const filteredShopItems = shopItems.filter((item) => {
+    return item.for === "all" || item.for === config.system;
+  });
 
   useEffect(() => {
-    if (!toggleID) return;
-    setData(
-      data.map((item) => {
-        if (item.id === toggleID) {
-          setToggleID("");
-          return { ...item, inCart: !item.inCart };
+    setCartItems(
+      cartItems.map((item) => {
+        if (item.autoCreated) {
+          return {
+            ...item,
+            quantity: (+config.width * +config.height) / 10000,
+          };
         } else {
           return item;
         }
       })
     );
-  }, [toggleID]);
+  }, []);
 
-  data.forEach((item) => {
-    if (item.inCart) {
-      cartArray.push(item);
+  const filteredCartItems = cartItems.filter((item) => {
+    return item.for === config.system || item.for === "all";
+  });
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const [cartItem, setCartItem] = useState({ name: "", id: "0" });
+
+  function handleCreate(id) {
+    const result = cartItems.find((item) => item.id === id);
+
+    if (result) {
+      setCartItems(
+        cartItems.map((item) => {
+          if (item.id === id) {
+            return { ...item, quantity: +item.quantity + 1 };
+          } else {
+            return item;
+          }
+        })
+      );
     } else {
-      falseArray.push(item);
+      const newItem = shopItems.find((item) => item.id === id);
+      if (newItem) {
+        setCartItems((cartItems) => [
+          ...cartItems,
+          { ...newItem, inCart: true },
+        ]);
+      }
     }
-  });
-
-  const filterArray = search(searchString, falseArray, {
-    keySelector: (obj) => obj.name,
-  });
-
-  function getFilteredItems(e) {
-    setSearchString(e.target.value);
   }
 
-  function toggleItem(id) {
-    setToggleID(id);
+  function handleDelete(id) {
+    setCartItems(
+      cartItems.filter((item) => {
+        return item.id !== id;
+      })
+    );
+  }
+
+  function handleEdit(id) {
+    const newArray = cartItems.filter((item) => {
+      return item.id === id;
+    });
+
+    if (newArray.length > 0) {
+      const newItem = newArray[0];
+      setCartItem(newItem);
+    }
+
+    setModalIsOpen(true);
+  }
+
+  function handleOnChange(event) {
+    const value = event.target.value;
+    setCartItem({ ...cartItem, name: value });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const values = Object.fromEntries(data);
+
+    setCartItems(
+      cartItems.map((item) => {
+        if (item.id === values.id) {
+          return { ...item, name: values.name };
+        } else {
+          return item;
+        }
+      })
+    );
+  }
+
+  function closeModal(e) {
+    setModalIsOpen(false);
   }
 
   return (
@@ -92,33 +131,55 @@ export default function Cart() {
       <Header />
       <Container>
         <StyledH2>Warenkorb:</StyledH2>
-        <section className="cart">
-          {cartArray.map((item) => (
+        <StyledSection>
+          {filteredCartItems.map((item) => (
             <Item
-              id={item.id}
               key={item.id}
-              name={item.name}
-              price={item.price}
-              inCart={item.inCart}
-              onToggle={toggleItem}
+              item={item}
+              onCreate={handleCreate}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
             />
           ))}
-        </section>
+        </StyledSection>
 
-        <StyledH2>Artikel-Suche:</StyledH2>
-        <TextInput id="searchInput" onInput={getFilteredItems} />
-        <section className="shop">
-          {filterArray.map((item) => (
+        <ReactModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Artikel Bearbeiten"
+          preventScroll={true}
+        >
+          <StyledH3>Artikel bearbeiten</StyledH3>
+          <form onSubmit={handleSubmit}>
+            <input type="hidden" name="id" value={cartItem.id} />
+            <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
+            <br />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={cartItem.name}
+              onChange={handleOnChange}
+            />
+            <br />
+            <button type="submit">Speichern</button>
+          </form>
+          <button onClick={closeModal}>Zurück</button>
+        </ReactModal>
+
+        <StyledH2>Artikel:</StyledH2>
+        <StyledSection>
+          {filteredShopItems.map((item) => (
             <Item
-              id={item.id}
               key={item.id}
-              name={item.name}
-              price={item.price}
-              inCart={item.inCart}
-              onToggle={toggleItem}
+              item={item}
+              onCreate={handleCreate}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
             />
           ))}
-        </section>
+        </StyledSection>
       </Container>
       <Footer />
     </>
@@ -141,4 +202,20 @@ const StyledH2 = styled.h2`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.4em;
   margin-top: 10px;
+`;
+
+const StyledH3 = styled.h3`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  margin: 10px;
+`;
+
+const StyledSection = styled.section`
+  width: 98%;
+`;
+
+const StyledLabel = styled.label`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  color: black;
 `;

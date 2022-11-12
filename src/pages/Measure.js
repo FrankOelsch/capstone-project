@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { getLocaleString } from "../components/helper";
 import TextInput from "../components/input/TextInput";
 import Select from "../components/select/Select";
 import { UserContext } from "../UserContext";
@@ -27,10 +28,7 @@ export default function Measure() {
   const [tempRadius, setTempRadius] = useState(30);
 
   const [qm, setQm] = useState(
-    ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-    })
+    getLocaleString((+config.width * +config.height) / 10000)
   );
 
   const RUNDLAUF = "Rundlauftor";
@@ -87,12 +85,7 @@ export default function Measure() {
       }
 
       if (isUsefull) {
-        setQm(
-          ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2,
-          })
-        );
+        setQm(getLocaleString((+config.width * +config.height) / 10000));
 
         setConfigForSave(config);
 
@@ -286,7 +279,7 @@ export default function Measure() {
             value={config.system}
             options={[
               { name: "Sectionaltor", id: "Sectionaltor" },
-              { name: "Rundumtor", id: "Rundumtor" },
+              { name: "Rundlauftor", id: "Rundlauftor" },
             ]}
           />
 

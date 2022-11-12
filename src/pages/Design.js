@@ -4,7 +4,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Select from "../components/select/Select";
 import { UserContext } from "../UserContext";
-import { RALColors } from "../data/ral-colors";
+import { RalColors } from "../data/RalColors";
+import { getLocaleString } from "../components/helper";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =
@@ -13,10 +14,7 @@ export default function Design() {
   const canvasRef = useRef(null);
 
   const [qm, setQm] = useState(
-    ((+config.width * +config.height) / 10000).toLocaleString(undefined, {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-    })
+    getLocaleString((+config.width * +config.height) / 10000)
   );
 
   useEffect(() => {
@@ -48,6 +46,8 @@ export default function Design() {
         break;
       case "doorColor":
         setConfig({ ...config, doorColor: value });
+        break;
+      default:
         break;
     }
   }
@@ -124,7 +124,7 @@ export default function Design() {
             id="wallColor"
             onChange={handleSelect}
             value={config.wallColor}
-            options={RALColors}
+            options={RalColors}
           />
 
           <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
@@ -155,7 +155,7 @@ export default function Design() {
             id="doorColor"
             onChange={handleSelect}
             value={config.doorColor}
-            options={RALColors}
+            options={RalColors}
           />
 
           <StyledButton type="submit">Submit</StyledButton>

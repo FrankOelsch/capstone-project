@@ -20,10 +20,35 @@ const DoorConfig = {
 
 const PrevDoorConfig = {
   system: "Sectionaltor",
-  width: "200",
+  width: "250",
   height: "200",
   radius: "30",
 };
+
+const CartItems = [
+  {
+    id: "1",
+    name: "Sectionaltor",
+    description: "Sectionaltor",
+    unit: "qm",
+    price: 300,
+    quantity: 10,
+    for: "Sectionaltor",
+    inCart: true,
+    autoCreated: true,
+  },
+  {
+    id: "2",
+    name: "Rundlauftor",
+    description: "Rundlauftor",
+    unit: "qm",
+    price: 300,
+    quantity: 10,
+    for: "Rundlauftor",
+    inCart: true,
+    autoCreated: true,
+  },
+];
 
 function App() {
   const [configForSave, setConfigForSave] = useLocalStorage(
@@ -37,6 +62,8 @@ function App() {
     PrevDoorConfig
   );
 
+  const [cartItems, setCartItems] = useLocalStorage("CartItems", CartItems);
+
   return (
     <UserContext.Provider
       value={{
@@ -46,6 +73,8 @@ function App() {
         setConfigForSave,
         prevConfig,
         setPrevConfig,
+        cartItems,
+        setCartItems,
       }}
     >
       <Routes>
