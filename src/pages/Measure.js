@@ -5,9 +5,9 @@ import Header from "../components/Header";
 import {
   getLocaleStringFromNumber,
   getSquareMeters,
-} from "../components/helper";
-import TextInput from "../components/input/TextInput";
-import Select from "../components/select/Select";
+} from "../utils/helper";
+import TextInput from "../components/TextInput";
+import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 
 export default function Measure() {

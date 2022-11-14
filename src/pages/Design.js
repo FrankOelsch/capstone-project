@@ -2,13 +2,13 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Select from "../components/select/Select";
+import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import { RalColors } from "../data/RalColors";
 import {
   getLocaleStringFromNumber,
   getSquareMeters,
-} from "../components/helper";
+} from "../utils/helper";
 import Button from "../components/button/Button";
 
 export default function Design() {

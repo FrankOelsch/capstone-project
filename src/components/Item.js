@@ -1,6 +1,6 @@
 import ReactTooltip from "react-tooltip";
 import styled from "styled-components";
-import { getLocaleStringFromNumber } from "./helper";
+import { getLocaleStringFromNumber } from "../utils/helper";
 
 export default function Item({ item, onCreate, onEdit, onDelete }) {
   return (

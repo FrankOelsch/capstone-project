@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import { UserContext } from "../UserContext";
 import { ShopItems } from "../data/Items";
 import ReactModal from "react-modal";
-import { getSquareMeters } from "../components/helper";
+import { getSquareMeters } from "../utils/helper";
 
 const customStyles = {
   overlay: {

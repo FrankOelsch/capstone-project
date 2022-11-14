@@ -1,8 +1,8 @@
 export function getLocaleStringFromNumber(number) {
-  if (!number || number === null || number === undefined || isNaN(number)) {
+  if (!number || isNaN(number)) {
     return "0,00";
   } else {
-    return number.toLocaleString("de", {
+    return (+number).toLocaleString("de", {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     });
@@ -10,7 +10,7 @@ export function getLocaleStringFromNumber(number) {
 }
 
 export function getSquareMeters(number1, number2) {
-  if (isNaN(number1) || isNaN(number2)) {
+  if (!number1 || !number2 || isNaN(number1) || isNaN(number2)) {
     return 0;
   } else {
     let squareMeters = (+number1 * +number2) / 10000;

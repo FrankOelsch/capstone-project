@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { CartIcon, Config2Icon, ConfigIcon, HomeIcon } from "./Icons";
+import { CartIcon, Config2Icon, ConfigIcon, HomeIcon } from "../Icons";
 
 export default function Footer() {
   return (

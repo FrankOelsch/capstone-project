@@ -69,7 +69,7 @@ describe("Check getLocaleStringFromNumber", () => {
 
 describe("Check getSquareMeters", () => {
   test("with NaN", async () => {
-    let number1 = "abc";
+    let number1 = undefined;
     let number2 = null;
     let squareMeters = getSquareMeters(number1, number2);
 
