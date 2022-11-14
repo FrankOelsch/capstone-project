@@ -2,7 +2,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { getLocaleString } from "../components/helper";
+import {
+  getLocaleStringFromNumber,
+  getSquareMeters,
+} from "../components/helper";
 import TextInput from "../components/input/TextInput";
 import Select from "../components/select/Select";
 import { UserContext } from "../UserContext";
@@ -28,7 +31,7 @@ export default function Measure() {
   const [tempRadius, setTempRadius] = useState(30);
 
   const [qm, setQm] = useState(
-    getLocaleString((+config.width * +config.height) / 10000)
+    getLocaleStringFromNumber(getSquareMeters(config.width, config.height))
   );
 
   const RUNDLAUF = "Rundlauftor";
@@ -85,7 +88,9 @@ export default function Measure() {
       }
 
       if (isUsefull) {
-        setQm(getLocaleString((+config.width * +config.height) / 10000));
+        setQm(
+          getLocaleStringFromNumber((+config.width * +config.height) / 10000)
+        );
 
         setConfigForSave(config);
 
@@ -319,7 +324,7 @@ export default function Measure() {
             ref={inputRadiusRef}
           />
 
-          <StyledButton type="submit">Submit</StyledButton>
+          <StyledButton type="submit">Berechnen</StyledButton>
         </form>
       </Container>
       <Footer />

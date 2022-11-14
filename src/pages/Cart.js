@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { UserContext } from "../UserContext";
 import { ShopItems } from "../data/Items";
 import ReactModal from "react-modal";
+import { getSquareMeters } from "../components/helper";
 
 const customStyles = {
   overlay: {
@@ -39,7 +40,7 @@ export default function Cart() {
         if (item.autoCreated) {
           return {
             ...item,
-            quantity: (+config.width * +config.height) / 10000,
+            quantity: getSquareMeters(config.width, config.height),
           };
         } else {
           return item;
@@ -168,7 +169,7 @@ export default function Cart() {
           <button onClick={closeModal}>Zurück</button>
         </ReactModal>
 
-        <StyledH2>Artikel:</StyledH2>
+        <StyledH2>Weitere Artikel:</StyledH2>
         <StyledSection>
           {filteredShopItems.map((item) => (
             <Item
