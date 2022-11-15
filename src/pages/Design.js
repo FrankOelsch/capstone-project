@@ -105,25 +105,68 @@ export default function Design() {
         );
       }
     } else {
-      ctx.strokeStyle = "hsl(0, 0%, 30%)";
+      ctx.strokeStyle = "hsl(0, 0%, 20%)";
       let segment = tempHeight / 4;
-      let subsegment = segment / 4;
       for (let i = 0; i < tempHeight; i += segment) {
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 4;
         ctx.strokeRect(
           startXTemp,
           canv.height - (canv.height - startY) - tempHeight + i,
           tempWidth,
           segment
         );
-        for (let ii = 0; ii < tempHeight; ii += subsegment) {
-          ctx.lineWidth = 2;
-          ctx.strokeRect(
-            startXTemp,
-            canv.height - (canv.height - startY) - tempHeight + ii,
-            tempWidth,
-            subsegment
-          );
+        if (config.design === "Sicke") {
+          let subsegment = segment / 3;
+          for (let ii = 0; ii < tempHeight; ii += subsegment) {
+            ctx.lineWidth = 1;
+            ctx.strokeRect(
+              startXTemp,
+              canv.height - (canv.height - startY) - tempHeight + ii,
+              tempWidth,
+              subsegment
+            );
+          }
+        } else if (config.design === "Großsicke") {
+          let subsegment = segment / 2;
+          for (let ii = 0; ii < tempHeight; ii += subsegment) {
+            ctx.lineWidth = 1;
+            ctx.strokeRect(
+              startXTemp,
+              canv.height - (canv.height - startY) - tempHeight + ii,
+              tempWidth,
+              subsegment
+            );
+          }
+        } else if (config.design === "Kassette") {
+          let subsegmentH = segment / 2;
+          let subsegmentW = tempWidth / 5;
+          let zwischenraum = subsegmentW / 5;
+          for (
+            let ii = zwischenraum;
+            ii < tempWidth;
+            ii += subsegmentW + zwischenraum
+          ) {
+            console.log(
+              "ii " +
+                ii +
+                " subsegmentW " +
+                subsegmentW +
+                " subsegmentH " +
+                subsegmentH +
+                " zwischenraum " +
+                zwischenraum
+            );
+            ctx.strokeRect(
+              startXTemp + ii,
+              canv.height -
+                (canv.height - startY) -
+                tempHeight +
+                subsegmentH / 2 +
+                i,
+              subsegmentW,
+              subsegmentH
+            );
+          }
         }
       }
     }
