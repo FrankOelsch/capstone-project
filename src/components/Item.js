@@ -1,17 +1,17 @@
 import ReactTooltip from "react-tooltip";
 import styled from "styled-components";
-import { getLocaleString } from "./helper";
+import { getLocaleStringFromNumber } from "../utils/helper";
 
 export default function Item({ item, onCreate, onEdit, onDelete }) {
   return (
     <StyledArticle variante={item.inCart}>
       <Quantity>
-        {getLocaleString(+item.quantity)} {item.unit}
+        {getLocaleStringFromNumber(+item.quantity)} {item.unit}
       </Quantity>
       <Name>{item.name}</Name>
       <Desc>{item.description}</Desc>
-      <Unitprice>{getLocaleString(+item.price)}</Unitprice>
-      <Price>{getLocaleString(+item.price * +item.quantity)}</Price>
+      <Unitprice>{getLocaleStringFromNumber(+item.price)}</Unitprice>
+      <Price>{getLocaleStringFromNumber(+item.price * +item.quantity)}</Price>
 
       <Actions id="actions">
         {item.inCart && !item.autoCreated && (

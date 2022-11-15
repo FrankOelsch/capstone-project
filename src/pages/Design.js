@@ -2,10 +2,14 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Select from "../components/select/Select";
+import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import { RalColors } from "../data/RalColors";
-import { getLocaleString } from "../components/helper";
+import {
+  getLocaleStringFromNumber,
+  getSquareMeters,
+} from "../utils/helper";
+import Button from "../components/button/Button";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =
@@ -14,7 +18,7 @@ export default function Design() {
   const canvasRef = useRef(null);
 
   const [qm, setQm] = useState(
-    getLocaleString((+config.width * +config.height) / 10000)
+    getLocaleStringFromNumber(getSquareMeters(config.width, config.height))
   );
 
   useEffect(() => {
@@ -110,6 +114,7 @@ export default function Design() {
     <>
       <Header />
       <Container>
+        <Button></Button>
         <StyledH3>
           {configForSave.system}: {qm} qm
         </StyledH3>
@@ -158,7 +163,7 @@ export default function Design() {
             options={RalColors}
           />
 
-          <StyledButton type="submit">Submit</StyledButton>
+          <StyledButton type="submit">Design anwenden</StyledButton>
         </form>
       </Container>
       <Footer />

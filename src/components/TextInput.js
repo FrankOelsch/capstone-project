@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import styled from "styled-components";
-import Theme from "../../Theme";
+import Theme from "../Theme";
 
 const TextInput = forwardRef((props, ref) => {
   const onFocus = (event) => {
