@@ -2,10 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import {
-  getLocaleStringFromNumber,
-  getSquareMeters,
-} from "../utils/helper";
+import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 import TextInput from "../components/TextInput";
 import Select from "../components/Select";
 import { UserContext } from "../UserContext";
@@ -163,6 +160,9 @@ export default function Measure() {
     let canv = canvasRef.current;
     let ctx = canv.getContext("2d");
 
+    let wallColor = config.wallColor;
+    let doorColor = config.doorColor;
+
     let torBreite = +config.width;
     let torBreitePrev = +prevConfig.width;
 
@@ -233,10 +233,24 @@ export default function Measure() {
     if (tempRadius < 0) setTempRadius(0);
 
     ctx.clearRect(0, 0, canv.width, canv.height);
-    ctx.lineWidth = 4;
 
+    ctx.lineWidth = 4;
+    ctx.strokeRect(0, 0, canv.width, canv.height);
+
+    // Door background
+    ctx.fillStyle = "gainsboro";
+    ctx.fillRect(
+      startXTemp,
+      canv.height - (canv.height - startY) - tempHeight,
+      tempWidth,
+      tempHeight
+    );
+
+    //Wall
+    ctx.lineWidth = 4;
     ctx.beginPath();
-    ctx.moveTo(startXTemp, startY);
+    ctx.moveTo(0, startY);
+    ctx.lineTo(startXTemp, startY);
     ctx.lineTo(startXTemp, startY - tempHeight + tempRadius);
     ctx.arcTo(
       startXTemp,
@@ -254,10 +268,15 @@ export default function Measure() {
       tempRadius
     );
     ctx.lineTo(startXTemp + tempWidth, startY);
-    ctx.closePath();
+    ctx.lineTo(canvBreite, startY);
+    ctx.lineTo(canvBreite, 0);
+    ctx.lineTo(0, 0);
+    ctx.lineTo(0, startY);
+    ctx.fillStyle = wallColor;
+    ctx.fill();
     ctx.stroke();
 
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, startY);
     ctx.lineTo(canvBreite, startY);
@@ -345,9 +364,10 @@ const Container = styled.div`
 `;
 
 const StyledCanvas = styled.canvas`
-  border: 1px solid #d3d3d3;
+  /* border: 1px solid #d3d3d3; */
   margin: 10px auto;
   width: 90%;
+  background-color: lightslategray;
 `;
 
 const StyledLabel = styled.label`
