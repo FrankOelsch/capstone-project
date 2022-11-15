@@ -11,14 +11,14 @@ describe("Check Select component", () => {
     expect(option).toBeInTheDocument();
   });
 
-  it("should have min 1 option", async () => {
+  it("should have min 1 option", () => {
     render(<Select options={"jhgjhg"}></Select>);
     const option = screen.getByRole("option");
 
     expect(option).toBeInTheDocument();
   });
 
-  it("should have min 1 valid option", async () => {
+  it("should have min 1 valid option", () => {
     render(<Select options={[{ name: "uzuz" }]}></Select>);
     const option = screen.getByRole("option");
 
