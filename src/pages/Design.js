@@ -85,15 +85,48 @@ export default function Design() {
     // Door
     ctx.fillStyle = doorColor;
     ctx.fillRect(
-      startXTemp + 50,
+      startXTemp,
       canv.height - (canv.height - startY) - tempHeight,
       tempWidth,
       tempHeight
     );
 
-    // // Wall
-    // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-    // ctx.fillRect(0, 0, canvBreite, startY);
+    // Door design
+    if (config.system === "Rundlauftor") {
+      ctx.strokeStyle = "hsl(0, 0%, 20%)";
+      let segmentR = 10;
+      ctx.lineWidth = 1;
+      for (let i = 0; i < tempWidth; i += segmentR) {
+        ctx.strokeRect(
+          startXTemp + i,
+          canv.height - (canv.height - startY) - tempHeight,
+          segmentR,
+          tempHeight
+        );
+      }
+    } else {
+      ctx.strokeStyle = "hsl(0, 0%, 30%)";
+      let segment = tempHeight / 4;
+      let subsegment = segment / 4;
+      for (let i = 0; i < tempHeight; i += segment) {
+        ctx.lineWidth = 5;
+        ctx.strokeRect(
+          startXTemp,
+          canv.height - (canv.height - startY) - tempHeight + i,
+          tempWidth,
+          segment
+        );
+        for (let ii = 0; ii < tempHeight; ii += subsegment) {
+          ctx.lineWidth = 2;
+          ctx.strokeRect(
+            startXTemp,
+            canv.height - (canv.height - startY) - tempHeight + ii,
+            tempWidth,
+            subsegment
+          );
+        }
+      }
+    }
 
     // Wall
     ctx.lineWidth = 4;
@@ -124,11 +157,6 @@ export default function Design() {
     ctx.fillStyle = wallColor;
     ctx.fill();
     ctx.stroke();
-
-    // ctx.lineWidth = 2;
-    // ctx.moveTo(startXTemp, startY);
-    // ctx.lineTo(startXTemp + tempWidth, startY);
-    // ctx.stroke();
 
     ctx.lineWidth = 2;
     ctx.beginPath();
