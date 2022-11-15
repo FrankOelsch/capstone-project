@@ -364,7 +364,6 @@ const Container = styled.div`
 `;
 
 const StyledCanvas = styled.canvas`
-  /* border: 1px solid #d3d3d3; */
   margin: 10px auto;
   width: 90%;
   background-color: lightslategray;
