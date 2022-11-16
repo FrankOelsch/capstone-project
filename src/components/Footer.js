@@ -8,15 +8,19 @@ export default function Footer() {
       <StyledNav>
         <StyledNavLink to="/" end>
           <HomeIcon />
+          Start
         </StyledNavLink>
         <StyledNavLink to="/measure">
           <ConfigIcon />
+          Masse
         </StyledNavLink>
         <StyledNavLink to="/design">
           <Config2Icon />
+          Design
         </StyledNavLink>
         <StyledNavLink to="/cart">
           <CartIcon />
+          WarenKorb
         </StyledNavLink>
       </StyledNav>
     </StyledFooter>
@@ -27,7 +31,7 @@ const StyledFooter = styled.footer`
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 54px;
+  height: 50px;
   background-color: hsl(216, 65%, 50%);
   color: white;
   z-index: 2;
@@ -42,9 +46,13 @@ const StyledNav = styled.nav`
 `;
 
 const StyledNavLink = styled(NavLink)`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.8em;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100%;
   width: 25%;
   background-color: hsl(216, 65%, 60%);

@@ -12,8 +12,8 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  height: 54px;
-  padding: 8px;
+  height: 50px;
+  padding: 6px;
   background-color: hsl(216, 65%, 50%);
   color: white;
   z-index: 2;
