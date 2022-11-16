@@ -94,3 +94,31 @@ export function CartIcon() {
     </svg>
   );
 }
+
+export function CartIcon2() {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20.5 45C22.433 45 24 43.433 24 41.5C24 39.567 22.433 38 20.5 38C18.567 38 17 39.567 17 41.5C17 43.433 18.567 45 20.5 45Z"
+        fill="green"
+      />
+      <path
+        d="M37.5 45C39.433 45 41 43.433 41 41.5C41 39.567 39.433 38 37.5 38C35.567 38 34 39.567 34 41.5C34 43.433 35.567 45 37.5 45Z"
+        fill="green"
+      />
+      <path
+        d="M5 6L14 12L19 34H39L44 17H25M25 26H41"
+        stroke="green"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

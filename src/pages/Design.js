@@ -306,6 +306,7 @@ const StyledButton = styled.button`
   outline: none;
   background-color: hsl(216, 65%, 80%);
   box-shadow: 3px 3px 3px lightgrey;
+  cursor: pointer;
 
   &:focus {
     border-color: hsl(216, 65%, 50%);

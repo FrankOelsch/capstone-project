@@ -1,6 +1,7 @@
-import ReactTooltip from "react-tooltip";
 import styled from "styled-components";
+import { CartIcon2 } from "../Icons";
 import { getLocaleStringFromNumber } from "../utils/helper";
+import { FaTrashAlt, FaRegEdit, FaCartPlus } from "react-icons/fa";
 
 export default function Item({ item, onCreate, onEdit, onDelete }) {
   return (
@@ -15,55 +16,18 @@ export default function Item({ item, onCreate, onEdit, onDelete }) {
 
       <Actions id="actions">
         {item.inCart && !item.autoCreated && (
-          <div id="edit">
-            <Edit
-              data-tip
-              data-for="ttedit"
-              onClick={() => onEdit(item.id)}
-            ></Edit>
-            <ReactTooltip id="ttedit" type="info">
-              Bearbeiten
-            </ReactTooltip>
-          </div>
+          <StyledFaEdit id="edit" onClick={() => onEdit(item.id)} />
         )}
 
         {item.inCart && !item.autoCreated && (
-          <div id="delete">
-            <Delete
-              data-tip
-              data-for="ttdelete"
-              onClick={() => onDelete(item.id)}
-            ></Delete>
-            <ReactTooltip id="ttdelete" type="info">
-              Löschen
-            </ReactTooltip>
-          </div>
+          <StyledFaTrashAlt id="delete" onClick={() => onDelete(item.id)} />
         )}
 
         {item.inCart || (
-          <div id="create">
-            <Create
-              data-tip
-              data-for="ttcreate"
-              onClick={() => onCreate(item.id)}
-            ></Create>
-            <ReactTooltip id="ttcreate" type="info">
-              In Warenkorb
-            </ReactTooltip>
-          </div>
-        )}
-
-        {item.inCart && item.autoCreated && (
-          <div id="autocreated">
-            <AutoCreated data-tip data-for="ttauto"></AutoCreated>
-            <ReactTooltip id="ttauto" type="info">
-              Wurde automatisch
-              <br />
-              entsprechend den
-              <br />
-              Einstellungen erstellt
-            </ReactTooltip>
-          </div>
+          <>
+            {/* <CartIcon2 id="create" onClick={() => onCreate(item.id)} /> */}
+            <StyledFaCartPlus id="create" onClick={() => onCreate(item.id)} />
+          </>
         )}
       </Actions>
     </StyledArticle>
@@ -146,52 +110,26 @@ const Actions = styled.div`
   align-items: flex-end;
   justify-content: flex-end;
   text-align: right;
+  height: 30px;
 `;
 
-const Create = styled.button`
-  grid-area: create;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  border-style: none;
-  background-color: green;
-  justify-self: end;
-  margin-left: 4px;
+const StyledFaTrashAlt = styled(FaTrashAlt)`
+  color: black;
+  width: 26px;
+  height: 24px;
   cursor: pointer;
 `;
 
-const Edit = styled.button`
-  grid-area: edit;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  border-style: none;
-  background-color: blue;
-  justify-self: end;
-  margin-left: 4px;
+const StyledFaEdit = styled(FaRegEdit)`
+  color: blue;
+  width: 26px;
+  height: 24px;
   cursor: pointer;
 `;
 
-const Delete = styled.button`
-  grid-area: delete;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  border-style: none;
-  background-color: red;
-  justify-self: end;
-  margin-left: 4px;
-  cursor: pointer;
-`;
-
-const AutoCreated = styled.button`
-  grid-area: delete;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  border-style: none;
-  background-color: green;
-  justify-self: end;
-  margin-left: 4px;
+const StyledFaCartPlus = styled(FaCartPlus)`
+  color: darkgreen;
+  width: 26px;
+  height: 24px;
   cursor: pointer;
 `;
