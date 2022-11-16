@@ -146,16 +146,6 @@ export default function Design() {
             ii < tempWidth;
             ii += subsegmentW + zwischenraum
           ) {
-            console.log(
-              "ii " +
-                ii +
-                " subsegmentW " +
-                subsegmentW +
-                " subsegmentH " +
-                subsegmentH +
-                " zwischenraum " +
-                zwischenraum
-            );
             ctx.strokeRect(
               startXTemp + ii,
               canv.height -

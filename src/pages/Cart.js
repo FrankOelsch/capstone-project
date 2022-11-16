@@ -112,10 +112,6 @@ export default function Cart() {
   }
 
   function handleOnChange(e) {
-    // if (isNaN(e.target.value)) {
-    //   return;
-    // }
-
     const value = e.target.value;
 
     switch (e.target.id) {
@@ -129,11 +125,6 @@ export default function Cart() {
         break;
     }
   }
-
-  // function handleOnChange(event) {
-  //   const value = event.target.value;
-  //   setCartItem({ ...cartItem, name: value });
-  // }
 
   function handleSubmit(event) {
     event.preventDefault();
