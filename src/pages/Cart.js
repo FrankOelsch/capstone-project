@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import { UserContext } from "../UserContext";
 import { ShopItems } from "../data/Items";
 import ReactModal from "react-modal";
-import { getSquareMeters } from "../utils/helper";
+import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 
 const customStyles = {
   overlay: {
@@ -127,11 +127,28 @@ export default function Cart() {
     setModalIsOpen(false);
   }
 
+  const getSum = () => {
+    const sum = filteredCartItems.reduce(
+      (total, curr) => total + curr.price * curr.quantity,
+      0
+    );
+    return getLocaleStringFromNumber(sum);
+  };
+
   return (
     <>
       <Header />
       <Container>
-        <StyledH2>Warenkorb:</StyledH2>
+        <StyledTopP>
+          Hier sehen sie den automatisch konfigurierten
+          <br /> Tor-Artikel entsprechend den Eingaben auf den <br />
+          vorherigen Seiten. <br />
+          Weitere Artikel können zufügen werden.
+        </StyledTopP>
+
+        <StyledHr />
+
+        <StyledH2>Warenkorb</StyledH2>
         <StyledSection>
           {filteredCartItems.map((item) => (
             <Item
@@ -169,7 +186,10 @@ export default function Cart() {
           <button onClick={closeModal}>Zurück</button>
         </ReactModal>
 
-        <StyledH2>Weitere Artikel:</StyledH2>
+        <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
+        <StyledHr />
+
+        <StyledH2>Weitere Artikel</StyledH2>
         <StyledSection>
           {filteredShopItems.map((item) => (
             <Item
@@ -190,7 +210,7 @@ export default function Cart() {
 const Container = styled.div`
   height: 100%;
   min-height: 100vh;
-  padding: 60px 0;
+  padding: 54px 0;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -201,8 +221,13 @@ const Container = styled.div`
 
 const StyledH2 = styled.h2`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.4em;
-  margin-top: 10px;
+  font-size: 1.2em;
+  margin-top: 0px;
+  padding: 0 6px;
+  border-radius: 0px 0px 6px 6px;
+  border-bottom: 3px solid hsl(216, 65%, 50%);
+  border-left: 3px solid hsl(216, 65%, 50%);
+  border-right: 3px solid hsl(216, 65%, 50%);
 `;
 
 const StyledH3 = styled.h3`
@@ -219,4 +244,25 @@ const StyledLabel = styled.label`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
   color: black;
+`;
+
+const StyledTopP = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  margin-top: 6px;
+`;
+
+const StyledSumP = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: right;
+  align-self: flex-end;
+  margin-right: 14px;
+`;
+
+const StyledHr = styled.hr`
+  width: 100%;
+  border-bottom: 6px solid hsl(216, 65%, 50%);
+  margin-top: 8px;
 `;

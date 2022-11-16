@@ -27,14 +27,14 @@ const StyledFooter = styled.footer`
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: 54px;
   background-color: hsl(216, 65%, 50%);
   color: white;
   z-index: 2;
 `;
 
 const StyledNav = styled.nav`
-  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,10 +42,11 @@ const StyledNav = styled.nav`
 `;
 
 const StyledNavLink = styled(NavLink)`
-  height: 60px;
-  padding: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   width: 25%;
-  text-align: center;
   background-color: hsl(216, 65%, 60%);
   text-decoration: none;
   border: black solid 1px;

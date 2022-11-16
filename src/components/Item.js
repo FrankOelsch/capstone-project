@@ -81,19 +81,18 @@ const StyledArticle = styled.article`
     "desc desc unitprice"
     "desc desc actions";
   justify-content: stretch;
-  font-size: 1em;
   margin: 8px;
   padding: 6px;
   background-color: ${(prop) =>
-    prop.variante === true ? "hsl(216, 65%, 80%)" : "hsl(34, 57%, 80%)"};
+    prop.variante === true ? "hsl(216, 65%, 78%)" : "hsl(216, 65%, 85%)"};
   border-radius: 6px;
   border-style: solid;
   border-width: 2px;
   border-color: ${(prop) =>
-    prop.variante === true ? "hsl(216, 65%, 70%)" : "hsl(34, 57%, 70%)"};
+    prop.variante === true ? "hsl(216, 65%, 68%)" : "hsl(216, 65%, 75%)"};
 
   :hover {
-    border-color: black;
+    border-color: hsl(216, 65%, 50%);
   }
 `;
 
