@@ -15,7 +15,7 @@ const DoorConfig = {
   material: "Metall",
   design: "Sicke",
   wallColor: "#EAE6CA",
-  doorColor: "#F6F6F6",
+  doorColor: "#A65E2E",
 };
 
 const PrevDoorConfig = {

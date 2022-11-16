@@ -5,10 +5,7 @@ import Header from "../components/Header";
 import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import { RalColors } from "../data/RalColors";
-import {
-  getLocaleStringFromNumber,
-  getSquareMeters,
-} from "../utils/helper";
+import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 import Button from "../components/button/Button";
 
 export default function Design() {
@@ -73,14 +70,112 @@ export default function Design() {
 
     ctx.clearRect(0, 0, canv.width, canv.height);
 
-    ctx.beginPath();
-    ctx.rect(0, 0, 650, 340);
-    ctx.fillStyle = wallColor;
-    ctx.fill();
+    ctx.lineWidth = 4;
+    ctx.strokeRect(0, 0, canv.width, canv.height);
 
+    // Door background
+    ctx.fillStyle = "gainsboro";
+    ctx.fillRect(
+      startXTemp,
+      canv.height - (canv.height - startY) - tempHeight,
+      tempWidth,
+      tempHeight
+    );
+
+    // Door
+    ctx.fillStyle = doorColor;
+    ctx.fillRect(
+      startXTemp,
+      canv.height - (canv.height - startY) - tempHeight,
+      tempWidth,
+      tempHeight
+    );
+
+    // Door design
+    if (config.system === "Rundlauftor") {
+      ctx.strokeStyle = "hsl(0, 0%, 20%)";
+      let segmentR = 10;
+      ctx.lineWidth = 1;
+      for (let i = 0; i < tempWidth; i += segmentR) {
+        ctx.strokeRect(
+          startXTemp + i,
+          canv.height - (canv.height - startY) - tempHeight,
+          segmentR,
+          tempHeight
+        );
+      }
+    } else {
+      ctx.strokeStyle = "hsl(0, 0%, 20%)";
+      let segment = tempHeight / 4;
+      for (let i = 0; i < tempHeight; i += segment) {
+        ctx.lineWidth = 4;
+        ctx.strokeRect(
+          startXTemp,
+          canv.height - (canv.height - startY) - tempHeight + i,
+          tempWidth,
+          segment
+        );
+        if (config.design === "Sicke") {
+          let subsegment = segment / 3;
+          for (let ii = 0; ii < tempHeight; ii += subsegment) {
+            ctx.lineWidth = 1;
+            ctx.strokeRect(
+              startXTemp,
+              canv.height - (canv.height - startY) - tempHeight + ii,
+              tempWidth,
+              subsegment
+            );
+          }
+        } else if (config.design === "Großsicke") {
+          let subsegment = segment / 2;
+          for (let ii = 0; ii < tempHeight; ii += subsegment) {
+            ctx.lineWidth = 1;
+            ctx.strokeRect(
+              startXTemp,
+              canv.height - (canv.height - startY) - tempHeight + ii,
+              tempWidth,
+              subsegment
+            );
+          }
+        } else if (config.design === "Kassette") {
+          let subsegmentH = segment / 2;
+          let subsegmentW = tempWidth / 5;
+          let zwischenraum = subsegmentW / 5;
+          for (
+            let ii = zwischenraum;
+            ii < tempWidth;
+            ii += subsegmentW + zwischenraum
+          ) {
+            console.log(
+              "ii " +
+                ii +
+                " subsegmentW " +
+                subsegmentW +
+                " subsegmentH " +
+                subsegmentH +
+                " zwischenraum " +
+                zwischenraum
+            );
+            ctx.strokeRect(
+              startXTemp + ii,
+              canv.height -
+                (canv.height - startY) -
+                tempHeight +
+                subsegmentH / 2 +
+                i,
+              subsegmentW,
+              subsegmentH
+            );
+          }
+        }
+      }
+    }
+
+    // Wall
     ctx.lineWidth = 4;
     ctx.beginPath();
-    ctx.moveTo(startXTemp, startY);
+    ctx.moveTo(0, startY);
+    ctx.lineTo(startXTemp, startY);
     ctx.lineTo(startXTemp, startY - tempHeight + tempRadius);
     ctx.arcTo(
       startXTemp,
@@ -98,12 +193,15 @@ export default function Design() {
       tempRadius
     );
     ctx.lineTo(startXTemp + tempWidth, startY);
-    ctx.closePath();
-    ctx.fillStyle = doorColor;
+    ctx.lineTo(canvBreite, startY);
+    ctx.lineTo(canvBreite, 0);
+    ctx.lineTo(0, 0);
+    ctx.lineTo(0, startY);
+    ctx.fillStyle = wallColor;
     ctx.fill();
     ctx.stroke();
 
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, startY);
     ctx.lineTo(canvBreite, startY);
@@ -114,7 +212,6 @@ export default function Design() {
     <>
       <Header />
       <Container>
-        <Button></Button>
         <StyledH3>
           {configForSave.system}: {qm} qm
         </StyledH3>
@@ -184,10 +281,9 @@ const Container = styled.div`
 `;
 
 const StyledCanvas = styled.canvas`
-  border: 1px solid #d3d3d3;
   margin: 10px auto;
   width: 90%;
-  background-color: grey;
+  background-color: lightslategray;
 `;
 
 const StyledLabel = styled.label`

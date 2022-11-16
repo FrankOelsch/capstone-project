@@ -7,7 +7,10 @@ const TextInput = forwardRef((props, ref) => {
     if (event.key === "Tab") {
       return false;
     }
-    event.target.select();
+    // timeout is necessary for correctly function on smartphone
+    setTimeout(() => {
+      event.target.select();
+    }, 100);
   };
   return (
     <Theme>
