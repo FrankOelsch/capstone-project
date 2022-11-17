@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CartIcon2 } from "../Icons";
 import { getLocaleStringFromNumber } from "../utils/helper";
 import { FaTrashAlt, FaRegEdit, FaCartPlus } from "react-icons/fa";
 
@@ -24,10 +23,7 @@ export default function Item({ item, onCreate, onEdit, onDelete }) {
         )}
 
         {item.inCart || (
-          <>
-            {/* <CartIcon2 id="create" onClick={() => onCreate(item.id)} /> */}
-            <StyledFaCartPlus id="create" onClick={() => onCreate(item.id)} />
-          </>
+          <StyledFaCartPlus id="create" onClick={() => onCreate(item.id)} />
         )}
       </Actions>
     </StyledArticle>

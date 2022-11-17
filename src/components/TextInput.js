@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
 import styled from "styled-components";
-import Theme from "../Theme";
 
 const TextInput = forwardRef((props, ref) => {
   const onFocus = (event) => {
@@ -13,17 +12,15 @@ const TextInput = forwardRef((props, ref) => {
     }, 100);
   };
   return (
-    <Theme>
-      <div>
-        <StyledInput
-          type="text"
-          autoComplete="off"
-          onFocus={onFocus}
-          {...props}
-          ref={ref}
-        />
-      </div>
-    </Theme>
+    <div>
+      <StyledInput
+        type="text"
+        autoComplete="off"
+        onFocus={onFocus}
+        {...props}
+        ref={ref}
+      />
+    </div>
   );
 });
 
@@ -33,10 +30,10 @@ const StyledInput = styled.input`
   width: 200px;
   padding: 3px;
   border: 3px solid;
-  border-color: ${({ theme: { colors } }) => colors.inputBorder};
+  border-color: hsl(216, 65%, 80%);
   border-radius: 6px;
   outline: none;
-  background-color: ${({ theme: { colors } }) => colors.inputBackground};
+  background-color: aliceblue;
   box-shadow: 3px 3px 3px lightgrey;
 
   &:focus {

@@ -161,7 +161,6 @@ export default function Measure() {
     let ctx = canv.getContext("2d");
 
     let wallColor = config.wallColor;
-    let doorColor = config.doorColor;
 
     let torBreite = +config.width;
     let torBreitePrev = +prevConfig.width;
@@ -343,7 +342,7 @@ export default function Measure() {
             ref={inputRadiusRef}
           />
 
-          <StyledButton type="submit">Berechnen</StyledButton>
+          <StyledButton type="submit">Anwenden</StyledButton>
         </form>
       </Container>
       <Footer />

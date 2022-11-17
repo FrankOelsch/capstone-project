@@ -5,8 +5,8 @@ import Header from "../components/Header";
 import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import { RalColors } from "../data/RalColors";
+import { RalColorsLimited } from "../data/RalColorsLimited";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
-import Button from "../components/button/Button";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =
@@ -63,6 +63,8 @@ export default function Design() {
 
     let wallColor = config.wallColor;
     let doorColor = config.doorColor;
+    console.log("wallColor" + wallColor);
+    console.log("doorColor" + doorColor);
 
     let startY = 340;
     let canvBreite = canv.width;
@@ -216,7 +218,7 @@ export default function Design() {
             id="wallColor"
             onChange={handleSelect}
             value={config.wallColor}
-            options={RalColors}
+            options={RalColorsLimited}
           />
 
           <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
@@ -230,27 +232,31 @@ export default function Design() {
             ]}
           />
 
-          <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
-          <Select
-            id="design"
-            onChange={handleSelect}
-            value={config.design}
-            options={[
-              { name: "Sicke", id: "Sicke" },
-              { name: "Großsicke", id: "Großsicke" },
-              { name: "Kassette", id: "Kassette" },
-            ]}
-          />
+          {config.system === "Rundlauftor" || (
+            <>
+              <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
+              <Select
+                id="design"
+                onChange={handleSelect}
+                value={config.design}
+                options={[
+                  { name: "Sicke", id: "Sicke" },
+                  { name: "Großsicke", id: "Großsicke" },
+                  { name: "Kassette", id: "Kassette" },
+                ]}
+              />
+            </>
+          )}
 
           <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
           <Select
             id="doorColor"
             onChange={handleSelect}
             value={config.doorColor}
-            options={RalColors}
+            options={RalColorsLimited}
           />
 
-          <StyledButton type="submit">Design anwenden</StyledButton>
+          <StyledButton type="submit">Anwenden</StyledButton>
         </form>
       </Container>
       <Footer />
