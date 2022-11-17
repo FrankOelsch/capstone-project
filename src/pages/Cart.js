@@ -8,6 +8,7 @@ import { ShopItems } from "../data/Items";
 import ReactModal from "react-modal";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 import TextInput from "../components/TextInput";
+import * as variables from "../Variables";
 
 const customStyles = {
   overlay: {
@@ -203,7 +204,7 @@ export default function Cart() {
 
   return (
     <>
-      <Header />
+      <Header text={"Warenkorb"} />
       <Container>
         <StyledTopP>
           Hier sehen sie den automatisch konfigurierten
@@ -212,9 +213,6 @@ export default function Cart() {
           Zusätzliche Artikel können zufügen werden.
         </StyledTopP>
 
-        <StyledHr />
-
-        <StyledH2>Warenkorb</StyledH2>
         <StyledSection>
           {filteredCartItems.map((item) => (
             <Item
@@ -268,9 +266,8 @@ export default function Cart() {
         </ReactModal>
 
         <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
-        <StyledHr />
 
-        <StyledH2>Zusätzliche Artikel</StyledH2>
+        <StyledH4>Zusätzliche Artikel</StyledH4>
         <StyledSection>
           {filteredShopItems.map((item) => (
             <Item
@@ -298,17 +295,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-`;
-
-const StyledH2 = styled.h2`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  margin-top: 0px;
-  padding: 0 6px;
-  border-radius: 0px 0px 6px 6px;
-  border-bottom: 3px solid hsl(216, 65%, 50%);
-  border-left: 3px solid hsl(216, 65%, 50%);
-  border-right: 3px solid hsl(216, 65%, 50%);
 `;
 
 const StyledH3 = styled.h3`
@@ -343,11 +329,6 @@ const StyledSumP = styled.p`
   margin-bottom: 6px;
 `;
 
-const StyledHr = styled.hr`
-  width: 100%;
-  border-bottom: 6px solid hsl(216, 65%, 50%);
-`;
-
 const StyledButton = styled.button`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2em;
@@ -365,4 +346,16 @@ const StyledButton = styled.button`
   &:focus {
     border-color: hsl(216, 65%, 50%);
   }
+`;
+
+const StyledH4 = styled.h4`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  color: white;
+  width: 280px;
+  padding: 8px;
+  border-color: ${variables.BACKGROUND_COLOR_1};
+  border-radius: 6px;
+  background-color: ${variables.BACKGROUND_COLOR_1};
+  margin-top: 12px;
 `;

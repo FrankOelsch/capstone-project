@@ -19,12 +19,12 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Header text={"MyGarageDoor"} />
       <Container>
         <Wrapper>
           <StyledH2>
-            Mit dieser App können sie ihr Garagentor <br />
-            incl. Kostenvorschau planen
+            Mit dieser App können sie ganz einfach ihre <br />
+            Garage vorplanen + Kosten einschätzen
           </StyledH2>
           <StyledArticle>
             <h3>Sectionaltor</h3>
@@ -111,7 +111,6 @@ const StyledArticle = styled.article`
   border: 3px solid;
   background-color: ${variables.BACKGROUND_COLOR_2};
   border-color: ${variables.BACKGROUND_COLOR_1};
-  /* box-shadow: ${variables.BOX_SHADOW_1}; */
   border-radius: 8px;
   width: 280px;
   padding: 8px;
@@ -141,7 +140,6 @@ const StyledLink = styled(Link)`
   border-radius: 6px;
   outline: none;
   background-color: ${variables.BACKGROUND_COLOR_1};
-  /* box-shadow: ${variables.BOX_SHADOW_1}; */
   text-decoration: none;
   margin-top: 12px;
 
@@ -152,10 +150,8 @@ const StyledLink = styled(Link)`
 
 const StyledH2 = styled.h2`
   font-family: "Noto Sans", Arial, Helvetica, sans-serif;
-  font-size: 1.1em;
+  font-size: 1.05em;
   margin-top: 16px;
   padding: 0;
   color: black;
-  /* background-color: hsla(255, 100%, 100%, 0.9); */
-  /* text-shadow: 0px 0px 30px #ffffff; */
 `;

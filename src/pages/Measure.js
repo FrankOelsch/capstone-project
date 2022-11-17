@@ -284,12 +284,8 @@ export default function Measure() {
 
   return (
     <>
-      <Header />
+      <Header text={configForSave.system + " " + qm + " qm"} />
       <Container>
-        <StyledH3>
-          {configForSave.system}: {qm} qm
-        </StyledH3>
-
         <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
           Your browser does not support the HTML5 canvas tag.
         </StyledCanvas>
