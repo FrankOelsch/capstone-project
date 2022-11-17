@@ -286,6 +286,13 @@ export default function Measure() {
     <>
       <Header text={configForSave.system + " " + qm + " qm"} />
       <Container>
+        <StyledTopP>
+          Bitte geben sie hier Höhe, Breite und optional
+          <br />
+          den Radius der Toröffnung ein, um die Torfläche <br />
+          zu berechnen und darzustellen.
+        </StyledTopP>
+
         <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
           Your browser does not support the HTML5 canvas tag.
         </StyledCanvas>
@@ -346,7 +353,7 @@ export default function Measure() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.main`
   height: 100%;
   min-height: 100vh;
   padding: 60px 0;
@@ -389,4 +396,10 @@ const StyledButton = styled.button`
   &:focus {
     border-color: hsl(216, 65%, 50%);
   }
+`;
+
+const StyledTopP = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  margin: 6px 0;
 `;

@@ -37,7 +37,12 @@ export default function Design() {
 
     switch (e.target.id) {
       case "material":
-        setConfig({ ...config, material: value });
+        if (value === "Holz") {
+          console.log(value);
+          setConfig({ ...config, material: value, doorColor: "#A65E2E" }); // Orangebraun
+        } else {
+          setConfig({ ...config, material: value });
+        }
         break;
       case "design":
         setConfig({ ...config, design: value });
@@ -202,6 +207,13 @@ export default function Design() {
     <>
       <Header text={configForSave.system + " " + qm + " qm"} />
       <Container>
+        <StyledTopP>
+          Bitte wählen sie hier die gewünschte Torausführung
+          <br />
+          und -farbe, und die Farbe der Hauswand, um einen <br />
+          visuellen Eindruck zu bekommen
+        </StyledTopP>
+
         <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
           Your browser does not support the HTML5 canvas tag.
         </StyledCanvas>
@@ -242,13 +254,17 @@ export default function Design() {
             </>
           )}
 
-          <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
-          <Select
-            id="doorColor"
-            onChange={handleSelect}
-            value={config.doorColor}
-            options={RalColorsLimited}
-          />
+          {config.material === "Holz" || (
+            <>
+              <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
+              <Select
+                id="doorColor"
+                onChange={handleSelect}
+                value={config.doorColor}
+                options={RalColorsLimited}
+              />
+            </>
+          )}
 
           <StyledButton type="submit">Anwenden</StyledButton>
         </form>
@@ -258,7 +274,7 @@ export default function Design() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.main`
   height: 100%;
   min-height: 100vh;
   padding: 60px 0;
@@ -301,4 +317,10 @@ const StyledButton = styled.button`
   &:focus {
     border-color: hsl(216, 65%, 50%);
   }
+`;
+
+const StyledTopP = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  margin: 6px 0;
 `;

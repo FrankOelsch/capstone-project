@@ -207,10 +207,10 @@ export default function Cart() {
       <Header text={"Warenkorb"} />
       <Container>
         <StyledTopP>
-          Hier sehen sie den automatisch konfigurierten
-          <br /> Tor-Artikel entsprechend den Eingaben auf den <br />
-          vorherigen Seiten. <br />
-          Zusätzliche Artikel können zufügen werden.
+          Hier sehen sie den automatisch konfigurierten Tor-
+          <br /> Artikel entsprechend den Eingaben auf den vorherigen
+          <br />
+          Seiten. Zusätzliche Artikel können zufügen werden.
         </StyledTopP>
 
         <StyledSection>
@@ -285,7 +285,7 @@ export default function Cart() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.main`
   height: 100%;
   min-height: 100vh;
   padding: 54px 0;
