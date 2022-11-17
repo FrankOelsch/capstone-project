@@ -115,21 +115,22 @@ const Actions = styled.div`
 
 const StyledFaTrashAlt = styled(FaTrashAlt)`
   color: black;
-  width: 26px;
-  height: 24px;
+  width: 23px;
+  height: 21px;
   cursor: pointer;
+  margin-left: 5px;
 `;
 
 const StyledFaEdit = styled(FaRegEdit)`
   color: blue;
-  width: 26px;
-  height: 24px;
+  width: 24px;
+  height: 22px;
   cursor: pointer;
 `;
 
 const StyledFaCartPlus = styled(FaCartPlus)`
   color: darkgreen;
-  width: 26px;
-  height: 24px;
+  width: 24px;
+  height: 22px;
   cursor: pointer;
 `;

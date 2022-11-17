@@ -47,9 +47,40 @@ export default function Cart() {
     setCartItems(
       cartItems.map((item) => {
         if (item.autoCreated) {
+          let door = config.system;
+          let mat = config.material;
+          let desc = door;
+          if (door === "Sectionaltor") {
+            if (mat === "Holz") {
+              desc +=
+                " 40mm Wandungsstärke in " +
+                config.material +
+                "-Ausführung incl. Dünnschicht-Lasur";
+            } else {
+              desc +=
+                " " +
+                config.design +
+                " 40mm Wandungsstärke in " +
+                config.material +
+                "-Ausführung incl. Farbe nach RAL";
+            }
+          } else {
+            if (mat === "Holz") {
+              desc +=
+                " 20mm Wandungsstärke in " +
+                config.material +
+                "-Ausführung incl. Dünnschicht-Lasur";
+            } else {
+              desc +=
+                " 20mm Wandungsstärke in " +
+                config.material +
+                "-Ausführung incl. Farbe nach RAL";
+            }
+          }
           return {
             ...item,
             quantity: getSquareMeters(config.width, config.height),
+            description: desc,
           };
         } else {
           return item;
