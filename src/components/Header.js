@@ -12,8 +12,8 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  height: 60px;
-  padding: 10px;
+  height: 50px;
+  padding: 6px;
   background-color: hsl(216, 65%, 50%);
   color: white;
   z-index: 2;
@@ -21,6 +21,6 @@ const StyledHeader = styled.header`
 
 const StyledH1 = styled.h1`
   font-family: "Abel", sans-serif;
-  font-size: 32px;
+  font-size: 28px;
   text-align: center;
 `;

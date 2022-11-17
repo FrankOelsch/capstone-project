@@ -27,7 +27,7 @@ export default function Select({ onChange, value, options, id }) {
 
 const StyledSelect = styled.select`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 200px;
   padding: 3px;
   border: 3px solid;

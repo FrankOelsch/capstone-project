@@ -29,7 +29,7 @@ const TextInput = forwardRef((props, ref) => {
 
 const StyledInput = styled.input`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 200px;
   padding: 3px;
   border: 3px solid;
