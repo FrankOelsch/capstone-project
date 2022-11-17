@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
+import * as variables from "../Variables";
 
 export default function Home() {
   const { config, setConfig } = useContext(UserContext);
@@ -20,87 +21,141 @@ export default function Home() {
     <>
       <Header />
       <Container>
-        <section>Bitte wählen sie das gewünschte Torsystem:</section>
-        <StyledLink to="/measure" onClick={handleClickSectional}>
-          <h2>Sectionaltor</h2>
-          <p>
-            Öffnet nach oben
-            <br />
-            Breite bis 500 cm möglich
-            <br />
-            Höhe bis 250 möglich
-            <br />
-            Keine Bodenschiene
-            <br />
-            Seitliche Innenwände frei
-          </p>
-        </StyledLink>
-        <StyledLink to="/measure" onClick={handleClickRundlauf}>
-          <h2>Rundlauftor</h2>
-          <p>
-            Öffnet seitlich
-            <br />
-            Breite bis 600 cm möglich
-            <br />
-            Höhe bis 300 cm möglich
-            <br />
-            Keine Federn oder Seilzüge
-            <br />
-            Deckenbereich frei
-          </p>
-        </StyledLink>
+        <Wrapper>
+          <StyledH2>
+            Mit dieser App können sie ihr Garagentor <br />
+            incl. Kostenvorschau planen
+          </StyledH2>
+          <StyledArticle>
+            <h3>Sectionaltor</h3>
+            <p>
+              Öffnet nach oben
+              <br />
+              Breite bis 500 cm möglich
+              <br />
+              Höhe bis 250 möglich
+              <br />
+              Keine Bodenschiene
+              <br />
+              Seitliche Innenwände frei
+            </p>
+          </StyledArticle>
+          <StyledLink to="/measure" onClick={handleClickSectional}>
+            Beginnen mit Sectionaltor
+          </StyledLink>
+          <StyledArticle>
+            <h3>Rundlauftor</h3>
+            <p>
+              Öffnet seitlich
+              <br />
+              Breite bis 600 cm möglich
+              <br />
+              Höhe bis 300 cm möglich
+              <br />
+              Keine Federn oder Seilzüge
+              <br />
+              Deckenbereich frei
+            </p>
+          </StyledArticle>
+          <StyledLink to="/measure" onClick={handleClickRundlauf}>
+            Beginnen mit Rundlauftor
+          </StyledLink>
+        </Wrapper>
       </Container>
       <Footer />
     </>
   );
 }
 
-const Container = styled.div`
+const Container = styled.main`
+  position: relative;
   height: 100%;
   min-height: 100vh;
-  padding: 60px 0;
+  padding: 50px 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(background3.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+
+    filter: blur(3px);
+    /* filter: contrast(70%); */
+    /* filter: opacity(80%); */
+
+    /* filter: grayscale(50%); */
+    /* filter: sepia(100%); */
+    /* filter: brightness(80%); */
+  }
+`;
+
+const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 30px;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+`;
 
-  section {
-    background-color: rgba(95, 158, 160, 0.75);
-    box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.8);
-    border-radius: 8px;
+const StyledArticle = styled.article`
+  color: hsl(216, 65%, 0%);
+  border: 3px solid;
+  background-color: ${variables.BACKGROUND_COLOR_2};
+  border-color: ${variables.BACKGROUND_COLOR_1};
+  /* box-shadow: ${variables.BOX_SHADOW_1}; */
+  border-radius: 8px;
+  width: 280px;
+  padding: 8px;
+  margin-top: 12px;
+
+  p {
+    font-family: "Noto Sans", Arial, Helvetica, sans-serif;
     font-size: 1em;
-    width: 280px;
-    padding: 10px;
+    color: hsl(216, 65%, 0%);
+  }
+
+  h3 {
+    font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+    font-size: 1.4em;
     color: hsl(216, 65%, 0%);
   }
 `;
 
 const StyledLink = styled(Link)`
-  color: hsl(216, 65%, 0%);
-  background-color: rgba(95, 158, 160, 0.75);
-  box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  color: white;
   width: 280px;
   padding: 10px;
+  border: 3px solid;
+  border-color: ${variables.BACKGROUND_COLOR_1};
+  border-radius: 6px;
+  outline: none;
+  background-color: ${variables.BACKGROUND_COLOR_1};
+  /* box-shadow: ${variables.BOX_SHADOW_1}; */
   text-decoration: none;
-  cursor: pointer;
+  margin-top: 12px;
 
-  p {
-    font-family: "Noto Sans", Arial, Helvetica, sans-serif;
-    font-size: 1.1em;
-    color: hsl(216, 65%, 0%);
+  &:hover {
+    border-color: hsl(216, 65%, 50%);
   }
+`;
 
-  h2 {
-    font-family: "Noto Sans", Arial, Helvetica, sans-serif;
-    font-size: 1.6em;
-    color: hsl(216, 65%, 0%);
-  }
+const StyledH2 = styled.h2`
+  font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
+  margin-top: 16px;
+  padding: 0;
+  color: black;
+  /* background-color: hsla(255, 100%, 100%, 0.9); */
+  /* text-shadow: 0px 0px 30px #ffffff; */
 `;
