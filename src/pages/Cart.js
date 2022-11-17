@@ -104,7 +104,11 @@ export default function Cart() {
       setCartItems(
         cartItems.map((item) => {
           if (item.id === id) {
-            return { ...item, quantity: +item.quantity + 1 };
+            if (item.quantity < 10) {
+              return { ...item, quantity: +item.quantity + 1 };
+            } else {
+              return item;
+            }
           } else {
             return item;
           }
