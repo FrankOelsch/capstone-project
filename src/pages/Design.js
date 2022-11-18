@@ -278,17 +278,6 @@ export default function Design() {
               options={RalColorsLimited}
             />
 
-            <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
-            <Select
-              id="material"
-              onChange={handleSelect}
-              value={config.material}
-              options={[
-                { name: "Holz", id: "Holz" },
-                { name: "Metall", id: "Metall" },
-              ]}
-            />
-
             {config.system === "Rundlauftor" || (
               <>
                 <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
@@ -304,6 +293,17 @@ export default function Design() {
                 />
               </>
             )}
+
+            <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
+            <Select
+              id="material"
+              onChange={handleSelect}
+              value={config.material}
+              options={[
+                { name: "Holz", id: "Holz" },
+                { name: "Metall", id: "Metall" },
+              ]}
+            />
 
             {config.material === "Holz" || (
               <>
