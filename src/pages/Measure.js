@@ -238,7 +238,7 @@ export default function Measure() {
     ctx.strokeRect(0, 0, canv.width, canv.height);
 
     // Door background
-    ctx.fillStyle = "gainsboro";
+    ctx.fillStyle = "#434B4D";
     ctx.fillRect(
       startXTemp,
       canv.height - (canv.height - startY) - tempHeight,
@@ -285,7 +285,7 @@ export default function Measure() {
 
   return (
     <>
-      <Header text={configForSave.system + " " + qm + " qm"} />
+      <Header text={configForSave.system + " " + qm + " qm"} size={"24px"} />
       <Container>
         <Wrapper>
           <StyledTopP>
@@ -372,17 +372,7 @@ const Container = styled.main`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
-
-    /* background-color: #c3e0e5; */
-
-    /* filter: blur(3px); */
-    /* filter: contrast(70%); */
-
     filter: opacity(45%) blur(3px);
-
-    /* filter: grayscale(80%); */
-    /* filter: sepia(100%); */
-    /* filter: brightness(60%); */
   }
 `;
 

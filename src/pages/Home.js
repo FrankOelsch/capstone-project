@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <>
-      <Header text={"MyGarageDoor"} />
+      <Header text={"MyGarageDoor"} size={"28px"} />
       <Container>
         <Wrapper>
           <StyledH2>
@@ -85,15 +85,7 @@ const Container = styled.main`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
-
     filter: opacity(80%) blur(3px);
-
-    /* filter: contrast(70%); */
-    /* filter: opacity(80%); */
-
-    /* filter: grayscale(50%); */
-    /* filter: sepia(100%); */
-    /* filter: brightness(80%); */
   }
 `;
 

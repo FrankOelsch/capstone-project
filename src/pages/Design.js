@@ -18,9 +18,20 @@ export default function Design() {
     getLocaleStringFromNumber(getSquareMeters(config.width, config.height))
   );
 
+  const [tempStepH, setTempStepH] = useState(0);
+  const [tempStepW, setTempStepW] = useState(0);
+  const [direction, setDirection] = useState("stop");
+
   useEffect(() => {
     checkConfig();
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      drawIt();
+    }, 6);
+    return () => clearTimeout(timeout);
+  }, [tempStepH, tempStepW, direction]);
 
   function checkConfig() {
     setConfigForSave(config);
@@ -38,7 +49,6 @@ export default function Design() {
     switch (e.target.id) {
       case "material":
         if (value === "Holz") {
-          console.log(value);
           setConfig({ ...config, material: value, doorColor: "#A65E2E" }); // Orangebraun
         } else {
           setConfig({ ...config, material: value });
@@ -58,6 +68,26 @@ export default function Design() {
     }
   }
 
+  function handleCanvasClick() {
+    if (config.system === "Sectionaltor") {
+      if (direction === "down") {
+        setDirection("up");
+        drawIt();
+      } else {
+        setDirection("down");
+        drawIt();
+      }
+    } else {
+      if (direction === "right") {
+        setDirection("left");
+        drawIt();
+      } else {
+        setDirection("right");
+        drawIt();
+      }
+    }
+  }
+
   function drawIt() {
     let canv = canvasRef.current;
     let ctx = canv.getContext("2d");
@@ -73,13 +103,28 @@ export default function Design() {
     let canvBreite = canv.width;
     let startXTemp = (canvBreite - tempWidth) / 2;
 
+    let stepW = tempStepW;
+    let stepH = tempStepH;
+
+    if ((direction === "up") & (stepH < tempHeight)) {
+      setTempStepH((prev) => prev + 1);
+    } else if ((direction === "down") & (stepH > 0)) {
+      setTempStepH((prev) => prev - 1);
+    }
+
+    if ((direction === "right") & (stepW < tempWidth)) {
+      setTempStepW((prev) => prev + 1);
+    } else if ((direction === "left") & (stepW > 0)) {
+      setTempStepW((prev) => prev - 1);
+    }
+
     ctx.clearRect(0, 0, canv.width, canv.height);
 
     ctx.lineWidth = 4;
     ctx.strokeRect(0, 0, canv.width, canv.height);
 
     // Door background
-    ctx.fillStyle = "gainsboro";
+    ctx.fillStyle = "#434B4D";
     ctx.fillRect(
       startXTemp,
       canv.height - (canv.height - startY) - tempHeight,
@@ -90,8 +135,8 @@ export default function Design() {
     // Door
     ctx.fillStyle = doorColor;
     ctx.fillRect(
-      startXTemp,
-      canv.height - (canv.height - startY) - tempHeight,
+      startXTemp + stepW,
+      canv.height - (canv.height - startY) - tempHeight - stepH,
       tempWidth,
       tempHeight
     );
@@ -103,7 +148,7 @@ export default function Design() {
       ctx.lineWidth = 1;
       for (let i = 0; i < tempWidth; i += segmentR) {
         ctx.strokeRect(
-          startXTemp + i,
+          startXTemp + i + stepW,
           canv.height - (canv.height - startY) - tempHeight,
           segmentR,
           tempHeight
@@ -116,17 +161,17 @@ export default function Design() {
         ctx.lineWidth = 4;
         ctx.strokeRect(
           startXTemp,
-          canv.height - (canv.height - startY) - tempHeight + i,
+          canv.height - (canv.height - startY) - tempHeight + i - stepH,
           tempWidth,
           segment
         );
         if (config.design === "Sicke") {
           let subsegment = segment / 3;
-          for (let ii = 0; ii < tempHeight; ii += subsegment) {
+          for (let ii = 0; ii < tempHeight - 1; ii += subsegment) {
             ctx.lineWidth = 1;
             ctx.strokeRect(
               startXTemp,
-              canv.height - (canv.height - startY) - tempHeight + ii,
+              canv.height - (canv.height - startY) - tempHeight + ii - stepH,
               tempWidth,
               subsegment
             );
@@ -137,7 +182,7 @@ export default function Design() {
             ctx.lineWidth = 1;
             ctx.strokeRect(
               startXTemp,
-              canv.height - (canv.height - startY) - tempHeight + ii,
+              canv.height - (canv.height - startY) - tempHeight + ii - stepH,
               tempWidth,
               subsegment
             );
@@ -157,7 +202,8 @@ export default function Design() {
                 (canv.height - startY) -
                 tempHeight +
                 subsegmentH / 2 +
-                i,
+                i -
+                stepH,
               subsegmentW,
               subsegmentH
             );
@@ -205,7 +251,7 @@ export default function Design() {
 
   return (
     <>
-      <Header text={configForSave.system + " " + qm + " qm"} />
+      <Header text={configForSave.system + " " + qm + " qm"} size={"24px"} />
       <Container>
         <Wrapper>
           <StyledTopP>
@@ -213,7 +259,13 @@ export default function Design() {
             und -farbe, um einen Eindruck zu bekommen
           </StyledTopP>
 
-          <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
+          <StyledCanvas
+            id="canvas"
+            onClick={handleCanvasClick}
+            ref={canvasRef}
+            width={650}
+            height={400}
+          >
             Your browser does not support the HTML5 canvas tag.
           </StyledCanvas>
 
@@ -232,8 +284,8 @@ export default function Design() {
               onChange={handleSelect}
               value={config.material}
               options={[
-                { name: "Metall", id: "Metall" },
                 { name: "Holz", id: "Holz" },
+                { name: "Metall", id: "Metall" },
               ]}
             />
 
@@ -292,17 +344,7 @@ const Container = styled.main`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
-
-    /* background-color: #c3e0e5; */
-
-    /* filter: blur(3px); */
-    /* filter: blur(3px) contrast(30%); */
-
     filter: opacity(45%) blur(3px);
-
-    /* filter: grayscale(50%); */
-    /* filter: sepia(100%); */
-    /* filter: brightness(80%); */
   }
 `;
 
@@ -321,6 +363,7 @@ const StyledCanvas = styled.canvas`
   width: 90%;
   background-color: ${variables.BACKGROUND_COLOR_7};
   box-shadow: 3px 3px 5px hsla(0, 0%, 40%, 1);
+  cursor: pointer;
 `;
 
 const StyledLabel = styled.label`

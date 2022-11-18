@@ -204,7 +204,7 @@ export default function Cart() {
 
   return (
     <>
-      <Header text={"Warenkorb"} />
+      <Header text={"Warenkorb"} size={"26px"} />
       <Container>
         <Wrapper>
           <StyledTopP>
@@ -305,15 +305,7 @@ const Container = styled.main`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
-
     filter: opacity(45%) blur(3px);
-
-    /* filter: contrast(70%); */
-    /* filter: opacity(80%); */
-
-    /* filter: grayscale(50%); */
-    /* filter: sepia(100%); */
-    /* filter: brightness(80%); */
   }
 `;
 
