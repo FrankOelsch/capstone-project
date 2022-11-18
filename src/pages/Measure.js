@@ -161,7 +161,6 @@ export default function Measure() {
     let ctx = canv.getContext("2d");
 
     let wallColor = config.wallColor;
-    let doorColor = config.doorColor;
 
     let torBreite = +config.width;
     let torBreitePrev = +prevConfig.width;
@@ -285,11 +284,12 @@ export default function Measure() {
 
   return (
     <>
-      <Header />
+      <Header text={configForSave.system + " " + qm + " qm"} />
       <Container>
-        <StyledH3>
-          {configForSave.system}: {qm} qm
-        </StyledH3>
+        <StyledTopP>
+          Geben sie hier Höhe, Breite und Radius ein, um <br />
+          die Torfläche zu berechnen und darzustellen.
+        </StyledTopP>
 
         <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
           Your browser does not support the HTML5 canvas tag.
@@ -319,7 +319,7 @@ export default function Measure() {
             ref={inputWidthRef}
           />
 
-          <label htmlFor="gateHeight">Tor-Höhe in cm</label>
+          <StyledLabel htmlFor="gateHeight">Tor-Höhe in cm</StyledLabel>
           <TextInput
             required
             type="number"
@@ -331,7 +331,7 @@ export default function Measure() {
             ref={inputHeightRef}
           />
 
-          <label htmlFor="radius">Torbogen-Radius in cm</label>
+          <StyledLabel htmlFor="radius">Torbogen-Radius in cm</StyledLabel>
           <TextInput
             required
             type="number"
@@ -343,7 +343,7 @@ export default function Measure() {
             ref={inputRadiusRef}
           />
 
-          <StyledButton type="submit">Berechnen</StyledButton>
+          <StyledButton type="submit">Anwenden</StyledButton>
         </form>
       </Container>
       <Footer />
@@ -351,7 +351,7 @@ export default function Measure() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.main`
   height: 100%;
   min-height: 100vh;
   padding: 60px 0;
@@ -359,22 +359,19 @@ const Container = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
 `;
 
 const StyledCanvas = styled.canvas`
-  margin: 10px auto;
+  margin: 8px auto;
   width: 90%;
   background-color: lightslategray;
 `;
 
 const StyledLabel = styled.label`
-  text-align: left;
-`;
-
-const StyledH3 = styled.h3`
-  margin: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
 `;
 
 const StyledButton = styled.button`
@@ -394,4 +391,10 @@ const StyledButton = styled.button`
   &:focus {
     border-color: hsl(216, 65%, 50%);
   }
+`;
+
+const StyledTopP = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  margin: 2px;
 `;

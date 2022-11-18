@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { CartIcon2 } from "../Icons";
 import { getLocaleStringFromNumber } from "../utils/helper";
 import { FaTrashAlt, FaRegEdit, FaCartPlus } from "react-icons/fa";
+import * as variables from "../Variables";
 
 export default function Item({ item, onCreate, onEdit, onDelete }) {
   return (
@@ -24,10 +24,7 @@ export default function Item({ item, onCreate, onEdit, onDelete }) {
         )}
 
         {item.inCart || (
-          <>
-            {/* <CartIcon2 id="create" onClick={() => onCreate(item.id)} /> */}
-            <StyledFaCartPlus id="create" onClick={() => onCreate(item.id)} />
-          </>
+          <StyledFaCartPlus id="create" onClick={() => onCreate(item.id)} />
         )}
       </Actions>
     </StyledArticle>
@@ -47,6 +44,7 @@ const StyledArticle = styled.article`
   justify-content: stretch;
   margin: 8px;
   padding: 6px;
+  /* box-shadow: ${variables.BOX_SHADOW_1}; */
   background-color: ${(prop) =>
     prop.variante === true ? "hsl(216, 65%, 78%)" : "hsl(216, 65%, 85%)"};
   border-radius: 6px;

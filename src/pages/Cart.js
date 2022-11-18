@@ -8,6 +8,7 @@ import { ShopItems } from "../data/Items";
 import ReactModal from "react-modal";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 import TextInput from "../components/TextInput";
+import * as variables from "../Variables";
 
 const customStyles = {
   overlay: {
@@ -203,18 +204,14 @@ export default function Cart() {
 
   return (
     <>
-      <Header />
+      <Header text={"Warenkorb"} />
       <Container>
         <StyledTopP>
-          Hier sehen sie den automatisch konfigurierten
-          <br /> Tor-Artikel entsprechend den Eingaben auf den <br />
-          vorherigen Seiten. <br />
-          Zusätzliche Artikel können zufügen werden.
+          Hier sehen sie den automatisch konfigurierten <br />
+          Tor- Artikel entsprechend den Eingaben auf den <br />
+          vorherigen Seiten. Zusätzliche Artikel können zufügen werden.
         </StyledTopP>
 
-        <StyledHr />
-
-        <StyledH2>Warenkorb</StyledH2>
         <StyledSection>
           {filteredCartItems.map((item) => (
             <Item
@@ -235,7 +232,8 @@ export default function Cart() {
           preventScroll={true}
           onAfterClose={handleAfterClose}
         >
-          <StyledH3>Artikel bearbeiten</StyledH3>
+          <StyledH4>Artikel bearbeiten</StyledH4>
+
           <form onSubmit={handleSubmit}>
             <input type="hidden" name="id" value={cartItem.id} />
             <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
@@ -268,9 +266,9 @@ export default function Cart() {
         </ReactModal>
 
         <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
-        <StyledHr />
 
-        <StyledH2>Zusätzliche Artikel</StyledH2>
+        <StyledH3>Zusätzliche Artikel</StyledH3>
+
         <StyledSection>
           {filteredShopItems.map((item) => (
             <Item
@@ -288,7 +286,7 @@ export default function Cart() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.main`
   height: 100%;
   min-height: 100vh;
   padding: 54px 0;
@@ -296,22 +294,11 @@ const Container = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
 `;
 
-const StyledH2 = styled.h2`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  margin-top: 0px;
-  padding: 0 6px;
-  border-radius: 0px 0px 6px 6px;
-  border-bottom: 3px solid hsl(216, 65%, 50%);
-  border-left: 3px solid hsl(216, 65%, 50%);
-  border-right: 3px solid hsl(216, 65%, 50%);
-`;
-
-const StyledH3 = styled.h3`
+const StyledH4 = styled.h4`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2em;
   margin-bottom: 10px;
@@ -330,7 +317,7 @@ const StyledLabel = styled.label`
 const StyledTopP = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
-  margin: 6px 0;
+  margin: 2px;
 `;
 
 const StyledSumP = styled.p`
@@ -341,11 +328,6 @@ const StyledSumP = styled.p`
   align-self: flex-end;
   margin-right: 14px;
   margin-bottom: 6px;
-`;
-
-const StyledHr = styled.hr`
-  width: 100%;
-  border-bottom: 6px solid hsl(216, 65%, 50%);
 `;
 
 const StyledButton = styled.button`
@@ -365,4 +347,14 @@ const StyledButton = styled.button`
   &:focus {
     border-color: hsl(216, 65%, 50%);
   }
+`;
+
+const StyledH3 = styled.h3`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
+  color: white;
+  width: 100%;
+  padding: 6px;
+  background-color: ${variables.BACKGROUND_COLOR_1};
+  margin: 8px;
 `;

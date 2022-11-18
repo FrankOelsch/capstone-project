@@ -5,8 +5,8 @@ import Header from "../components/Header";
 import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import { RalColors } from "../data/RalColors";
+import { RalColorsLimited } from "../data/RalColorsLimited";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
-import Button from "../components/button/Button";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =
@@ -37,7 +37,12 @@ export default function Design() {
 
     switch (e.target.id) {
       case "material":
-        setConfig({ ...config, material: value });
+        if (value === "Holz") {
+          console.log(value);
+          setConfig({ ...config, material: value, doorColor: "#A65E2E" }); // Orangebraun
+        } else {
+          setConfig({ ...config, material: value });
+        }
         break;
       case "design":
         setConfig({ ...config, design: value });
@@ -200,11 +205,12 @@ export default function Design() {
 
   return (
     <>
-      <Header />
+      <Header text={configForSave.system + " " + qm + " qm"} />
       <Container>
-        <StyledH3>
-          {configForSave.system}: {qm} qm
-        </StyledH3>
+        <StyledTopP>
+          Wählen sie hier die gewünschte Torausführung <br />
+          und -farbe, um einen Eindruck zu bekommen
+        </StyledTopP>
 
         <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
           Your browser does not support the HTML5 canvas tag.
@@ -216,7 +222,7 @@ export default function Design() {
             id="wallColor"
             onChange={handleSelect}
             value={config.wallColor}
-            options={RalColors}
+            options={RalColorsLimited}
           />
 
           <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
@@ -230,27 +236,35 @@ export default function Design() {
             ]}
           />
 
-          <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
-          <Select
-            id="design"
-            onChange={handleSelect}
-            value={config.design}
-            options={[
-              { name: "Sicke", id: "Sicke" },
-              { name: "Großsicke", id: "Großsicke" },
-              { name: "Kassette", id: "Kassette" },
-            ]}
-          />
+          {config.system === "Rundlauftor" || (
+            <>
+              <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
+              <Select
+                id="design"
+                onChange={handleSelect}
+                value={config.design}
+                options={[
+                  { name: "Sicke", id: "Sicke" },
+                  { name: "Großsicke", id: "Großsicke" },
+                  { name: "Kassette", id: "Kassette" },
+                ]}
+              />
+            </>
+          )}
 
-          <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
-          <Select
-            id="doorColor"
-            onChange={handleSelect}
-            value={config.doorColor}
-            options={RalColors}
-          />
+          {config.material === "Holz" || (
+            <>
+              <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
+              <Select
+                id="doorColor"
+                onChange={handleSelect}
+                value={config.doorColor}
+                options={RalColorsLimited}
+              />
+            </>
+          )}
 
-          <StyledButton type="submit">Design anwenden</StyledButton>
+          <StyledButton type="submit">Anwenden</StyledButton>
         </form>
       </Container>
       <Footer />
@@ -258,7 +272,7 @@ export default function Design() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.main`
   height: 100%;
   min-height: 100vh;
   padding: 60px 0;
@@ -266,22 +280,19 @@ const Container = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
 `;
 
 const StyledCanvas = styled.canvas`
-  margin: 10px auto;
+  margin: 8px auto;
   width: 90%;
   background-color: lightslategray;
 `;
 
 const StyledLabel = styled.label`
-  text-align: left;
-`;
-
-const StyledH3 = styled.h3`
-  margin: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
 `;
 
 const StyledButton = styled.button`
@@ -301,4 +312,10 @@ const StyledButton = styled.button`
   &:focus {
     border-color: hsl(216, 65%, 50%);
   }
+`;
+
+const StyledTopP = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  margin: 2px;
 `;

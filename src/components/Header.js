@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function Header() {
+export default function Header({ text }) {
   return (
     <StyledHeader>
-      <StyledH1>MyGarageDoor</StyledH1>
+      <StyledH1>{text}</StyledH1>
     </StyledHeader>
   );
 }
