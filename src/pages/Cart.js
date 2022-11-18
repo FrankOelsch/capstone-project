@@ -206,80 +206,82 @@ export default function Cart() {
     <>
       <Header text={"Warenkorb"} />
       <Container>
-        <StyledTopP>
-          Hier sehen sie den automatisch konfigurierten <br />
-          Tor- Artikel entsprechend den Eingaben auf den <br />
-          vorherigen Seiten. Zusätzliche Artikel können zufügen werden.
-        </StyledTopP>
+        <Wrapper>
+          <StyledTopP>
+            Hier sehen sie den automatisch konfigurierten <br />
+            Tor- Artikel entsprechend den Eingaben auf den <br />
+            vorherigen Seiten. Zusätzliche Artikel können zufügen werden.
+          </StyledTopP>
 
-        <StyledSection>
-          {filteredCartItems.map((item) => (
-            <Item
-              key={item.id}
-              item={item}
-              onCreate={handleCreate}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </StyledSection>
+          <StyledSection>
+            {filteredCartItems.map((item) => (
+              <Item
+                key={item.id}
+                item={item}
+                onCreate={handleCreate}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </StyledSection>
 
-        <ReactModal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Artikel Bearbeiten"
-          preventScroll={true}
-          onAfterClose={handleAfterClose}
-        >
-          <StyledH4>Artikel bearbeiten</StyledH4>
+          <ReactModal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Artikel Bearbeiten"
+            preventScroll={true}
+            onAfterClose={handleAfterClose}
+          >
+            <StyledH4>Artikel bearbeiten</StyledH4>
 
-          <form onSubmit={handleSubmit}>
-            <input type="hidden" name="id" value={cartItem.id} />
-            <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
-            <TextInput
-              type="text"
-              id="name"
-              name="name"
-              value={cartItem.name}
-              onChange={handleOnChange}
-              minLength="8"
-              maxLength="20"
-              required
-            />
-            <StyledLabel htmlFor="quantity">Anzahl:</StyledLabel>
-            <TextInput
-              type="number"
-              id="quantity"
-              name="quantity"
-              value={cartItem.quantity}
-              onChange={handleOnChange}
-              min="1"
-              max="10"
-              step="1"
-              required
-            />
-            <StyledButton type="submit">Speichern</StyledButton>
-            <p>{message}</p>
-          </form>
-          <StyledButton onClick={closeModal}>Schließen</StyledButton>
-        </ReactModal>
+            <form onSubmit={handleSubmit}>
+              <input type="hidden" name="id" value={cartItem.id} />
+              <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
+              <TextInput
+                type="text"
+                id="name"
+                name="name"
+                value={cartItem.name}
+                onChange={handleOnChange}
+                minLength="8"
+                maxLength="20"
+                required
+              />
+              <StyledLabel htmlFor="quantity">Anzahl:</StyledLabel>
+              <TextInput
+                type="number"
+                id="quantity"
+                name="quantity"
+                value={cartItem.quantity}
+                onChange={handleOnChange}
+                min="1"
+                max="10"
+                step="1"
+                required
+              />
+              <StyledButton type="submit">Speichern</StyledButton>
+              <p>{message}</p>
+            </form>
+            <StyledButton onClick={closeModal}>Schließen</StyledButton>
+          </ReactModal>
 
-        <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
+          <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
 
-        <StyledH3>Zusätzliche Artikel</StyledH3>
+          <StyledH3>Zusätzliche Artikel</StyledH3>
 
-        <StyledSection>
-          {filteredShopItems.map((item) => (
-            <Item
-              key={item.id}
-              item={item}
-              onCreate={handleCreate}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </StyledSection>
+          <StyledSection>
+            {filteredShopItems.map((item) => (
+              <Item
+                key={item.id}
+                item={item}
+                onCreate={handleCreate}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </StyledSection>
+        </Wrapper>
       </Container>
       <Footer />
     </>
@@ -290,6 +292,32 @@ const Container = styled.main`
   height: 100%;
   min-height: 100vh;
   padding: 54px 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(background3.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+
+    filter: blur(3px);
+    /* filter: contrast(70%); */
+    /* filter: opacity(80%); */
+
+    /* filter: grayscale(50%); */
+    /* filter: sepia(100%); */
+    /* filter: brightness(80%); */
+  }
+`;
+
+const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -337,15 +365,15 @@ const StyledButton = styled.button`
   padding: 3px;
   margin-top: 20px;
   border: 3px solid;
-  border-color: hsl(216, 65%, 80%);
+  border-color: ${variables.BACKGROUND_COLOR_6};
   border-radius: 6px;
   outline: none;
-  background-color: hsl(216, 65%, 80%);
+  background-color: ${variables.BACKGROUND_COLOR_6};
   box-shadow: 3px 3px 3px lightgrey;
   cursor: pointer;
 
   &:focus {
-    border-color: hsl(216, 65%, 50%);
+    border-color: ${variables.BACKGROUND_COLOR_3};
   }
 `;
 

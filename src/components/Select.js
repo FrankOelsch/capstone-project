@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as variables from "../Variables";
 
 export default function Select({ onChange, value, options, id }) {
   if (!options || !Array.isArray(options) || options.length < 1) {
@@ -32,7 +33,7 @@ const StyledSelect = styled.select`
 
   border-radius: 6px;
   outline: none;
-  background-color: aliceblue;
+  background-color: ${variables.BACKGROUND_COLOR_5};
   box-shadow: 3px 3px 3px lightgrey;
 
   &:focus {

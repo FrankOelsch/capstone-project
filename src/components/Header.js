@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as variables from "../Variables";
 
 export default function Header({ text }) {
   return (
@@ -14,7 +15,7 @@ const StyledHeader = styled.header`
   width: 100%;
   height: 50px;
   padding: 6px;
-  background-color: hsl(216, 65%, 50%);
+  background-color: ${variables.BACKGROUND_COLOR_3};
   color: white;
   z-index: 2;
 `;
