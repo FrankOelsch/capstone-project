@@ -29,7 +29,7 @@ const StyledSelect = styled.select`
   width: 200px;
   padding: 3px;
   border: 3px solid;
-  border-color: hsl(216, 65%, 80%);
+  border-color: ${variables.BACKGROUND_COLOR_6};
 
   border-radius: 6px;
   outline: none;
@@ -37,6 +37,6 @@ const StyledSelect = styled.select`
   box-shadow: 3px 3px 3px lightgrey;
 
   &:focus {
-    border-color: hsl(216, 65%, 50%);
+    border-color: ${variables.BACKGROUND_COLOR_3};
   }
 `;

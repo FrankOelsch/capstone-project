@@ -5,6 +5,7 @@ import Abel from "./fonts/abel-v18-latin-regular.woff";
 import Abel2 from "./fonts/abel-v18-latin-regular.woff2";
 import MeriendaOne from "./fonts/merienda-one-v16-latin-regular.woff";
 import MeriendaOne2 from "./fonts/merienda-one-v16-latin-regular.woff2";
+import * as variables from "./Variables";
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -36,7 +37,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     position: relative;
     height: 100%;
-    background-color: aliceblue;
+    background-color: ${variables.BACKGROUND_COLOR_5};
     font-family: 'Noto Sans', 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;

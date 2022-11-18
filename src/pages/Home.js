@@ -107,7 +107,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledArticle = styled.article`
-  color: hsl(216, 65%, 0%);
+  color: ${variables.BACKGROUND_COLOR_13};
   border: 3px solid;
   background-color: ${variables.BACKGROUND_COLOR_2};
   border-color: ${variables.BACKGROUND_COLOR_1};
@@ -119,20 +119,20 @@ const StyledArticle = styled.article`
   p {
     font-family: "Noto Sans", Arial, Helvetica, sans-serif;
     font-size: 1em;
-    color: hsl(216, 65%, 0%);
+    color: ${variables.BACKGROUND_COLOR_13};
   }
 
   h3 {
     font-family: "Noto Sans", Arial, Helvetica, sans-serif;
     font-size: 1.4em;
-    color: hsl(216, 65%, 0%);
+    color: ${variables.BACKGROUND_COLOR_13};
   }
 `;
 
 const StyledLink = styled(Link)`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2em;
-  color: white;
+  color: ${variables.BACKGROUND_COLOR_8};
   width: 280px;
   padding: 10px;
   border: 3px solid;
@@ -153,5 +153,5 @@ const StyledH2 = styled.h2`
   font-size: 1.05em;
   margin-top: 16px;
   padding: 0;
-  color: black;
+  color: ${variables.BACKGROUND_COLOR_9};
 `;

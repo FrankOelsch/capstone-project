@@ -34,7 +34,7 @@ const StyledFooter = styled.footer`
   width: 100%;
   height: 50px;
   background-color: ${variables.BACKGROUND_COLOR_3};
-  color: white;
+  color: ${variables.BACKGROUND_COLOR_8};
   z-index: 2;
 `;
 
@@ -49,7 +49,7 @@ const StyledNav = styled.nav`
 const StyledNavLink = styled(NavLink)`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.8em;
-  color: white;
+  color: ${variables.BACKGROUND_COLOR_8};
   display: flex;
   justify-content: center;
   align-items: center;

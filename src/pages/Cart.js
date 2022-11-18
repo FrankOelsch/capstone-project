@@ -12,7 +12,7 @@ import * as variables from "../Variables";
 
 const customStyles = {
   overlay: {
-    backgroundColor: "hsla(0, 0%, 40%, 70%)",
+    backgroundColor: variables.BACKGROUND_COLOR_12,
   },
   content: {
     display: "flex",
@@ -27,7 +27,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "aliceblue",
+    backgroundColor: variables.BACKGROUND_COLOR_5,
   },
 };
 
@@ -261,7 +261,7 @@ export default function Cart() {
                 required
               />
               <StyledButton type="submit">Speichern</StyledButton>
-              <p>{message}</p>
+              <StyledMessageP>{message}</StyledMessageP>
             </form>
             <StyledButton onClick={closeModal}>Schließen</StyledButton>
           </ReactModal>
@@ -339,7 +339,7 @@ const StyledSection = styled.section`
 const StyledLabel = styled.label`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
-  color: black;
+  color: ${variables.BACKGROUND_COLOR_9};
 `;
 
 const StyledTopP = styled.p`
@@ -356,6 +356,15 @@ const StyledSumP = styled.p`
   align-self: flex-end;
   margin-right: 14px;
   margin-bottom: 6px;
+`;
+
+const StyledMessageP = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 2px;
+  margin-top: 10px;
+  color: ${variables.BACKGROUND_COLOR_10};
 `;
 
 const StyledButton = styled.button`
@@ -380,7 +389,7 @@ const StyledButton = styled.button`
 const StyledH3 = styled.h3`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.1em;
-  color: white;
+  color: ${variables.BACKGROUND_COLOR_9};
   width: 100%;
   padding: 6px;
   background-color: ${variables.BACKGROUND_COLOR_1};

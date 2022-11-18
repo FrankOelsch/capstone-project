@@ -54,7 +54,7 @@ const StyledArticle = styled.article`
     prop.variante === true ? "hsl(216, 65%, 68%)" : "hsl(216, 65%, 75%)"};
 
   :hover {
-    border-color: hsl(216, 65%, 50%);
+    border-color: ${variables.BACKGROUND_COLOR_3};
   }
 `;
 
@@ -112,7 +112,7 @@ const Actions = styled.div`
 `;
 
 const StyledFaTrashAlt = styled(FaTrashAlt)`
-  color: black;
+  color: ${variables.BACKGROUND_COLOR_9};
   width: 23px;
   height: 21px;
   cursor: pointer;
@@ -120,14 +120,14 @@ const StyledFaTrashAlt = styled(FaTrashAlt)`
 `;
 
 const StyledFaEdit = styled(FaRegEdit)`
-  color: blue;
+  color: ${variables.BACKGROUND_COLOR_10};
   width: 24px;
   height: 22px;
   cursor: pointer;
 `;
 
 const StyledFaCartPlus = styled(FaCartPlus)`
-  color: darkgreen;
+  color: ${variables.BACKGROUND_COLOR_11};
   width: 24px;
   height: 22px;
   cursor: pointer;

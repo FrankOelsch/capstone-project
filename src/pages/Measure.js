@@ -411,7 +411,7 @@ const StyledButton = styled.button`
   padding: 3px;
   margin-top: 20px;
   border: 3px solid;
-  border-color: hsl(216, 65%, 80%);
+  border-color: ${variables.BACKGROUND_COLOR_6};
   border-radius: 6px;
   outline: none;
   background-color: ${variables.BACKGROUND_COLOR_6};
@@ -419,7 +419,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   &:focus {
-    border-color: hsl(216, 65%, 50%);
+    border-color: ${variables.BACKGROUND_COLOR_3};
   }
 `;
 
