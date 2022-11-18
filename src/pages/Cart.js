@@ -27,7 +27,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: variables.BACKGROUND_COLOR_5,
+    backgroundColor: "#c7ddde",
   },
 };
 
@@ -306,7 +306,8 @@ const Container = styled.main`
     background-size: cover;
     background-position: top;
 
-    filter: blur(3px);
+    filter: opacity(45%) blur(3px);
+
     /* filter: contrast(70%); */
     /* filter: opacity(80%); */
 
@@ -374,15 +375,19 @@ const StyledButton = styled.button`
   padding: 3px;
   margin-top: 20px;
   border: 3px solid;
-  border-color: ${variables.BACKGROUND_COLOR_6};
+  border-color: hsla(216, 65%, 60%, 0.8);
   border-radius: 6px;
   outline: none;
-  background-color: ${variables.BACKGROUND_COLOR_6};
-  box-shadow: 3px 3px 3px lightgrey;
+  background-color: hsla(216, 65%, 60%, 0.8);
+  box-shadow: 3px 3px 5px hsla(0, 0%, 30%, 1);
   cursor: pointer;
 
+  &:hover {
+    border-color: ${variables.BACKGROUND_COLOR_14};
+  }
+
   &:focus {
-    border-color: ${variables.BACKGROUND_COLOR_3};
+    border-color: ${variables.BACKGROUND_COLOR_14};
   }
 `;
 

@@ -11,6 +11,7 @@ export const BACKGROUND_COLOR_10 = "blue";
 export const BACKGROUND_COLOR_11 = "darkgreen";
 export const BACKGROUND_COLOR_12 = "hsla(0, 0%, 40%, 0.7)";
 export const BACKGROUND_COLOR_13 = "hsla(216, 65%, 0%, 1)";
+export const BACKGROUND_COLOR_14 = "#3333ff";
 
 export const BORDER_COLOR_1 = "hsla(216, 65%, 80%, 0)";
 export const BORDER_COLOR_2 = "hsla(216, 65%, 80%, 1)";

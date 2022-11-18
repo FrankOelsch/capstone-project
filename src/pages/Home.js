@@ -86,7 +86,8 @@ const Container = styled.main`
     background-size: cover;
     background-position: top;
 
-    filter: blur(3px);
+    filter: opacity(80%) blur(3px);
+
     /* filter: contrast(70%); */
     /* filter: opacity(80%); */
 

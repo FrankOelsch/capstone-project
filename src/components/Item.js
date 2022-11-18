@@ -46,15 +46,19 @@ const StyledArticle = styled.article`
   padding: 6px;
   /* box-shadow: ${variables.BOX_SHADOW_1}; */
   background-color: ${(prop) =>
-    prop.variante === true ? "hsl(216, 65%, 78%)" : "hsl(216, 65%, 85%)"};
+    prop.variante === true
+      ? "hsla(216, 65%, 80%, 0.8)"
+      : "hsla(216, 65%, 80%, 0.8)"};
   border-radius: 6px;
   border-style: solid;
-  border-width: 2px;
+  border-width: 3px;
   border-color: ${(prop) =>
-    prop.variante === true ? "hsl(216, 65%, 68%)" : "hsl(216, 65%, 75%)"};
+    prop.variante === true
+      ? "hsla(216, 65%, 60%, 1)"
+      : "hsla(216, 65%, 60%, 1)"};
 
   :hover {
-    border-color: ${variables.BACKGROUND_COLOR_3};
+    border-color: hsla(216, 65%, 40%, 1);
   }
 `;
 

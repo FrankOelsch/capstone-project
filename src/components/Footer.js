@@ -34,7 +34,7 @@ const StyledFooter = styled.footer`
   width: 100%;
   height: 50px;
   background-color: ${variables.BACKGROUND_COLOR_3};
-  color: ${variables.BACKGROUND_COLOR_8};
+  color: ${variables.BACKGROUND_COLOR_5};
   z-index: 2;
 `;
 

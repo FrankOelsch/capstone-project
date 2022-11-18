@@ -373,9 +373,12 @@ const Container = styled.main`
     background-size: cover;
     background-position: top;
 
+    /* background-color: #c3e0e5; */
+
     /* filter: blur(3px); */
     /* filter: contrast(70%); */
-    filter: opacity(40%) blur(3px);
+
+    filter: opacity(45%) blur(3px);
 
     /* filter: grayscale(80%); */
     /* filter: sepia(100%); */
@@ -397,6 +400,7 @@ const StyledCanvas = styled.canvas`
   margin: 8px auto;
   width: 90%;
   background-color: ${variables.BACKGROUND_COLOR_7};
+  box-shadow: 3px 3px 5px hsla(0, 0%, 40%, 1);
 `;
 
 const StyledLabel = styled.label`
@@ -411,15 +415,19 @@ const StyledButton = styled.button`
   padding: 3px;
   margin-top: 20px;
   border: 3px solid;
-  border-color: ${variables.BACKGROUND_COLOR_6};
+  border-color: ${variables.BACKGROUND_COLOR_1};
   border-radius: 6px;
   outline: none;
-  background-color: ${variables.BACKGROUND_COLOR_6};
-  box-shadow: 3px 3px 3px lightgrey;
+  background-color: ${variables.BACKGROUND_COLOR_1};
+  box-shadow: 3px 3px 5px hsla(0, 0%, 30%, 1);
   cursor: pointer;
 
+  &:hover {
+    border-color: ${variables.BACKGROUND_COLOR_14};
+  }
+
   &:focus {
-    border-color: ${variables.BACKGROUND_COLOR_3};
+    border-color: ${variables.BACKGROUND_COLOR_14};
   }
 `;
 
