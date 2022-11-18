@@ -207,10 +207,9 @@ export default function Cart() {
       <Header text={"Warenkorb"} />
       <Container>
         <StyledTopP>
-          Hier sehen sie den automatisch konfigurierten Tor-
-          <br /> Artikel entsprechend den Eingaben auf den vorherigen
-          <br />
-          Seiten. Zusätzliche Artikel können zufügen werden.
+          Hier sehen sie den automatisch konfigurierten <br />
+          Tor- Artikel entsprechend den Eingaben auf den <br />
+          vorherigen Seiten. Zusätzliche Artikel können zufügen werden.
         </StyledTopP>
 
         <StyledSection>
@@ -233,7 +232,8 @@ export default function Cart() {
           preventScroll={true}
           onAfterClose={handleAfterClose}
         >
-          <StyledH3>Artikel bearbeiten</StyledH3>
+          <StyledH4>Artikel bearbeiten</StyledH4>
+
           <form onSubmit={handleSubmit}>
             <input type="hidden" name="id" value={cartItem.id} />
             <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
@@ -267,7 +267,8 @@ export default function Cart() {
 
         <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
 
-        <StyledH4>Zusätzliche Artikel</StyledH4>
+        <StyledH3>Zusätzliche Artikel</StyledH3>
+
         <StyledSection>
           {filteredShopItems.map((item) => (
             <Item
@@ -293,11 +294,11 @@ const Container = styled.main`
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
 `;
 
-const StyledH3 = styled.h3`
+const StyledH4 = styled.h4`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2em;
   margin-bottom: 10px;
@@ -316,7 +317,7 @@ const StyledLabel = styled.label`
 const StyledTopP = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
-  margin: 6px 0;
+  margin: 2px;
 `;
 
 const StyledSumP = styled.p`
@@ -348,14 +349,12 @@ const StyledButton = styled.button`
   }
 `;
 
-const StyledH4 = styled.h4`
+const StyledH3 = styled.h3`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: white;
-  width: 280px;
-  padding: 8px;
-  border-color: ${variables.BACKGROUND_COLOR_1};
-  border-radius: 6px;
+  width: 100%;
+  padding: 6px;
   background-color: ${variables.BACKGROUND_COLOR_1};
-  margin-top: 12px;
+  margin: 8px;
 `;

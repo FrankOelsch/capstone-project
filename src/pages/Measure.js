@@ -287,10 +287,8 @@ export default function Measure() {
       <Header text={configForSave.system + " " + qm + " qm"} />
       <Container>
         <StyledTopP>
-          Bitte geben sie hier Höhe, Breite und optional
-          <br />
-          den Radius der Toröffnung ein, um die Torfläche <br />
-          zu berechnen und darzustellen.
+          Geben sie hier Höhe, Breite und Radius ein, um <br />
+          die Torfläche zu berechnen und darzustellen.
         </StyledTopP>
 
         <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
@@ -321,7 +319,7 @@ export default function Measure() {
             ref={inputWidthRef}
           />
 
-          <label htmlFor="gateHeight">Tor-Höhe in cm</label>
+          <StyledLabel htmlFor="gateHeight">Tor-Höhe in cm</StyledLabel>
           <TextInput
             required
             type="number"
@@ -333,7 +331,7 @@ export default function Measure() {
             ref={inputHeightRef}
           />
 
-          <label htmlFor="radius">Torbogen-Radius in cm</label>
+          <StyledLabel htmlFor="radius">Torbogen-Radius in cm</StyledLabel>
           <TextInput
             required
             type="number"
@@ -361,22 +359,19 @@ const Container = styled.main`
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
 `;
 
 const StyledCanvas = styled.canvas`
-  margin: 10px auto;
+  margin: 8px auto;
   width: 90%;
   background-color: lightslategray;
 `;
 
 const StyledLabel = styled.label`
-  text-align: left;
-`;
-
-const StyledH3 = styled.h3`
-  margin: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
 `;
 
 const StyledButton = styled.button`
@@ -401,5 +396,5 @@ const StyledButton = styled.button`
 const StyledTopP = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
-  margin: 6px 0;
+  margin: 2px;
 `;

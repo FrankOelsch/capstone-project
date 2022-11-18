@@ -208,10 +208,8 @@ export default function Design() {
       <Header text={configForSave.system + " " + qm + " qm"} />
       <Container>
         <StyledTopP>
-          Bitte wählen sie hier die gewünschte Torausführung
-          <br />
-          und -farbe, und die Farbe der Hauswand, um einen <br />
-          visuellen Eindruck zu bekommen
+          Wählen sie hier die gewünschte Torausführung <br />
+          und -farbe, um einen Eindruck zu bekommen
         </StyledTopP>
 
         <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
@@ -282,22 +280,19 @@ const Container = styled.main`
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
 `;
 
 const StyledCanvas = styled.canvas`
-  margin: 10px auto;
+  margin: 8px auto;
   width: 90%;
   background-color: lightslategray;
 `;
 
 const StyledLabel = styled.label`
-  text-align: left;
-`;
-
-const StyledH3 = styled.h3`
-  margin: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
 `;
 
 const StyledButton = styled.button`
@@ -322,5 +317,5 @@ const StyledButton = styled.button`
 const StyledTopP = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
-  margin: 6px 0;
+  margin: 2px;
 `;
