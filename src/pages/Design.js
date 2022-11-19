@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Select from "../components/Select";
 import { UserContext } from "../UserContext";
-import { RalColors } from "../data/RalColors";
 import { RalColorsLimited } from "../data/RalColorsLimited";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
+import * as variables from "../Variables";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =
@@ -18,9 +18,20 @@ export default function Design() {
     getLocaleStringFromNumber(getSquareMeters(config.width, config.height))
   );
 
+  const [tempStepH, setTempStepH] = useState(0);
+  const [tempStepW, setTempStepW] = useState(0);
+  const [direction, setDirection] = useState("stop");
+
   useEffect(() => {
     checkConfig();
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      drawIt();
+    }, 6);
+    return () => clearTimeout(timeout);
+  }, [tempStepH, tempStepW, direction]);
 
   function checkConfig() {
     setConfigForSave(config);
@@ -38,7 +49,6 @@ export default function Design() {
     switch (e.target.id) {
       case "material":
         if (value === "Holz") {
-          console.log(value);
           setConfig({ ...config, material: value, doorColor: "#A65E2E" }); // Orangebraun
         } else {
           setConfig({ ...config, material: value });
@@ -58,6 +68,26 @@ export default function Design() {
     }
   }
 
+  function handleCanvasClick() {
+    if (config.system === "Sectionaltor") {
+      if (direction === "down") {
+        setDirection("up");
+        drawIt();
+      } else {
+        setDirection("down");
+        drawIt();
+      }
+    } else {
+      if (direction === "right") {
+        setDirection("left");
+        drawIt();
+      } else {
+        setDirection("right");
+        drawIt();
+      }
+    }
+  }
+
   function drawIt() {
     let canv = canvasRef.current;
     let ctx = canv.getContext("2d");
@@ -73,13 +103,28 @@ export default function Design() {
     let canvBreite = canv.width;
     let startXTemp = (canvBreite - tempWidth) / 2;
 
+    let stepW = tempStepW;
+    let stepH = tempStepH;
+
+    if ((direction === "up") & (stepH < tempHeight)) {
+      setTempStepH((prev) => prev + 1);
+    } else if ((direction === "down") & (stepH > 0)) {
+      setTempStepH((prev) => prev - 1);
+    }
+
+    if ((direction === "right") & (stepW < tempWidth)) {
+      setTempStepW((prev) => prev + 1);
+    } else if ((direction === "left") & (stepW > 0)) {
+      setTempStepW((prev) => prev - 1);
+    }
+
     ctx.clearRect(0, 0, canv.width, canv.height);
 
     ctx.lineWidth = 4;
     ctx.strokeRect(0, 0, canv.width, canv.height);
 
     // Door background
-    ctx.fillStyle = "gainsboro";
+    ctx.fillStyle = "#434B4D";
     ctx.fillRect(
       startXTemp,
       canv.height - (canv.height - startY) - tempHeight,
@@ -90,8 +135,8 @@ export default function Design() {
     // Door
     ctx.fillStyle = doorColor;
     ctx.fillRect(
-      startXTemp,
-      canv.height - (canv.height - startY) - tempHeight,
+      startXTemp + stepW,
+      canv.height - (canv.height - startY) - tempHeight - stepH,
       tempWidth,
       tempHeight
     );
@@ -103,7 +148,7 @@ export default function Design() {
       ctx.lineWidth = 1;
       for (let i = 0; i < tempWidth; i += segmentR) {
         ctx.strokeRect(
-          startXTemp + i,
+          startXTemp + i + stepW,
           canv.height - (canv.height - startY) - tempHeight,
           segmentR,
           tempHeight
@@ -116,17 +161,17 @@ export default function Design() {
         ctx.lineWidth = 4;
         ctx.strokeRect(
           startXTemp,
-          canv.height - (canv.height - startY) - tempHeight + i,
+          canv.height - (canv.height - startY) - tempHeight + i - stepH,
           tempWidth,
           segment
         );
         if (config.design === "Sicke") {
           let subsegment = segment / 3;
-          for (let ii = 0; ii < tempHeight; ii += subsegment) {
+          for (let ii = 0; ii < tempHeight - 1; ii += subsegment) {
             ctx.lineWidth = 1;
             ctx.strokeRect(
               startXTemp,
-              canv.height - (canv.height - startY) - tempHeight + ii,
+              canv.height - (canv.height - startY) - tempHeight + ii - stepH,
               tempWidth,
               subsegment
             );
@@ -137,7 +182,7 @@ export default function Design() {
             ctx.lineWidth = 1;
             ctx.strokeRect(
               startXTemp,
-              canv.height - (canv.height - startY) - tempHeight + ii,
+              canv.height - (canv.height - startY) - tempHeight + ii - stepH,
               tempWidth,
               subsegment
             );
@@ -157,7 +202,8 @@ export default function Design() {
                 (canv.height - startY) -
                 tempHeight +
                 subsegmentH / 2 +
-                i,
+                i -
+                stepH,
               subsegmentW,
               subsegmentH
             );
@@ -205,67 +251,75 @@ export default function Design() {
 
   return (
     <>
-      <Header text={configForSave.system + " " + qm + " qm"} />
+      <Header text={configForSave.system + " " + qm + " qm"} size={"24px"} />
       <Container>
-        <StyledTopP>
-          Wählen sie hier die gewünschte Torausführung <br />
-          und -farbe, um einen Eindruck zu bekommen
-        </StyledTopP>
+        <Wrapper>
+          <StyledTopP>
+            Wählen sie hier die gewünschte Torausführung <br />
+            und -farbe, um einen Eindruck zu bekommen
+          </StyledTopP>
 
-        <StyledCanvas id="canvas" ref={canvasRef} width={650} height={400}>
-          Your browser does not support the HTML5 canvas tag.
-        </StyledCanvas>
+          <StyledCanvas
+            id="canvas"
+            onClick={handleCanvasClick}
+            ref={canvasRef}
+            width={650}
+            height={400}
+          >
+            Your browser does not support the HTML5 canvas tag.
+          </StyledCanvas>
 
-        <form onSubmit={handleSubmit}>
-          <StyledLabel htmlFor="wallColor">Hauswand</StyledLabel>
-          <Select
-            id="wallColor"
-            onChange={handleSelect}
-            value={config.wallColor}
-            options={RalColorsLimited}
-          />
+          <form onSubmit={handleSubmit}>
+            <StyledLabel htmlFor="wallColor">Hauswand</StyledLabel>
+            <Select
+              id="wallColor"
+              onChange={handleSelect}
+              value={config.wallColor}
+              options={RalColorsLimited}
+            />
 
-          <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
-          <Select
-            id="material"
-            onChange={handleSelect}
-            value={config.material}
-            options={[
-              { name: "Metall", id: "Metall" },
-              { name: "Holz", id: "Holz" },
-            ]}
-          />
+            {config.system === "Rundlauftor" || (
+              <>
+                <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
+                <Select
+                  id="design"
+                  onChange={handleSelect}
+                  value={config.design}
+                  options={[
+                    { name: "Sicke", id: "Sicke" },
+                    { name: "Großsicke", id: "Großsicke" },
+                    { name: "Kassette", id: "Kassette" },
+                  ]}
+                />
+              </>
+            )}
 
-          {config.system === "Rundlauftor" || (
-            <>
-              <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
-              <Select
-                id="design"
-                onChange={handleSelect}
-                value={config.design}
-                options={[
-                  { name: "Sicke", id: "Sicke" },
-                  { name: "Großsicke", id: "Großsicke" },
-                  { name: "Kassette", id: "Kassette" },
-                ]}
-              />
-            </>
-          )}
+            <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
+            <Select
+              id="material"
+              onChange={handleSelect}
+              value={config.material}
+              options={[
+                { name: "Holz", id: "Holz" },
+                { name: "Metall", id: "Metall" },
+              ]}
+            />
 
-          {config.material === "Holz" || (
-            <>
-              <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
-              <Select
-                id="doorColor"
-                onChange={handleSelect}
-                value={config.doorColor}
-                options={RalColorsLimited}
-              />
-            </>
-          )}
+            {config.material === "Holz" || (
+              <>
+                <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
+                <Select
+                  id="doorColor"
+                  onChange={handleSelect}
+                  value={config.doorColor}
+                  options={RalColorsLimited}
+                />
+              </>
+            )}
 
-          <StyledButton type="submit">Anwenden</StyledButton>
-        </form>
+            <StyledButton type="submit">Anwenden</StyledButton>
+          </form>
+        </Wrapper>
       </Container>
       <Footer />
     </>
@@ -273,9 +327,29 @@ export default function Design() {
 }
 
 const Container = styled.main`
+  position: relative;
   height: 100%;
   min-height: 100vh;
-  padding: 60px 0;
+  padding: 50px 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(background3.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    filter: opacity(45%) blur(3px);
+  }
+`;
+
+const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -287,7 +361,9 @@ const Container = styled.main`
 const StyledCanvas = styled.canvas`
   margin: 8px auto;
   width: 90%;
-  background-color: lightslategray;
+  background-color: ${variables.BACKGROUND_COLOR_7};
+  box-shadow: 3px 3px 5px hsla(0, 0%, 40%, 1);
+  cursor: pointer;
 `;
 
 const StyledLabel = styled.label`
@@ -302,20 +378,24 @@ const StyledButton = styled.button`
   padding: 3px;
   margin-top: 20px;
   border: 3px solid;
-  border-color: hsl(216, 65%, 80%);
+  border-color: ${variables.BACKGROUND_COLOR_1};
   border-radius: 6px;
   outline: none;
-  background-color: hsl(216, 65%, 80%);
-  box-shadow: 3px 3px 3px lightgrey;
+  background-color: ${variables.BACKGROUND_COLOR_1};
+  box-shadow: 3px 3px 5px hsla(0, 0%, 30%, 1);
   cursor: pointer;
 
+  &:hover {
+    border-color: ${variables.BACKGROUND_COLOR_14};
+  }
+
   &:focus {
-    border-color: hsl(216, 65%, 50%);
+    border-color: ${variables.BACKGROUND_COLOR_14};
   }
 `;
 
 const StyledTopP = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
-  margin: 2px;
+  margin-top: 8px;
 `;

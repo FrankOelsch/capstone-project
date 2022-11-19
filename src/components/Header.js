@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import * as variables from "../Variables";
 
-export default function Header({ text }) {
+export default function Header({ text, size }) {
   return (
     <StyledHeader>
-      <StyledH1>{text}</StyledH1>
+      <StyledH1 style={{ fontSize: size }}>{text}</StyledH1>
     </StyledHeader>
   );
 }
@@ -13,14 +14,17 @@ const StyledHeader = styled.header`
   top: 0;
   width: 100%;
   height: 50px;
-  padding: 6px;
-  background-color: hsl(216, 65%, 50%);
+  background-color: ${variables.BACKGROUND_COLOR_3};
   color: white;
   z-index: 2;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `;
 
 const StyledH1 = styled.h1`
   font-family: "Abel", sans-serif;
-  font-size: 28px;
-  text-align: center;
 `;

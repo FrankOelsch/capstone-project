@@ -11,10 +11,10 @@ const DoorConfig = {
   system: "Sectionaltor",
   width: "250",
   height: "200",
-  radius: "30",
-  material: "Metall",
+  radius: "0",
+  material: "Holz",
   design: "Sicke",
-  wallColor: "#EAE6CA",
+  wallColor: "#cbd0cc",
   doorColor: "#A65E2E",
 };
 
@@ -22,7 +22,7 @@ const PrevDoorConfig = {
   system: "Sectionaltor",
   width: "250",
   height: "200",
-  radius: "30",
+  radius: "0",
 };
 
 const CartItems = [

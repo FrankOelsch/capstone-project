@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import styled from "styled-components";
+import * as variables from "../Variables";
 
 const TextInput = forwardRef((props, ref) => {
   const onFocus = (event) => {
@@ -30,14 +31,14 @@ const StyledInput = styled.input`
   width: 200px;
   padding: 3px;
   border: 3px solid;
-  border-color: hsl(216, 65%, 80%);
+  border-color: ${variables.BACKGROUND_COLOR_1};
   border-radius: 6px;
   outline: none;
-  background-color: aliceblue;
-  box-shadow: 3px 3px 3px lightgrey;
+  background-color: ${variables.BACKGROUND_COLOR_2};
+  box-shadow: 3px 3px 5px hsla(0, 0%, 40%, 1);
 
   &:focus {
-    border-color: hsl(216, 65%, 50%);
+    border-color: ${variables.BACKGROUND_COLOR_14};
   }
 `;
 

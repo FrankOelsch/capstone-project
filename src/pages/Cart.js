@@ -12,7 +12,7 @@ import * as variables from "../Variables";
 
 const customStyles = {
   overlay: {
-    backgroundColor: "hsla(0, 0%, 40%, 70%)",
+    backgroundColor: variables.BACKGROUND_COLOR_12,
   },
   content: {
     display: "flex",
@@ -27,7 +27,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "aliceblue",
+    backgroundColor: "#c7ddde",
   },
 };
 
@@ -204,82 +204,84 @@ export default function Cart() {
 
   return (
     <>
-      <Header text={"Warenkorb"} />
+      <Header text={"Warenkorb"} size={"26px"} />
       <Container>
-        <StyledTopP>
-          Hier sehen sie den automatisch konfigurierten <br />
-          Tor- Artikel entsprechend den Eingaben auf den <br />
-          vorherigen Seiten. Zusätzliche Artikel können zufügen werden.
-        </StyledTopP>
+        <Wrapper>
+          <StyledTopP>
+            Hier sehen sie den automatisch konfigurierten <br />
+            Tor- Artikel entsprechend den Eingaben auf den <br />
+            vorherigen Seiten. Zusätzliche Artikel können zufügen werden.
+          </StyledTopP>
 
-        <StyledSection>
-          {filteredCartItems.map((item) => (
-            <Item
-              key={item.id}
-              item={item}
-              onCreate={handleCreate}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </StyledSection>
+          <StyledSection>
+            {filteredCartItems.map((item) => (
+              <Item
+                key={item.id}
+                item={item}
+                onCreate={handleCreate}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </StyledSection>
 
-        <ReactModal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Artikel Bearbeiten"
-          preventScroll={true}
-          onAfterClose={handleAfterClose}
-        >
-          <StyledH4>Artikel bearbeiten</StyledH4>
+          <ReactModal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Artikel Bearbeiten"
+            preventScroll={true}
+            onAfterClose={handleAfterClose}
+          >
+            <StyledH4>Artikel bearbeiten</StyledH4>
 
-          <form onSubmit={handleSubmit}>
-            <input type="hidden" name="id" value={cartItem.id} />
-            <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
-            <TextInput
-              type="text"
-              id="name"
-              name="name"
-              value={cartItem.name}
-              onChange={handleOnChange}
-              minLength="8"
-              maxLength="20"
-              required
-            />
-            <StyledLabel htmlFor="quantity">Anzahl:</StyledLabel>
-            <TextInput
-              type="number"
-              id="quantity"
-              name="quantity"
-              value={cartItem.quantity}
-              onChange={handleOnChange}
-              min="1"
-              max="10"
-              step="1"
-              required
-            />
-            <StyledButton type="submit">Speichern</StyledButton>
-            <p>{message}</p>
-          </form>
-          <StyledButton onClick={closeModal}>Schließen</StyledButton>
-        </ReactModal>
+            <form onSubmit={handleSubmit}>
+              <input type="hidden" name="id" value={cartItem.id} />
+              <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
+              <TextInput
+                type="text"
+                id="name"
+                name="name"
+                value={cartItem.name}
+                onChange={handleOnChange}
+                minLength="8"
+                maxLength="20"
+                required
+              />
+              <StyledLabel htmlFor="quantity">Anzahl:</StyledLabel>
+              <TextInput
+                type="number"
+                id="quantity"
+                name="quantity"
+                value={cartItem.quantity}
+                onChange={handleOnChange}
+                min="1"
+                max="10"
+                step="1"
+                required
+              />
+              <StyledButton type="submit">Speichern</StyledButton>
+              <StyledMessageP>{message}</StyledMessageP>
+            </form>
+            <StyledButton onClick={closeModal}>Schließen</StyledButton>
+          </ReactModal>
 
-        <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
+          <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
 
-        <StyledH3>Zusätzliche Artikel</StyledH3>
+          <StyledH3>Zusätzliche Artikel</StyledH3>
 
-        <StyledSection>
-          {filteredShopItems.map((item) => (
-            <Item
-              key={item.id}
-              item={item}
-              onCreate={handleCreate}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </StyledSection>
+          <StyledSection>
+            {filteredShopItems.map((item) => (
+              <Item
+                key={item.id}
+                item={item}
+                onCreate={handleCreate}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </StyledSection>
+        </Wrapper>
       </Container>
       <Footer />
     </>
@@ -290,6 +292,25 @@ const Container = styled.main`
   height: 100%;
   min-height: 100vh;
   padding: 54px 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(background3.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    filter: opacity(45%) blur(3px);
+  }
+`;
+
+const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -311,7 +332,7 @@ const StyledSection = styled.section`
 const StyledLabel = styled.label`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
-  color: black;
+  color: ${variables.BACKGROUND_COLOR_9};
 `;
 
 const StyledTopP = styled.p`
@@ -330,6 +351,15 @@ const StyledSumP = styled.p`
   margin-bottom: 6px;
 `;
 
+const StyledMessageP = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 2px;
+  margin-top: 10px;
+  color: ${variables.BACKGROUND_COLOR_10};
+`;
+
 const StyledButton = styled.button`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2em;
@@ -337,22 +367,26 @@ const StyledButton = styled.button`
   padding: 3px;
   margin-top: 20px;
   border: 3px solid;
-  border-color: hsl(216, 65%, 80%);
+  border-color: hsla(216, 65%, 60%, 0.8);
   border-radius: 6px;
   outline: none;
-  background-color: hsl(216, 65%, 80%);
-  box-shadow: 3px 3px 3px lightgrey;
+  background-color: hsla(216, 65%, 60%, 0.8);
+  box-shadow: 3px 3px 5px hsla(0, 0%, 30%, 1);
   cursor: pointer;
 
+  &:hover {
+    border-color: ${variables.BACKGROUND_COLOR_14};
+  }
+
   &:focus {
-    border-color: hsl(216, 65%, 50%);
+    border-color: ${variables.BACKGROUND_COLOR_14};
   }
 `;
 
 const StyledH3 = styled.h3`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.1em;
-  color: white;
+  color: ${variables.BACKGROUND_COLOR_9};
   width: 100%;
   padding: 6px;
   background-color: ${variables.BACKGROUND_COLOR_1};
