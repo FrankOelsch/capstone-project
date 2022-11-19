@@ -1,4 +1,3 @@
-
 ## Digitales Gesellenstück MyGarageDoor for [neuefische](https://www.neuefische.de/) web dev bootcamp
 
 ### `Demo`
@@ -24,7 +23,7 @@ The app is responsive, however it is best viewed on a mobile device.
 2. Install all npm dependencies
    `npm install`
 3. To run the app in development mode
-  `npm start` 
-  then open http://localhost:3000 to view it in the browser
-5. To run unit and component tests
+   `npm start`
+   then open http://localhost:3000 to view it in the browser
+4. To run unit and component tests
    `npm test`
