@@ -9,6 +9,7 @@ import ReactModal from "react-modal";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 import TextInput from "../components/TextInput";
 import * as variables from "../Variables";
+import InputWithLabel from "../components/InputWithLabel";
 
 const customStyles = {
   overlay: {
@@ -237,7 +238,8 @@ export default function Cart() {
 
             <form onSubmit={handleSubmit}>
               <input type="hidden" name="id" value={cartItem.id} />
-              <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
+
+              {/* <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
               <TextInput
                 type="text"
                 id="name"
@@ -247,8 +249,20 @@ export default function Cart() {
                 minLength="8"
                 maxLength="20"
                 required
+              /> */}
+              <InputWithLabel
+                type="text"
+                id="name"
+                name="name"
+                value={cartItem.name}
+                onChange={handleOnChange}
+                minLength="8"
+                maxLength="20"
+                required
+                labelText="Artikel-Name"
               />
-              <StyledLabel htmlFor="quantity">Anzahl:</StyledLabel>
+
+              {/* <StyledLabel htmlFor="quantity">Anzahl:</StyledLabel>
               <TextInput
                 type="number"
                 id="quantity"
@@ -259,6 +273,18 @@ export default function Cart() {
                 max="10"
                 step="1"
                 required
+              /> */}
+              <InputWithLabel
+                type="number"
+                id="quantity"
+                name="quantity"
+                value={cartItem.quantity}
+                onChange={handleOnChange}
+                min="1"
+                max="10"
+                step="1"
+                required
+                labelText="Anzahl"
               />
               <StyledButton type="submit">Speichern</StyledButton>
               <StyledMessageP>{message}</StyledMessageP>

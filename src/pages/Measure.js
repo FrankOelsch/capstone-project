@@ -7,6 +7,7 @@ import TextInput from "../components/TextInput";
 import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import * as variables from "../Variables";
+import InputWithLabel from "../components/InputWithLabel";
 
 export default function Measure() {
   const {
@@ -309,7 +310,7 @@ export default function Measure() {
               ]}
             />
 
-            <StyledLabel htmlFor="gateWidth">Tor-Breite in cm</StyledLabel>
+            {/* <StyledLabel htmlFor="gateWidth">Tor-Breite in cm</StyledLabel>
             <TextInput
               required
               type="number"
@@ -319,9 +320,21 @@ export default function Measure() {
               onChange={handleChange}
               value={config.width}
               ref={inputWidthRef}
+            /> */}
+
+            <InputWithLabel
+              required
+              type="number"
+              id="gateWidth"
+              min="200"
+              max="500"
+              onChange={handleChange}
+              value={config.width}
+              ref={inputWidthRef}
+              labelText="Tor-Breite in cm"
             />
 
-            <StyledLabel htmlFor="gateHeight">Tor-Höhe in cm</StyledLabel>
+            {/* <StyledLabel htmlFor="gateHeight">Tor-Höhe in cm</StyledLabel>
             <TextInput
               required
               type="number"
@@ -331,9 +344,21 @@ export default function Measure() {
               onChange={handleChange}
               value={config.height}
               ref={inputHeightRef}
+            /> */}
+
+            <InputWithLabel
+              required
+              type="number"
+              id="gateHeight"
+              min="175"
+              max="250"
+              onChange={handleChange}
+              value={config.height}
+              ref={inputHeightRef}
+              labelText="Tor-Höhe in cm"
             />
 
-            <StyledLabel htmlFor="radius">Torbogen-Radius in cm</StyledLabel>
+            {/* <StyledLabel htmlFor="radius">Torbogen-Radius in cm</StyledLabel>
             <TextInput
               required
               type="number"
@@ -343,6 +368,18 @@ export default function Measure() {
               onChange={handleChange}
               value={config.radius}
               ref={inputRadiusRef}
+            /> */}
+
+            <InputWithLabel
+              required
+              type="number"
+              id="radius"
+              min="0"
+              max="100"
+              onChange={handleChange}
+              value={config.radius}
+              ref={inputRadiusRef}
+              labelText="Torbogen-Radius in cm"
             />
 
             <StyledButton type="submit">Anwenden</StyledButton>
