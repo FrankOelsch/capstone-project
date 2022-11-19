@@ -3,7 +3,7 @@
 ### `Demo`
 
 You can find the hosted version on vercel:
-[MyGarageDoor Demo](https://vercel.com/frankoelsch/capstone-project/2H1P31WgCes2qsE31a42eKTVQnYF)
+[MyGarageDoor Demo](https://capstone-project-n8hfi45jo-frankoelsch.vercel.app/)
 
 The app is responsive, however it is best viewed on a mobile device.
 
