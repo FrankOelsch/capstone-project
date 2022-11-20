@@ -100,6 +100,8 @@ export default function Measure() {
         const r = +prevConfig.radius;
         setTempRadius(r);
 
+        changeInputMinMax(system);
+
         drawIt();
       }
     }

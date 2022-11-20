@@ -60,11 +60,17 @@ describe("MyButton component", () => {
   });
 
   it("should trigger form-onSubmit", async () => {
-    const handleSubmit = jest.fn();
+    const handleSubmit = jest.fn((e) => e.preventDefault());
+    const handleChange = jest.fn();
     render(
       <form data-testid="form" onSubmit={handleSubmit}>
-        <input type="text" name="name" value="Frank"></input>
-        <MyButton type="submit"></MyButton>
+        <input
+          type="text"
+          name="name"
+          value="Frank"
+          onChange={handleChange}
+        ></input>
+        <MyButton type="submit">Submit</MyButton>
       </form>
     );
 

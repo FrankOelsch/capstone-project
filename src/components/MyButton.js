@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import * as variables from "../Variables";
 
-export default function Button({ children, type = "button", ...props }) {
+export default function MyButton({ children, type = "button", ...props }) {
   return (
     <StyledButton type={type} {...props}>
       {children}
