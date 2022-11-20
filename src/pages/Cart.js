@@ -9,6 +9,7 @@ import ReactModal from "react-modal";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 import * as variables from "../Variables";
 import InputWithLabel from "../components/InputWithLabel";
+import MyButton from "../components/MyButton";
 
 const customStyles = {
   overlay: {
@@ -27,7 +28,10 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "#c7ddde",
+    backgroundColor: variables.BACKGROUND_COLOR_6,
+    width: "320px",
+    paddingBottom: "30px",
+    borderRadius: "8px",
   },
 };
 
@@ -262,10 +266,10 @@ export default function Cart() {
                 required
                 labelText="Anzahl"
               />
-              <StyledButton type="submit">Speichern</StyledButton>
+              <MyButton type="submit">Speichern</MyButton>
               <StyledMessageP>{message}</StyledMessageP>
             </form>
-            <StyledButton onClick={closeModal}>Schließen</StyledButton>
+            <MyButton onClick={closeModal}>Schließen</MyButton>
           </ReactModal>
 
           <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
@@ -354,29 +358,6 @@ const StyledMessageP = styled.p`
   margin: 2px;
   margin-top: 10px;
   color: ${variables.BACKGROUND_COLOR_10};
-`;
-
-const StyledButton = styled.button`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  width: 200px;
-  padding: 3px;
-  margin-top: 20px;
-  border: 3px solid;
-  border-color: hsla(216, 65%, 60%, 0.8);
-  border-radius: 6px;
-  outline: none;
-  background-color: hsla(216, 65%, 60%, 0.8);
-  box-shadow: 3px 3px 5px hsla(0, 0%, 30%, 1);
-  cursor: pointer;
-
-  &:hover {
-    border-color: ${variables.BACKGROUND_COLOR_14};
-  }
-
-  &:focus {
-    border-color: ${variables.BACKGROUND_COLOR_14};
-  }
 `;
 
 const StyledH3 = styled.h3`
