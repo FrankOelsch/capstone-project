@@ -7,7 +7,6 @@ import { UserContext } from "../UserContext";
 import { ShopItems } from "../data/Items";
 import ReactModal from "react-modal";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
-import TextInput from "../components/TextInput";
 import * as variables from "../Variables";
 import InputWithLabel from "../components/InputWithLabel";
 
@@ -239,17 +238,6 @@ export default function Cart() {
             <form onSubmit={handleSubmit}>
               <input type="hidden" name="id" value={cartItem.id} />
 
-              {/* <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
-              <TextInput
-                type="text"
-                id="name"
-                name="name"
-                value={cartItem.name}
-                onChange={handleOnChange}
-                minLength="8"
-                maxLength="20"
-                required
-              /> */}
               <InputWithLabel
                 type="text"
                 id="name"
@@ -262,18 +250,6 @@ export default function Cart() {
                 labelText="Artikel-Name"
               />
 
-              {/* <StyledLabel htmlFor="quantity">Anzahl:</StyledLabel>
-              <TextInput
-                type="number"
-                id="quantity"
-                name="quantity"
-                value={cartItem.quantity}
-                onChange={handleOnChange}
-                min="1"
-                max="10"
-                step="1"
-                required
-              /> */}
               <InputWithLabel
                 type="number"
                 id="quantity"
@@ -353,12 +329,6 @@ const StyledH4 = styled.h4`
 
 const StyledSection = styled.section`
   width: 98%;
-`;
-
-const StyledLabel = styled.label`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1em;
-  color: ${variables.BACKGROUND_COLOR_9};
 `;
 
 const StyledTopP = styled.p`

@@ -3,8 +3,6 @@ import styled from "styled-components";
 import * as variables from "../Variables";
 
 const InputWithLabel = forwardRef((props, ref) => {
-  //   console.log(props.labelText);
-
   const onFocus = (event) => {
     if (event.key === "Tab") {
       return false;

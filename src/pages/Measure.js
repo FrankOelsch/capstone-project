@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
-import TextInput from "../components/TextInput";
 import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import * as variables from "../Variables";
@@ -299,7 +298,6 @@ export default function Measure() {
           </StyledCanvas>
 
           <form onSubmit={handleSubmit}>
-            <StyledLabel htmlFor="system">Torsystem</StyledLabel>
             <Select
               id="system"
               onChange={handleSelect}
@@ -308,19 +306,8 @@ export default function Measure() {
                 { name: "Sectionaltor", id: "Sectionaltor" },
                 { name: "Rundlauftor", id: "Rundlauftor" },
               ]}
+              labelText="Torsystem"
             />
-
-            {/* <StyledLabel htmlFor="gateWidth">Tor-Breite in cm</StyledLabel>
-            <TextInput
-              required
-              type="number"
-              id="gateWidth"
-              min="200"
-              max="500"
-              onChange={handleChange}
-              value={config.width}
-              ref={inputWidthRef}
-            /> */}
 
             <InputWithLabel
               required
@@ -334,18 +321,6 @@ export default function Measure() {
               labelText="Tor-Breite in cm"
             />
 
-            {/* <StyledLabel htmlFor="gateHeight">Tor-Höhe in cm</StyledLabel>
-            <TextInput
-              required
-              type="number"
-              id="gateHeight"
-              min="175"
-              max="250"
-              onChange={handleChange}
-              value={config.height}
-              ref={inputHeightRef}
-            /> */}
-
             <InputWithLabel
               required
               type="number"
@@ -357,18 +332,6 @@ export default function Measure() {
               ref={inputHeightRef}
               labelText="Tor-Höhe in cm"
             />
-
-            {/* <StyledLabel htmlFor="radius">Torbogen-Radius in cm</StyledLabel>
-            <TextInput
-              required
-              type="number"
-              id="radius"
-              min="0"
-              max="100"
-              onChange={handleChange}
-              value={config.radius}
-              ref={inputRadiusRef}
-            /> */}
 
             <InputWithLabel
               required

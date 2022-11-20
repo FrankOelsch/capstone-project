@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import * as variables from "../Variables";
 
-export default function Select({ onChange, value, options, id }) {
+export default function Select({ onChange, value, options, id, labelText }) {
   if (!options || !Array.isArray(options) || options.length < 1) {
     options = [{ id: "0", name: "Keine Auswahl möglich" }];
   }
@@ -11,7 +11,8 @@ export default function Select({ onChange, value, options, id }) {
   }
 
   return (
-    <div>
+    <StyledDiv>
+      <StyledLabel htmlFor={id}>{labelText}</StyledLabel>
       <StyledSelect onChange={onChange} value={value} id={id}>
         {options.map((option) => (
           <option key={option.id} value={option.id}>
@@ -19,9 +20,18 @@ export default function Select({ onChange, value, options, id }) {
           </option>
         ))}
       </StyledSelect>
-    </div>
+    </StyledDiv>
   );
 }
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
 
 const StyledSelect = styled.select`
   font-family: Arial, Helvetica, sans-serif;
@@ -39,4 +49,11 @@ const StyledSelect = styled.select`
   &:focus {
     border-color: ${variables.BACKGROUND_COLOR_14};
   }
+`;
+
+const StyledLabel = styled.label`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
+  padding-top: 4px;
+  padding-bottom: 2px;
 `;

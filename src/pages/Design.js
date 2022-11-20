@@ -270,17 +270,16 @@ export default function Design() {
           </StyledCanvas>
 
           <form onSubmit={handleSubmit}>
-            <StyledLabel htmlFor="wallColor">Hauswand</StyledLabel>
             <Select
               id="wallColor"
               onChange={handleSelect}
               value={config.wallColor}
               options={RalColorsLimited}
+              labelText="Hauswand"
             />
 
             {config.system === "Rundlauftor" || (
               <>
-                <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
                 <Select
                   id="design"
                   onChange={handleSelect}
@@ -290,11 +289,11 @@ export default function Design() {
                     { name: "Großsicke", id: "Großsicke" },
                     { name: "Kassette", id: "Kassette" },
                   ]}
+                  labelText="Tor-Design"
                 />
               </>
             )}
 
-            <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
             <Select
               id="material"
               onChange={handleSelect}
@@ -303,16 +302,17 @@ export default function Design() {
                 { name: "Holz", id: "Holz" },
                 { name: "Metall", id: "Metall" },
               ]}
+              labelText="Tor-Material"
             />
 
             {config.material === "Holz" || (
               <>
-                <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
                 <Select
                   id="doorColor"
                   onChange={handleSelect}
                   value={config.doorColor}
                   options={RalColorsLimited}
+                  labelText="Tor-Farbe"
                 />
               </>
             )}
@@ -364,11 +364,6 @@ const StyledCanvas = styled.canvas`
   background-color: ${variables.BACKGROUND_COLOR_7};
   box-shadow: 3px 3px 5px hsla(0, 0%, 40%, 1);
   cursor: pointer;
-`;
-
-const StyledLabel = styled.label`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.9em;
 `;
 
 const StyledButton = styled.button`
