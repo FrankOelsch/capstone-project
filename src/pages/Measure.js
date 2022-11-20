@@ -3,10 +3,10 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
-import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import * as variables from "../Variables";
 import InputWithLabel from "../components/InputWithLabel";
+import SelectWithLabel from "../components/SelectWithLabel";
 
 export default function Measure() {
   const {
@@ -298,7 +298,7 @@ export default function Measure() {
           </StyledCanvas>
 
           <form onSubmit={handleSubmit}>
-            <Select
+            <SelectWithLabel
               id="system"
               onChange={handleSelect}
               value={config.system}

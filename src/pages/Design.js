@@ -2,11 +2,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import { RalColorsLimited } from "../data/RalColorsLimited";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 import * as variables from "../Variables";
+import SelectWithLabel from "../components/SelectWithLabel";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =
@@ -270,7 +270,7 @@ export default function Design() {
           </StyledCanvas>
 
           <form onSubmit={handleSubmit}>
-            <Select
+            <SelectWithLabel
               id="wallColor"
               onChange={handleSelect}
               value={config.wallColor}
@@ -280,7 +280,7 @@ export default function Design() {
 
             {config.system === "Rundlauftor" || (
               <>
-                <Select
+                <SelectWithLabel
                   id="design"
                   onChange={handleSelect}
                   value={config.design}
@@ -294,7 +294,7 @@ export default function Design() {
               </>
             )}
 
-            <Select
+            <SelectWithLabel
               id="material"
               onChange={handleSelect}
               value={config.material}
@@ -307,7 +307,7 @@ export default function Design() {
 
             {config.material === "Holz" || (
               <>
-                <Select
+                <SelectWithLabel
                   id="doorColor"
                   onChange={handleSelect}
                   value={config.doorColor}

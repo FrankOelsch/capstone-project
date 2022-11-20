@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import * as variables from "../Variables";
 
-export default function Select({ onChange, value, options, id, labelText }) {
+export default function SelectWithLabel({
+  onChange,
+  value,
+  options,
+  id,
+  labelText,
+}) {
   if (!options || !Array.isArray(options) || options.length < 1) {
     options = [{ id: "0", name: "Keine Auswahl möglich" }];
   }
