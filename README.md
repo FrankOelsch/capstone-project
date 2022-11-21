@@ -1,11 +1,23 @@
-## Digitales Gesellenstück MyGarageDoor for [neuefische](https://www.neuefische.de/) web dev bootcamp
+# MyGarageDoor
+
+## Digitales Gesellenstück für [neuefische](https://www.neuefische.de/) web dev bootcamp
+
+### `About`
+
+Mit dieser App können sie ganz einfach ihr individuelles, massgefertigtes Garagentor vorplanen und die Kosten einschätzen.
+
+Sowohl die Toröffnung als auch das Garagentor selbst wird grafisch animiert dargestellt.
+
+Zur Auswahl stehen das bekannte, nach oben öffnende Decken-Sectionaltor und das seitlich öffnende Rundlauftor.
+
+Das Rundlauftor eignet sich vor allem für große Toröffnungen und da es seitlich öffnet, muss man, wenn man zB mit dem Fahrrad heraus will, nicht das ganze Tor öffnen.
 
 ### `Demo`
 
-You can find the hosted version on vercel:
-[MyGarageDoor Demo](https://capstone-project-n8hfi45jo-frankoelsch.vercel.app/)
+Die Demo Version findet man auf vercel:
+[MyGarageDoor Demo](https://capstone-project-nine-ivory.vercel.app/)
 
-The app is responsive, however it is best viewed on a mobile device.
+Die App ist zwar responsive, aber die beste Ansicht ist auf dem Smartphone, optimiert auf 375x667.
 
 ### `Tech Stack`
 
