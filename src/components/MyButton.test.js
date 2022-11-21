@@ -7,7 +7,7 @@ describe("MyButton component", () => {
   it("should render", () => {
     render(
       <>
-        <MyButton>"Spaeichern"</MyButton>
+        <MyButton>"Speichern"</MyButton>
         <MyButton>"Anwenden"</MyButton>
         <MyButton>"Löschen"</MyButton>
       </>
@@ -44,17 +44,16 @@ describe("MyButton component", () => {
 
   it("should allow focus", async () => {
     const handleClick = jest.fn();
+    const text = "Löschen";
     render(
       <>
-        <MyButton>"Spaeichern"</MyButton>
-        <MyButton onClick={handleClick} data-testid="delete">
-          "Löschen"
-        </MyButton>
+        <MyButton>"Speichern"</MyButton>
+        <MyButton onClick={handleClick}>{text}</MyButton>
         <MyButton>"Bearbeiten"</MyButton>
       </>
     );
 
-    const input = screen.getByTestId("delete");
+    const input = screen.getByText(text);
     await userEvent.click(input);
     expect(input).toHaveFocus();
   });
@@ -62,6 +61,7 @@ describe("MyButton component", () => {
   it("should trigger form-onSubmit", async () => {
     const handleSubmit = jest.fn((e) => e.preventDefault());
     const handleChange = jest.fn();
+
     render(
       <form data-testid="form" onSubmit={handleSubmit}>
         <input

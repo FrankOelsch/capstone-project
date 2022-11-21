@@ -4,15 +4,6 @@ import userEvent from "@testing-library/user-event";
 import InputWithLabel from "./InputWithLabel";
 
 describe("Check InputWithLabel component", () => {
-  it("should render label", () => {
-    render(
-      <InputWithLabel labelText={"Tor-Breite"} id={"breite"}></InputWithLabel>
-    );
-
-    const label = screen.getByText(/tor-breite/i);
-    expect(label).toBeInTheDocument();
-  });
-
   it("should render input", () => {
     render(
       <InputWithLabel labelText={"Tor-Höhe"} id={"hoehe"}></InputWithLabel>
@@ -31,7 +22,6 @@ describe("Check InputWithLabel component", () => {
           onClick={handleClick}
           labelText={"Radius"}
           id={"radius"}
-          data-testid="radius"
         ></InputWithLabel>
         <InputWithLabel labelText={"Tor-Höhe"} id={"hoehe"}></InputWithLabel>
       </>
@@ -40,7 +30,7 @@ describe("Check InputWithLabel component", () => {
     const label = screen.getByText(/radius/i);
     await userEvent.click(label);
 
-    const input = screen.getByTestId("radius");
+    const input = screen.getByLabelText(/radius/i);
     expect(input).toHaveFocus();
   });
 });
