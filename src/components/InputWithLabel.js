@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import styled from "styled-components";
 import * as variables from "../Variables";
 
-const TextInput = forwardRef((props, ref) => {
+const InputWithLabel = forwardRef((props, ref) => {
   const onFocus = (event) => {
     if (event.key === "Tab") {
       return false;
@@ -12,8 +12,10 @@ const TextInput = forwardRef((props, ref) => {
       event.target.select();
     }, 100);
   };
+
   return (
-    <div>
+    <StyledDiv>
+      <StyledLabel htmlFor={props.id}>{props.labelText}</StyledLabel>
       <StyledInput
         type="text"
         autoComplete="off"
@@ -21,9 +23,18 @@ const TextInput = forwardRef((props, ref) => {
         {...props}
         ref={ref}
       />
-    </div>
+    </StyledDiv>
   );
 });
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
 
 const StyledInput = styled.input`
   font-family: Arial, Helvetica, sans-serif;
@@ -42,4 +53,11 @@ const StyledInput = styled.input`
   }
 `;
 
-export default TextInput;
+const StyledLabel = styled.label`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
+  padding-top: 4px;
+  padding-bottom: 2px;
+`;
+
+export default InputWithLabel;

@@ -3,10 +3,11 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
-import TextInput from "../components/TextInput";
-import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import * as variables from "../Variables";
+import InputWithLabel from "../components/InputWithLabel";
+import SelectWithLabel from "../components/SelectWithLabel";
+import MyButton from "../components/MyButton";
 
 export default function Measure() {
   const {
@@ -98,6 +99,8 @@ export default function Measure() {
         setTempHeight(h);
         const r = +prevConfig.radius;
         setTempRadius(r);
+
+        changeInputMinMax(system);
 
         drawIt();
       }
@@ -298,8 +301,7 @@ export default function Measure() {
           </StyledCanvas>
 
           <form onSubmit={handleSubmit}>
-            <StyledLabel htmlFor="system">Torsystem</StyledLabel>
-            <Select
+            <SelectWithLabel
               id="system"
               onChange={handleSelect}
               value={config.system}
@@ -307,10 +309,10 @@ export default function Measure() {
                 { name: "Sectionaltor", id: "Sectionaltor" },
                 { name: "Rundlauftor", id: "Rundlauftor" },
               ]}
+              labelText="Torsystem"
             />
 
-            <StyledLabel htmlFor="gateWidth">Tor-Breite in cm</StyledLabel>
-            <TextInput
+            <InputWithLabel
               required
               type="number"
               id="gateWidth"
@@ -319,10 +321,10 @@ export default function Measure() {
               onChange={handleChange}
               value={config.width}
               ref={inputWidthRef}
+              labelText="Tor-Breite in cm"
             />
 
-            <StyledLabel htmlFor="gateHeight">Tor-Höhe in cm</StyledLabel>
-            <TextInput
+            <InputWithLabel
               required
               type="number"
               id="gateHeight"
@@ -331,10 +333,10 @@ export default function Measure() {
               onChange={handleChange}
               value={config.height}
               ref={inputHeightRef}
+              labelText="Tor-Höhe in cm"
             />
 
-            <StyledLabel htmlFor="radius">Torbogen-Radius in cm</StyledLabel>
-            <TextInput
+            <InputWithLabel
               required
               type="number"
               id="radius"
@@ -343,9 +345,10 @@ export default function Measure() {
               onChange={handleChange}
               value={config.radius}
               ref={inputRadiusRef}
+              labelText="Torbogen-Radius in cm"
             />
 
-            <StyledButton type="submit">Anwenden</StyledButton>
+            <MyButton type="submit">Anwenden</MyButton>
           </form>
         </Wrapper>
       </Container>
@@ -391,34 +394,6 @@ const StyledCanvas = styled.canvas`
   width: 90%;
   background-color: ${variables.BACKGROUND_COLOR_7};
   box-shadow: 3px 3px 5px hsla(0, 0%, 40%, 1);
-`;
-
-const StyledLabel = styled.label`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.9em;
-`;
-
-const StyledButton = styled.button`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  width: 200px;
-  padding: 3px;
-  margin-top: 20px;
-  border: 3px solid;
-  border-color: ${variables.BACKGROUND_COLOR_1};
-  border-radius: 6px;
-  outline: none;
-  background-color: ${variables.BACKGROUND_COLOR_1};
-  box-shadow: 3px 3px 5px hsla(0, 0%, 30%, 1);
-  cursor: pointer;
-
-  &:hover {
-    border-color: ${variables.BACKGROUND_COLOR_14};
-  }
-
-  &:focus {
-    border-color: ${variables.BACKGROUND_COLOR_14};
-  }
 `;
 
 const StyledTopP = styled.p`

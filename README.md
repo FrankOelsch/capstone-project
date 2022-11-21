@@ -1,12 +1,23 @@
+# MyGarageDoor
 
-## Digitales Gesellenstück MyGarageDoor for [neuefische](https://www.neuefische.de/) web dev bootcamp
+## Digitales Gesellenstück für [neuefische](https://www.neuefische.de/) web dev bootcamp
+
+### `About`
+
+Mit dieser App können sie ganz einfach ihr individuelles, massgefertigtes Garagentor vorplanen und die Kosten einschätzen.
+
+Sowohl die Toröffnung als auch das Garagentor selbst wird grafisch animiert dargestellt.
+
+Zur Auswahl stehen das bekannte, nach oben öffnende Decken-Sectionaltor und das seitlich öffnende Rundlauftor.
+
+Das Rundlauftor eignet sich vor allem für große Toröffnungen und da es seitlich öffnet, muss man, wenn man zB mit dem Fahrrad heraus will, nicht das ganze Tor öffnen.
 
 ### `Demo`
 
-You can find the hosted version on vercel:
-[MyGarageDoor Demo](https://vercel.com/frankoelsch/capstone-project/2H1P31WgCes2qsE31a42eKTVQnYF)
+Die Demo Version findet man auf vercel:
+[MyGarageDoor Demo](https://capstone-project-nine-ivory.vercel.app/)
 
-The app is responsive, however it is best viewed on a mobile device.
+Die App ist zwar responsive, aber die beste Ansicht ist auf dem Smartphone, optimiert auf 375x667.
 
 ### `Tech Stack`
 
@@ -24,7 +35,7 @@ The app is responsive, however it is best viewed on a mobile device.
 2. Install all npm dependencies
    `npm install`
 3. To run the app in development mode
-  `npm start` 
-  then open http://localhost:3000 to view it in the browser
-5. To run unit and component tests
+   `npm start`
+   then open http://localhost:3000 to view it in the browser
+4. To run unit and component tests
    `npm test`

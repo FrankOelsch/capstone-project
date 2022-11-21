@@ -1,25 +1,29 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Select from "./Select";
+import SelectWithLabel from "./SelectWithLabel";
 
-describe("Check Select component", () => {
+describe("Check SelectWithLabel component", () => {
   it("should render children", () => {
-    render(<Select options={[{ id: "123", name: "name" }]}></Select>);
+    render(
+      <SelectWithLabel
+        options={[{ id: "123", name: "name" }]}
+      ></SelectWithLabel>
+    );
     const option = screen.getByRole("option");
 
     expect(option).toBeInTheDocument();
   });
 
   it("should have min 1 option", () => {
-    render(<Select options={"jhgjhg"}></Select>);
+    render(<SelectWithLabel options={"jhgjhg"}></SelectWithLabel>);
     const option = screen.getByRole("option");
 
     expect(option).toBeInTheDocument();
   });
 
   it("should have min 1 valid option", () => {
-    render(<Select options={[{ name: "uzuz" }]}></Select>);
+    render(<SelectWithLabel options={[{ name: "uzuz" }]}></SelectWithLabel>);
     const option = screen.getByRole("option");
 
     expect(option).toBeInTheDocument();
@@ -28,13 +32,13 @@ describe("Check Select component", () => {
   it("should allow select options", async () => {
     const handleChange = jest.fn();
     render(
-      <Select
+      <SelectWithLabel
         onChange={handleChange}
         options={[
           { id: "1", name: "name1" },
           { id: "2", name: "name2" },
         ]}
-      ></Select>
+      ></SelectWithLabel>
     );
     const select = screen.getByRole("combobox");
     await userEvent.selectOptions(select, "name2");

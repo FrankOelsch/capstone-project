@@ -7,8 +7,9 @@ import { UserContext } from "../UserContext";
 import { ShopItems } from "../data/Items";
 import ReactModal from "react-modal";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
-import TextInput from "../components/TextInput";
 import * as variables from "../Variables";
+import InputWithLabel from "../components/InputWithLabel";
+import MyButton from "../components/MyButton";
 
 const customStyles = {
   overlay: {
@@ -27,7 +28,10 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "#c7ddde",
+    backgroundColor: variables.BACKGROUND_COLOR_6,
+    width: "320px",
+    paddingBottom: "30px",
+    borderRadius: "8px",
   },
 };
 
@@ -237,8 +241,8 @@ export default function Cart() {
 
             <form onSubmit={handleSubmit}>
               <input type="hidden" name="id" value={cartItem.id} />
-              <StyledLabel htmlFor="name">Artikel-Name:</StyledLabel>
-              <TextInput
+
+              <InputWithLabel
                 type="text"
                 id="name"
                 name="name"
@@ -247,9 +251,10 @@ export default function Cart() {
                 minLength="8"
                 maxLength="20"
                 required
+                labelText="Artikel-Name"
               />
-              <StyledLabel htmlFor="quantity">Anzahl:</StyledLabel>
-              <TextInput
+
+              <InputWithLabel
                 type="number"
                 id="quantity"
                 name="quantity"
@@ -259,11 +264,12 @@ export default function Cart() {
                 max="10"
                 step="1"
                 required
+                labelText="Anzahl"
               />
-              <StyledButton type="submit">Speichern</StyledButton>
+              <MyButton type="submit">Speichern</MyButton>
               <StyledMessageP>{message}</StyledMessageP>
             </form>
-            <StyledButton onClick={closeModal}>Schließen</StyledButton>
+            <MyButton onClick={closeModal}>Schließen</MyButton>
           </ReactModal>
 
           <StyledSumP>{"Brutto-Gesamtsumme: " + getSum() + " €"}</StyledSumP>
@@ -329,12 +335,6 @@ const StyledSection = styled.section`
   width: 98%;
 `;
 
-const StyledLabel = styled.label`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1em;
-  color: ${variables.BACKGROUND_COLOR_9};
-`;
-
 const StyledTopP = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
@@ -358,29 +358,6 @@ const StyledMessageP = styled.p`
   margin: 2px;
   margin-top: 10px;
   color: ${variables.BACKGROUND_COLOR_10};
-`;
-
-const StyledButton = styled.button`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  width: 200px;
-  padding: 3px;
-  margin-top: 20px;
-  border: 3px solid;
-  border-color: hsla(216, 65%, 60%, 0.8);
-  border-radius: 6px;
-  outline: none;
-  background-color: hsla(216, 65%, 60%, 0.8);
-  box-shadow: 3px 3px 5px hsla(0, 0%, 30%, 1);
-  cursor: pointer;
-
-  &:hover {
-    border-color: ${variables.BACKGROUND_COLOR_14};
-  }
-
-  &:focus {
-    border-color: ${variables.BACKGROUND_COLOR_14};
-  }
 `;
 
 const StyledH3 = styled.h3`

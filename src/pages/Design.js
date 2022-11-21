@@ -2,11 +2,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Select from "../components/Select";
 import { UserContext } from "../UserContext";
 import { RalColorsLimited } from "../data/RalColorsLimited";
 import { getLocaleStringFromNumber, getSquareMeters } from "../utils/helper";
 import * as variables from "../Variables";
+import SelectWithLabel from "../components/SelectWithLabel";
+import MyButton from "../components/MyButton";
 
 export default function Design() {
   const { config, setConfig, configForSave, setConfigForSave } =
@@ -270,18 +271,17 @@ export default function Design() {
           </StyledCanvas>
 
           <form onSubmit={handleSubmit}>
-            <StyledLabel htmlFor="wallColor">Hauswand</StyledLabel>
-            <Select
+            <SelectWithLabel
               id="wallColor"
               onChange={handleSelect}
               value={config.wallColor}
               options={RalColorsLimited}
+              labelText="Hauswand"
             />
 
             {config.system === "Rundlauftor" || (
               <>
-                <StyledLabel htmlFor="design">Tor-Design</StyledLabel>
-                <Select
+                <SelectWithLabel
                   id="design"
                   onChange={handleSelect}
                   value={config.design}
@@ -290,12 +290,12 @@ export default function Design() {
                     { name: "Großsicke", id: "Großsicke" },
                     { name: "Kassette", id: "Kassette" },
                   ]}
+                  labelText="Tor-Design"
                 />
               </>
             )}
 
-            <StyledLabel htmlFor="material">Tor-Material</StyledLabel>
-            <Select
+            <SelectWithLabel
               id="material"
               onChange={handleSelect}
               value={config.material}
@@ -303,21 +303,22 @@ export default function Design() {
                 { name: "Holz", id: "Holz" },
                 { name: "Metall", id: "Metall" },
               ]}
+              labelText="Tor-Material"
             />
 
             {config.material === "Holz" || (
               <>
-                <StyledLabel htmlFor="doorColor">Tor-Farbe</StyledLabel>
-                <Select
+                <SelectWithLabel
                   id="doorColor"
                   onChange={handleSelect}
                   value={config.doorColor}
                   options={RalColorsLimited}
+                  labelText="Tor-Farbe"
                 />
               </>
             )}
 
-            <StyledButton type="submit">Anwenden</StyledButton>
+            <MyButton type="submit">Anwenden</MyButton>
           </form>
         </Wrapper>
       </Container>
@@ -364,34 +365,6 @@ const StyledCanvas = styled.canvas`
   background-color: ${variables.BACKGROUND_COLOR_7};
   box-shadow: 3px 3px 5px hsla(0, 0%, 40%, 1);
   cursor: pointer;
-`;
-
-const StyledLabel = styled.label`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.9em;
-`;
-
-const StyledButton = styled.button`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  width: 200px;
-  padding: 3px;
-  margin-top: 20px;
-  border: 3px solid;
-  border-color: ${variables.BACKGROUND_COLOR_1};
-  border-radius: 6px;
-  outline: none;
-  background-color: ${variables.BACKGROUND_COLOR_1};
-  box-shadow: 3px 3px 5px hsla(0, 0%, 30%, 1);
-  cursor: pointer;
-
-  &:hover {
-    border-color: ${variables.BACKGROUND_COLOR_14};
-  }
-
-  &:focus {
-    border-color: ${variables.BACKGROUND_COLOR_14};
-  }
 `;
 
 const StyledTopP = styled.p`
