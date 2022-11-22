@@ -44,21 +44,14 @@ const StyledArticle = styled.article`
   justify-content: stretch;
   margin: 8px;
   padding: 6px;
-  /* box-shadow: ${variables.BOX_SHADOW_1}; */
-  background-color: ${(prop) =>
-    prop.variante === true
-      ? "hsla(216, 65%, 80%, 0.8)"
-      : "hsla(216, 65%, 80%, 0.8)"};
+  background-color: ${variables.BACKGROUND_COLOR_15};
   border-radius: 6px;
   border-style: solid;
   border-width: 3px;
-  border-color: ${(prop) =>
-    prop.variante === true
-      ? "hsla(216, 65%, 60%, 1)"
-      : "hsla(216, 65%, 60%, 1)"};
+  border-color: ${variables.BACKGROUND_COLOR_4};
 
   :hover {
-    border-color: hsla(216, 65%, 40%, 1);
+    border-color: ${variables.BACKGROUND_COLOR_16};
   }
 `;
 
