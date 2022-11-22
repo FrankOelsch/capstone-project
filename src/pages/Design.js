@@ -93,27 +93,27 @@ export default function Design() {
     let canv = canvasRef.current;
     let ctx = canv.getContext("2d");
 
-    let tempWidth = +config.width;
-    let tempHeight = +config.height;
-    let tempRadius = +config.radius;
+    let breite = +config.width;
+    let hoehe = +config.height;
+    let radius = +config.radius;
 
     let wallColor = config.wallColor;
     let doorColor = config.doorColor;
 
     let startY = 340;
     let canvBreite = canv.width;
-    let startXTemp = (canvBreite - tempWidth) / 2;
+    let startXTemp = (canvBreite - breite) / 2;
 
     let stepW = tempStepW;
     let stepH = tempStepH;
 
-    if ((direction === "up") & (stepH < tempHeight)) {
+    if ((direction === "up") & (stepH < hoehe)) {
       setTempStepH((prev) => prev + 1);
     } else if ((direction === "down") & (stepH > 0)) {
       setTempStepH((prev) => prev - 1);
     }
 
-    if ((direction === "right") & (stepW < tempWidth)) {
+    if ((direction === "right") & (stepW < breite)) {
       setTempStepW((prev) => prev + 1);
     } else if ((direction === "left") & (stepW > 0)) {
       setTempStepW((prev) => prev - 1);
@@ -128,18 +128,18 @@ export default function Design() {
     ctx.fillStyle = "#434B4D";
     ctx.fillRect(
       startXTemp,
-      canv.height - (canv.height - startY) - tempHeight,
-      tempWidth,
-      tempHeight
+      canv.height - (canv.height - startY) - hoehe,
+      breite,
+      hoehe
     );
 
     // Door
     ctx.fillStyle = doorColor;
     ctx.fillRect(
       startXTemp + stepW,
-      canv.height - (canv.height - startY) - tempHeight - stepH,
-      tempWidth,
-      tempHeight
+      canv.height - (canv.height - startY) - hoehe - stepH,
+      breite,
+      hoehe
     );
 
     // Door design
@@ -147,61 +147,61 @@ export default function Design() {
       ctx.strokeStyle = "hsl(0, 0%, 20%)";
       let segmentR = 10;
       ctx.lineWidth = 1;
-      for (let i = 0; i < tempWidth; i += segmentR) {
+      for (let i = 0; i < breite; i += segmentR) {
         ctx.strokeRect(
           startXTemp + i + stepW,
-          canv.height - (canv.height - startY) - tempHeight,
+          canv.height - (canv.height - startY) - hoehe,
           segmentR,
-          tempHeight
+          hoehe
         );
       }
     } else {
       ctx.strokeStyle = "hsl(0, 0%, 20%)";
-      let segment = tempHeight / 4;
-      for (let i = 0; i < tempHeight; i += segment) {
+      let segment = hoehe / 4;
+      for (let i = 0; i < hoehe; i += segment) {
         ctx.lineWidth = 4;
         ctx.strokeRect(
           startXTemp,
-          canv.height - (canv.height - startY) - tempHeight + i - stepH,
-          tempWidth,
+          canv.height - (canv.height - startY) - hoehe + i - stepH,
+          breite,
           segment
         );
         if (config.design === "Sicke") {
           let subsegment = segment / 3;
-          for (let ii = 0; ii < tempHeight - 1; ii += subsegment) {
+          for (let ii = 0; ii < hoehe - 1; ii += subsegment) {
             ctx.lineWidth = 1;
             ctx.strokeRect(
               startXTemp,
-              canv.height - (canv.height - startY) - tempHeight + ii - stepH,
-              tempWidth,
+              canv.height - (canv.height - startY) - hoehe + ii - stepH,
+              breite,
               subsegment
             );
           }
         } else if (config.design === "Großsicke") {
           let subsegment = segment / 2;
-          for (let ii = 0; ii < tempHeight; ii += subsegment) {
+          for (let ii = 0; ii < hoehe; ii += subsegment) {
             ctx.lineWidth = 1;
             ctx.strokeRect(
               startXTemp,
-              canv.height - (canv.height - startY) - tempHeight + ii - stepH,
-              tempWidth,
+              canv.height - (canv.height - startY) - hoehe + ii - stepH,
+              breite,
               subsegment
             );
           }
         } else if (config.design === "Kassette") {
           let subsegmentH = segment / 2;
-          let subsegmentW = tempWidth / 5;
+          let subsegmentW = breite / 5;
           let zwischenraum = subsegmentW / 5;
           for (
             let ii = zwischenraum;
-            ii < tempWidth;
+            ii < breite;
             ii += subsegmentW + zwischenraum
           ) {
             ctx.strokeRect(
               startXTemp + ii,
               canv.height -
                 (canv.height - startY) -
-                tempHeight +
+                hoehe +
                 subsegmentH / 2 +
                 i -
                 stepH,
@@ -218,23 +218,23 @@ export default function Design() {
     ctx.beginPath();
     ctx.moveTo(0, startY);
     ctx.lineTo(startXTemp, startY);
-    ctx.lineTo(startXTemp, startY - tempHeight + tempRadius);
+    ctx.lineTo(startXTemp, startY - hoehe + radius);
     ctx.arcTo(
       startXTemp,
-      startY - tempHeight,
-      startXTemp + tempRadius,
-      startY - tempHeight,
-      tempRadius
+      startY - hoehe,
+      startXTemp + radius,
+      startY - hoehe,
+      radius
     );
-    ctx.lineTo(startXTemp + tempWidth - tempRadius, startY - tempHeight);
+    ctx.lineTo(startXTemp + breite - radius, startY - hoehe);
     ctx.arcTo(
-      startXTemp + tempWidth,
-      startY - tempHeight,
-      startXTemp + tempWidth,
-      startY - tempHeight + tempRadius,
-      tempRadius
+      startXTemp + breite,
+      startY - hoehe,
+      startXTemp + breite,
+      startY - hoehe + radius,
+      radius
     );
-    ctx.lineTo(startXTemp + tempWidth, startY);
+    ctx.lineTo(startXTemp + breite, startY);
     ctx.lineTo(canvBreite, startY);
     ctx.lineTo(canvBreite, 0);
     ctx.lineTo(0, 0);
@@ -253,7 +253,7 @@ export default function Design() {
   return (
     <>
       <Header text={configForSave.system + " " + qm + " qm"} size={"24px"} />
-      <Container>
+      <main>
         <Wrapper>
           <StyledTopP>
             Wählen sie hier die gewünschte Torausführung <br />
@@ -321,33 +321,11 @@ export default function Design() {
             <MyButton type="submit">Anwenden</MyButton>
           </form>
         </Wrapper>
-      </Container>
+      </main>
       <Footer />
     </>
   );
 }
-
-const Container = styled.main`
-  position: relative;
-  height: 100%;
-  min-height: 100vh;
-  padding: 50px 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(background3.png);
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
-    filter: opacity(45%) blur(3px);
-  }
-`;
 
 const Wrapper = styled.div`
   position: relative;

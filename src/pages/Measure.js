@@ -289,7 +289,7 @@ export default function Measure() {
   return (
     <>
       <Header text={configForSave.system + " " + qm + " qm"} size={"24px"} />
-      <Container>
+      <main>
         <Wrapper>
           <StyledTopP>
             Geben sie hier Höhe, Breite und Radius ein, um <br />
@@ -351,33 +351,11 @@ export default function Measure() {
             <MyButton type="submit">Anwenden</MyButton>
           </form>
         </Wrapper>
-      </Container>
+      </main>
       <Footer />
     </>
   );
 }
-
-const Container = styled.main`
-  position: relative;
-  height: 100%;
-  min-height: 100vh;
-  padding: 50px 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(background3.png);
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
-    filter: opacity(45%) blur(3px);
-  }
-`;
 
 const Wrapper = styled.div`
   position: relative;

@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <>
       <Header text={"MyGarageDoor"} size={"28px"} />
-      <Container>
+      <Main>
         <Wrapper>
           <StyledH2>
             Mit dieser App können sie ganz einfach ihre <br />
@@ -61,30 +61,15 @@ export default function Home() {
             Beginnen mit Rundlauftor
           </StyledLink>
         </Wrapper>
-      </Container>
+      </Main>
       <Footer />
     </>
   );
 }
 
-const Container = styled.main`
-  position: relative;
-  height: 100%;
-  min-height: 100vh;
-  padding: 50px 0;
-
+// main basic styling in GlobalStyle
+const Main = styled.main`
   &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(background3.png);
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
     filter: opacity(80%) blur(3px);
   }
 `;
@@ -137,7 +122,7 @@ const StyledLink = styled(Link)`
   margin-top: 12px;
 
   &:hover {
-    border-color: hsl(216, 65%, 50%);
+    border-color: ${variables.BACKGROUND_COLOR_3};
   }
 `;
 

@@ -194,7 +194,7 @@ export default function Cart() {
     setMessage("");
   }
 
-  function closeModal(e) {
+  function closeModal() {
     setModalIsOpen(false);
   }
 
@@ -209,7 +209,7 @@ export default function Cart() {
   return (
     <>
       <Header text={"Warenkorb"} size={"26px"} />
-      <Container>
+      <main>
         <Wrapper>
           <StyledTopP>
             Hier sehen sie den automatisch konfigurierten <br />
@@ -288,32 +288,11 @@ export default function Cart() {
             ))}
           </StyledSection>
         </Wrapper>
-      </Container>
+      </main>
       <Footer />
     </>
   );
 }
-
-const Container = styled.main`
-  height: 100%;
-  min-height: 100vh;
-  padding: 54px 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(background3.png);
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
-    filter: opacity(45%) blur(3px);
-  }
-`;
 
 const Wrapper = styled.div`
   position: relative;
