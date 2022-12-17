@@ -21,7 +21,13 @@ export default function Design() {
 
   const [tempStepH, setTempStepH] = useState(0);
   const [tempStepW, setTempStepW] = useState(0);
-  const [direction, setDirection] = useState("stop");
+  const [direction, setDirection] = useState("down");
+  const [wall, setWall] = useState("white");
+  const [door, setDoor] = useState("white");
+
+  useEffect(() => {
+    drawIt();
+  }, [wall, door]);
 
   useEffect(() => {
     checkConfig();
@@ -60,9 +66,11 @@ export default function Design() {
         break;
       case "wallColor":
         setConfig({ ...config, wallColor: value });
+        setWall(value);
         break;
       case "doorColor":
         setConfig({ ...config, doorColor: value });
+        setDoor(value);
         break;
       default:
         break;
@@ -335,6 +343,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
 `;
 
 const StyledCanvas = styled.canvas`

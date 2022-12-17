@@ -365,6 +365,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
 `;
 
 const StyledCanvas = styled.canvas`

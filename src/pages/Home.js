@@ -93,6 +93,7 @@ const StyledArticle = styled.article`
   width: 280px;
   padding: 8px;
   margin-top: 12px;
+  cursor: default;
 
   p {
     font-family: "Noto Sans", Arial, Helvetica, sans-serif;
