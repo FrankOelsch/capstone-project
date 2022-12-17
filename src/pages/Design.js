@@ -22,12 +22,10 @@ export default function Design() {
   const [tempStepH, setTempStepH] = useState(0);
   const [tempStepW, setTempStepW] = useState(0);
   const [direction, setDirection] = useState("down");
-  const [wall, setWall] = useState("white");
-  const [door, setDoor] = useState("white");
 
   useEffect(() => {
     drawIt();
-  }, [wall, door]);
+  }, [config]);
 
   useEffect(() => {
     checkConfig();
@@ -66,11 +64,9 @@ export default function Design() {
         break;
       case "wallColor":
         setConfig({ ...config, wallColor: value });
-        setWall(value);
         break;
       case "doorColor":
         setConfig({ ...config, doorColor: value });
-        setDoor(value);
         break;
       default:
         break;
