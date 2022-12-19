@@ -13,7 +13,7 @@ export default function Footer() {
         </StyledNavLink>
         <StyledNavLink to="/measure">
           <ConfigIcon />
-          Masse
+          Maße
         </StyledNavLink>
         <StyledNavLink to="/design">
           <Config2Icon />

@@ -25,9 +25,9 @@ export default function Measure() {
   const inputHeightRef = useRef(null);
   const inputRadiusRef = useRef(null);
 
-  const [tempWidth, setTempWidth] = useState(250);
-  const [tempHeight, setTempHeight] = useState(200);
-  const [tempRadius, setTempRadius] = useState(30);
+  const [tempWidth, setTempWidth] = useState(+configForSave.width);
+  const [tempHeight, setTempHeight] = useState(configForSave.height);
+  const [tempRadius, setTempRadius] = useState(configForSave.radius);
 
   const [qm, setQm] = useState(
     getLocaleStringFromNumber(getSquareMeters(config.width, config.height))
@@ -348,7 +348,7 @@ export default function Measure() {
               labelText="Torbogen-Radius in cm"
             />
 
-            <MyButton type="submit">Anwenden</MyButton>
+            <MyButton type="submit">Speichern</MyButton>
           </form>
         </Wrapper>
       </main>

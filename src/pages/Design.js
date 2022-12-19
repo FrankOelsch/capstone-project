@@ -22,6 +22,7 @@ export default function Design() {
   const [tempStepH, setTempStepH] = useState(0);
   const [tempStepW, setTempStepW] = useState(0);
   const [direction, setDirection] = useState("down");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     drawIt();
@@ -50,6 +51,7 @@ export default function Design() {
 
   function handleSelect(e) {
     const value = e.target.value;
+    setErrorMessage("");
 
     switch (e.target.id) {
       case "material":
@@ -67,6 +69,13 @@ export default function Design() {
         break;
       case "doorColor":
         setConfig({ ...config, doorColor: value });
+        break;
+      case "system":
+        if (config.width <= 500 && config.height <= 250) {
+          setConfig({ ...config, system: value });
+        } else {
+          setErrorMessage("Vor Auswahl Sectionaltor müssen Maße geändert werden (Breite x Höhe max 500 x 250 cm).");
+        }
         break;
       default:
         break;
@@ -276,6 +285,19 @@ export default function Design() {
 
           <form onSubmit={handleSubmit}>
             <SelectWithLabel
+              id="system"
+              onChange={handleSelect}
+              value={config.system}
+              options={[
+                { name: "Sectionaltor", id: "Sectionaltor" },
+                { name: "Rundlauftor", id: "Rundlauftor" },
+              ]}
+              labelText="Torsystem"
+            />
+
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+
+            <SelectWithLabel
               id="wallColor"
               onChange={handleSelect}
               value={config.wallColor}
@@ -322,7 +344,7 @@ export default function Design() {
               </>
             )}
 
-            <MyButton type="submit">Anwenden</MyButton>
+            <MyButton type="submit">Speichern</MyButton>
           </form>
         </Wrapper>
       </main>
@@ -355,4 +377,11 @@ const StyledTopP = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
   margin-top: 8px;
+`;
+
+const ErrorMessage = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.875em;
+  margin-top: 6px;
+  color: red;
 `;
